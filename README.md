@@ -326,7 +326,9 @@ under Lorentz changes of co-ordinates, a stationary source has the far field of 
 momentum, a localized source
 radiates gravitational waves by the quadrupole formula, short waves travel along null geodesics of a
 curved background with their amplitude transported and carry the averaged effective stress of
-Isaacson, and the time lines of a synchronous system focus under the energy condition.
+Isaacson, and the time lines of a synchronous system focus under the energy condition. Kasner
+universes end at a curvature singularity in a finite proper time, and under the energy condition a
+slice that contracts everywhere bounds the length of every maximizing normal geodesic.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, solves the Einstein equations across its
 surface in the weak sense, and its event horizon is the boundary of the region from which light still

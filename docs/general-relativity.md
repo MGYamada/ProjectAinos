@@ -1530,7 +1530,25 @@ the strong energy condition with Einstein's equations and `Λ ≤ 0` gives `R₀
 (`SatisfiesEinstein.ricci_timelike_nonneg`), and the time line leaves the domain of the synchronous
 chart within `3/|θ|` (`IsSynchronous.exists_notMem_of_focusing`); `θ → −∞` there only when the line
 stays in the domain up to that time (`IsSynchronous.tendsto_expansion_atBot`). Leaving the chart is
-not by itself a caustic. Geodesic incompleteness is the remainder.
+not by itself a caustic.
+
+**Incompleteness (§119).** The Kretschmann scalar `R_abcd R^abcd` (`LorentzMetric.kretschmann`) is
+invariant under isometries (`kretschmann_isometry`). In a vacuum Kasner model it is
+`−16 p₁p₂p₃/t⁴` (`Kasner.kretschmann_kasner`), positive unless `p` is a permutation of `(1, 0, 0)`; the
+comoving past-directed unit geodesic reaches `t = 0` in the proper time `t₀`
+(`properTime_comovingPast`), has no limit, and `K → ∞` along it, so no smooth isometric map into any
+Lorentz manifold gives it a limit (`not_tendsto_of_isometry`), while flat Kasner embeds in Minkowski
+space by the Milne map (`exists_isometry_tendsto_flat`). For a coordinate metric with a time
+function, the timelike convergence condition and a slice whose normal expansion satisfies
+`νθ ≤ −C`, a maximizing normal geodesic has length at most `3/C`: the second variation along the
+test fields `(1 − s/L)E_i` (`FocalPoints.varSpeed₂_zero`, `sum_curv_frame`) would otherwise give a
+longer curve (`length_le_of_maximizing`); with the premise that every point is reached by such a
+maximizer, every normal geodesic is incomplete (`length_le_of_focusing`). For synchronous metrics
+the premise is proved (`curveProperTime_le`, `IsSynchronous.length_le_of_focusing`), and with
+Einstein's equations, the strong energy condition and `Λ ≤ 0` the bound is `3/C`
+(`IsSynchronous.length_le_of_einstein`; instances `Kasner.length_le_past`,
+`Kasner.length_le_reverse_dustKasner`). Constructing maximizers from global hyperbolicity is outside
+the scope, and the generic structure near the singularity (BKL) is open.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
@@ -1541,10 +1559,11 @@ not by itself a caustic. Geodesic incompleteness is the remainder.
 | Transport and effective stress | `CoordinateMetric.covDerivOne`, `tensorPairing`, `christoffelOf_perturbation_eq`, `ricciOf_eq_of_christoffel`, `hasDerivAt_deriv_ricciOf_perturbation`, `secondRicci`, `ShortWave.transportOperator`, `transportTerm_eq`, `transportTerm_of_gauge`, `sum_transverse_transportTerm`, `harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`, `transportTerm_longitudinal`, `secondRicci_shortWave`, `tendsto_secondRicci_shortWave`, `effectiveStress`, `averagedSecondRicci_eq_effectiveStress`, `effectiveStress_eq_average_gradient`, `effectiveStress_conserved`, `effectiveStress_flux_eq_average`, `PlaneWave.effectiveStress_cross` | [CovariantLeibniz](../ProjectAinos/SmoothGeometry/Lorentzian/CovariantLeibniz.lean) · [SecondVariation](../ProjectAinos/SmoothGeometry/Lorentzian/SecondVariation.lean) · [ShortWaveTransport](../ProjectAinos/GeneralRelativity/ShortWaveTransport.lean) · [EffectiveStress](../ProjectAinos/GeneralRelativity/EffectiveStress.lean) |
 | Gravitational radiation | `LinearizedRadiation.retardedPerturbation`, `linearizedEinstein_retardedPerturbation`, `farZone_quadrupole`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `binary_power_smooth`, `Wave.integral_ttSquare` | [TransverseTraceless](../ProjectAinos/SmoothGeometry/Wave/TransverseTraceless.lean), [LinearizedRadiation](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) |
 | Focusing | `Focusing.trace_sq_ge`, `IsSynchronous.raychaudhuri`, `RiccatiComparison.lt_div_abs`, `StrongEnergyCondition`, `SatisfiesEinstein.ricci_timelike_nonneg`, `IsSynchronous.exists_notMem_of_focusing`, `deSitter_not_focusing` | [RiccatiComparison](../ProjectAinos/SmoothGeometry/ODE/RiccatiComparison.lean), [Focusing](../ProjectAinos/SmoothGeometry/Lorentzian/Focusing.lean), [EnergyCondition](../ProjectAinos/GeneralRelativity/EnergyCondition.lean) |
+| Incompleteness | `LorentzMetric.kretschmann`, `kretschmann_isometry`, `Kasner.kretschmann_kasner`, `kasner_prod_neg`, `properTime_comovingPast`, `tendsto_kretschmann_comovingPast`, `not_tendsto_of_isometry`, `exists_isometry_tendsto_flat`, `FocalPoints.varSpeed₂_zero`, `length_le_of_maximizing`, `length_le_of_focusing`, `IsSynchronous.length_le_of_focusing`, `IsSynchronous.length_le_of_einstein`, `Kasner.length_le_past` | [Kretschmann](../ProjectAinos/SmoothGeometry/Lorentzian/Kretschmann.lean) · [ProperTimeVariation](../ProjectAinos/SmoothGeometry/Lorentzian/ProperTimeVariation.lean) · [SecondDerivativeTest](../ProjectAinos/SmoothGeometry/ODE/SecondDerivativeTest.lean) · [FocalPoints](../ProjectAinos/SmoothGeometry/Lorentzian/FocalPoints.lean) · [KasnerIncompleteness](../ProjectAinos/GeneralRelativity/KasnerIncompleteness.lean) · [SingularityTheorem](../ProjectAinos/GeneralRelativity/SingularityTheorem.lean) |
 
 The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/ChargeCovarianceAPI.lean`,
 `checks/CurvedWavesAPI.lean`, `checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
-`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33, GR40 and GR41 of the
+`checks/FocusingAPI.lean` and `checks/IncompletenessAPI.lean`. The decisions are recorded in GR30–GR33, GR40, GR41 and GR44 of the
 [notes](general-relativity-notes.md) and in G16 of the
 [smooth-geometry notes](smooth-geometry-notes.md).
 

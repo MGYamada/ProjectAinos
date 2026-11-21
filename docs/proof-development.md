@@ -1007,6 +1007,16 @@ outgoing null generator that reaches the surface at `r = 2M`. The ledger row §1
 (GR 37 of 39).
 [Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
 
+The Kretschmann scalar is an invariant of isometries; in a nonflat Kasner universe it diverges like
+`t⁻⁴` along the comoving geodesic, which reaches `t = 0` in a finite proper time, so no isometric
+extension gives the geodesic an end point, while the flat case embeds in Minkowski space. The
+second variation of the proper time along a normal geodesic, with the timelike convergence
+condition and a contracting slice, bounds the length of every maximizing normal geodesic by
+`3/C`; for synchronous metrics every point is reached by a maximizer, so the bound is unconditional
+there. The ledger row §119 is *proved* with the maximizing premise as the global hypothesis
+(GR 38 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

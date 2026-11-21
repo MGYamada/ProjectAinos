@@ -178,6 +178,7 @@ public import ProjectAinos.GeneralRelativity.FreeLagrangian
 public import ProjectAinos.GeneralRelativity.GeodesicHamiltonian
 public import ProjectAinos.GeneralRelativity.HomogeneousSpace
 public import ProjectAinos.GeneralRelativity.Kasner
+public import ProjectAinos.GeneralRelativity.KasnerIncompleteness
 public import ProjectAinos.GeneralRelativity.Kerr
 public import ProjectAinos.GeneralRelativity.LightDeflection
 public import ProjectAinos.GeneralRelativity.LinearizedRadiation
@@ -219,6 +220,7 @@ public import ProjectAinos.GeneralRelativity.SchwarzschildRotations
 public import ProjectAinos.GeneralRelativity.SchwarzschildVacuum
 public import ProjectAinos.GeneralRelativity.ShortWave
 public import ProjectAinos.GeneralRelativity.ShortWaveTransport
+public import ProjectAinos.GeneralRelativity.SingularityTheorem
 public import ProjectAinos.GeneralRelativity.SpecialRelativity
 public import ProjectAinos.GeneralRelativity.SphericalAnsatz
 public import ProjectAinos.GeneralRelativity.StationaryFarField
@@ -522,6 +524,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.ExponentialConformalExample
 public import ProjectAinos.SmoothGeometry.Lorentzian.FlatConnection
 public import ProjectAinos.SmoothGeometry.Lorentzian.FlatFrameExamples
 public import ProjectAinos.SmoothGeometry.Lorentzian.FlatTransport
+public import ProjectAinos.SmoothGeometry.Lorentzian.FocalPoints
 public import ProjectAinos.SmoothGeometry.Lorentzian.Focusing
 public import ProjectAinos.SmoothGeometry.Lorentzian.Geodesic
 public import ProjectAinos.SmoothGeometry.Lorentzian.HodgeCoordinates
@@ -536,6 +539,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.HyperplaneFlux
 public import ProjectAinos.SmoothGeometry.Lorentzian.InertialDerivatives
 public import ProjectAinos.SmoothGeometry.Lorentzian.IsotropicRicci
 public import ProjectAinos.SmoothGeometry.Lorentzian.Killing
+public import ProjectAinos.SmoothGeometry.Lorentzian.Kretschmann
 public import ProjectAinos.SmoothGeometry.Lorentzian.LeviCivita
 public import ProjectAinos.SmoothGeometry.Lorentzian.Linearized
 public import ProjectAinos.SmoothGeometry.Lorentzian.LocalFlatness
@@ -559,6 +563,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.ParallelTransport
 public import ProjectAinos.SmoothGeometry.Lorentzian.ParallelUniqueness
 public import ProjectAinos.SmoothGeometry.Lorentzian.PathExamples
 public import ProjectAinos.SmoothGeometry.Lorentzian.PiecewisePath
+public import ProjectAinos.SmoothGeometry.Lorentzian.ProperTimeVariation
 public import ProjectAinos.SmoothGeometry.Lorentzian.Pseudotensor
 public import ProjectAinos.SmoothGeometry.Lorentzian.PseudotensorAlgebra
 public import ProjectAinos.SmoothGeometry.Lorentzian.PseudotensorChristoffel
@@ -656,6 +661,7 @@ public import ProjectAinos.SmoothGeometry.ODE.RadialReparam
 public import ProjectAinos.SmoothGeometry.ODE.Riccati
 public import ProjectAinos.SmoothGeometry.ODE.RiccatiComparison
 public import ProjectAinos.SmoothGeometry.ODE.ScalarFlow
+public import ProjectAinos.SmoothGeometry.ODE.SecondDerivativeTest
 public import ProjectAinos.SmoothGeometry.ODE.SlowParameter
 public import ProjectAinos.SmoothGeometry.ODE.Superposition
 public import ProjectAinos.SmoothGeometry.ODE.Volterra
