@@ -886,11 +886,18 @@ the power is `(2/3)(e²/4π)γ⁴v²Ω²`, with the loss per turn and its ratio 
 fraction of the power outside the cone of half-angle `c/γ` about `v` is at most `π²/(2c²)`
 (`Ultrarelativistic.integral_indicator_outsideCone_le_uniform`).
 
-**Scope.** Flat space-time, prescribed motions, Heaviside–Lorentz units. Not stated: the time
-transform of the far-zone amplitude of a point charge (with the collision spectra, F22b), the
-harmonics of synchrotron radiation with Bessel functions, and the spectral asymptotics of the
-ultrarelativistic case, which need stationary phase and Airy functions (§§74, 77 are closed with
-these remainders).
+**Harmonic spectrum of a prescribed circle.** With β = RΩ, the far observer measures phase
+M = Ω(t − n·r(t)). Inverting Kepler's equation for this phase gives both polarizations of the
+electric field at every azimuth. If z = nβ and F = eΩn/(4π), the power in the pair of lines
+±nΩ, integrated over solid angle, obeys
+zPₙ = 4πF²[2β²J′₂ₙ(2z) + 2z(β²−1)∫₀¹ J₂ₙ(2zt) dt]. With r = (n/2)⅓ the relative frequency
+is n/γ³ = 2(r/γ)³. The rescaled angular power converges in absolute difference to the sum of
+the two squared Macdonald profiles for any bounded moving r/γ and r sin(latitude). For the
+angle-integrated line, `critical_total_power` gives the K⅔ term and the improper K⅓ integral.
+An exponential Bessel bound controls the doubled-order Bessel integral outside the local Airy window.
+[Polarized field](../ProjectAinos/Electrodynamics/Radiation/CircularHarmonics.lean) ·
+[Integrated line power](../ProjectAinos/Electrodynamics/Radiation/HarmonicPower.lean) ·
+[Critical spectrum](../ProjectAinos/Electrodynamics/Radiation/CriticalSpectrum.lean)
 
 ## Proof and API map
 

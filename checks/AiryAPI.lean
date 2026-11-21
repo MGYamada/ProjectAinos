@@ -3,7 +3,7 @@ module
 import ProjectAinos.SpecialFunctions.AiryMacdonald
 import ProjectAinos.SpecialFunctions.AiryVertical
 import ProjectAinos.SpecialFunctions.CubicPhase
-import ProjectAinos.SpecialFunctions.BesselContour
+import ProjectAinos.SpecialFunctions.BesselTurningIntegral
 
 noncomputable section
 open Complex Filter MeasureTheory Set
@@ -142,3 +142,37 @@ example (n : ℤ) (x h : ℝ) :
 example (n : ℤ) (x h : ℝ) :
     (∫ t in -π..π, I*sin (t-h*I)*fourierKernel n x (t-h*I)) = 2*π*deriv (besselJ n) x :=
   integral_shift_deriv n x h
+
+example : Tendsto turningScale atTop atTop := tendsto_turningScale
+
+example (n : ℕ) : (n : ℝ) = 2 * turningScale n ^ 3 := turningScale_cube n
+
+example {u : ℕ → ℝ} {B : ℝ} (hu : ∀ᶠ n in atTop, |u n| ≤ B) :
+    Tendsto (fun n : ℕ => (turningScale n : ℂ) *
+      besselJ n (n-u n*turningScale n : ℝ) - ai (u n)) atTop (𝓝 0) ∧
+    Tendsto (fun n : ℕ => (turningScale n : ℂ)^2 * deriv (besselJ n) (n-u n*turningScale n : ℝ) +
+      deriv ai (u n)) atTop (𝓝 0) :=
+  turning_point hu
+
+example {d : ℕ → ℕ} (hd : Tendsto d atTop atTop)
+    {u : ℕ → ℝ} {B : ℝ} (hu : ∀ᶠ n in atTop, |u n| ≤ B) :
+    Tendsto (fun n : ℕ => (turningScale (d n) : ℂ) *
+      besselJ (d n) (d n-u n*turningScale (d n) : ℝ) - ai (u n)) atTop (𝓝 0) ∧
+    Tendsto (fun n : ℕ => (turningScale (d n) : ℂ)^2 *
+      deriv (besselJ (d n)) (d n-u n*turningScale (d n) : ℝ) + deriv ai (u n)) atTop (𝓝 0) :=
+  turning_point_along hd hu
+
+example : ∃ C : ℝ, 0 ≤ C ∧ ∀ n : ℕ, 1 ≤ turningScale n →
+    ∀ u : ℝ, 0 ≤ u → u ≤ 2*turningScale n^2 →
+      ‖(turningScale n : ℂ)*besselJ n (n-u*turningScale n : ℝ)‖ ≤ C*Real.exp (-u/2) :=
+  turning_bound
+
+example : ∃ C : ℝ, 0 ≤ C ∧ ∀ u : ℝ, ‖ai u‖ ≤ C*Real.exp (-u) :=
+  airy_bound
+
+example {d : ℕ → ℕ} (hd : Tendsto d atTop atTop) {u : ℕ → ℝ} {B : ℝ}
+    (hu : ∀ᶠ n in atTop, 0 ≤ u n ∧ u n ≤ B) :
+    Tendsto (fun n =>
+      (∫ x in (0 : ℝ)..(d n-u n*turningScale (d n)), besselJ (d n) x) -
+      ∫ v : ℝ in Ioi 0, ai (u n+v : ℝ)) atTop (𝓝 0) :=
+  turning_primitive hd hu

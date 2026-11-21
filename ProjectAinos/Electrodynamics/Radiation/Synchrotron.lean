@@ -35,9 +35,9 @@ of Fields*, §74; units with `c = 1`), with the speed `v = |RΩ|` and `γ = 1/�
   (`synchrotronPower_eq_magnetic`).
 
 The orbit is prescribed: it is not compared with the four-dimensional motion `ConstantField.motion`
-in a constant field, whose magnetic case turns in the plane of the second and third axes. Not
-formalized: the decomposition of the radiation into the harmonics of `Ω` and their intensities
-in terms of Bessel functions, and the spectrum of §74.
+in a constant field, whose magnetic case turns in the plane of the second and third axes. The spectral
+calculation is in `CircularHarmonics`, `HarmonicPower` and
+`CriticalSpectrum`.
 -/
 
 @[expose] public section

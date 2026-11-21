@@ -67,12 +67,15 @@ public import ProjectAinos.Electrodynamics.PolynomialBridge
 public import ProjectAinos.Electrodynamics.PolynomialExamples
 public import ProjectAinos.Electrodynamics.PolynomialRadial
 public import ProjectAinos.Electrodynamics.Radiation.Basic
+public import ProjectAinos.Electrodynamics.Radiation.CircularHarmonics
 public import ProjectAinos.Electrodynamics.Radiation.Collision
 public import ProjectAinos.Electrodynamics.Radiation.CollisionSpectrum
 public import ProjectAinos.Electrodynamics.Radiation.CoulombRadiation
+public import ProjectAinos.Electrodynamics.Radiation.CriticalSpectrum
 public import ProjectAinos.Electrodynamics.Radiation.Dipole
 public import ProjectAinos.Electrodynamics.Radiation.EccentricOrbit
 public import ProjectAinos.Electrodynamics.Radiation.FarZone
+public import ProjectAinos.Electrodynamics.Radiation.HarmonicPower
 public import ProjectAinos.Electrodynamics.Radiation.KeplerHarmonics
 public import ProjectAinos.Electrodynamics.Radiation.Multipole
 public import ProjectAinos.Electrodynamics.Radiation.NearZone
@@ -669,6 +672,9 @@ public import ProjectAinos.SpecialFunctions.BesselAsymptotic
 public import ProjectAinos.SpecialFunctions.BesselContour
 public import ProjectAinos.SpecialFunctions.BesselGenerating
 public import ProjectAinos.SpecialFunctions.BesselIntegral
+public import ProjectAinos.SpecialFunctions.BesselSquare
+public import ProjectAinos.SpecialFunctions.BesselTurningIntegral
+public import ProjectAinos.SpecialFunctions.BesselTurningPoint
 public import ProjectAinos.SpecialFunctions.BesselZeros
 public import ProjectAinos.SpecialFunctions.CubicPhase
 public import ProjectAinos.SpecialFunctions.Fresnel

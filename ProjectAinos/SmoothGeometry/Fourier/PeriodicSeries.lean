@@ -47,6 +47,27 @@ theorem coefficient_const_mul {f : ℝ → ℂ} (hf : Continuous f) (a : ℂ) (n
     coefficient (fun t => a * f t) n = a * coefficient f n := by
   simpa using coefficient_linear hf hf a 0 n
 
+/-- A phase delay of a periodic signal multiplies its harmonic by a unit complex phase. -/
+theorem coefficient_translate {f : ℝ → ℂ} (hp : Periodic f (2*π)) (a : ℝ) (n : ℤ) :
+    coefficient (fun t => f (t-a)) n = exp (-((n : ℂ)*a)*I) * coefficient f n := by
+  let g (t : ℝ) := exp (-((n : ℂ)*t)*I) * f t
+  have hg : Periodic g (2*π) := by
+    intro t
+    unfold g
+    rw [hp, ofReal_add, ofReal_mul, ofReal_ofNat,
+      show -((n : ℂ)*(t+2*π))*I = -(n*t)*I + ((-n : ℤ) : ℂ)*(2*π*I) by push_cast; ring,
+      exp_add, exp_int_mul_two_pi_mul_I, mul_one]
+  have h (t : ℝ) : exp (-((n : ℂ)*t)*I) * f (t-a) = exp (-((n : ℂ)*a)*I) * g (t-a) := by
+    unfold g
+    rw [← mul_assoc, ← exp_add, ofReal_sub]
+    congr 2
+    ring
+  have hi := hg.intervalIntegral_add_eq (-π-a) (-π)
+  rw [show -π-a+2*π=π-a by ring, show -π+2*π=π by ring] at hi
+  unfold coefficient
+  simp_rw [h, intervalIntegral.integral_const_mul, intervalIntegral.integral_comp_sub_right, hi]
+  ring
+
 private theorem hab : -π < π := by linarith [Real.pi_pos]
 
 private theorem coeff_eq (f : ℝ → ℂ) (n : ℤ) :
@@ -59,6 +80,15 @@ private theorem coeff_eq (f : ℝ → ℂ) (n : ℤ) :
     ring
   simp_rw [h]
   ring
+
+/-- Parseval for the coefficients on the symmetric observer-phase interval. -/
+theorem hasSum_sq {f : ℝ → ℂ} (hf : Continuous f) :
+    HasSum (fun n : ℤ => ‖coefficient f n‖^2) ((2*π)⁻¹ * ∫ t in -π..π, ‖f t‖^2) := by
+  obtain ⟨C,hC⟩ := (isCompact_Icc (a := -π) (b := π)).exists_bound_of_continuousOn hf.continuousOn
+  have hL : MemLp f 2 (volume.restrict (Ioc (-π) π)) := MemLp.of_bound hf.aestronglyMeasurable C
+    ((ae_restrict_iff' measurableSet_Ioc).mpr (Eventually.of_forall fun t ht =>
+      hC t (Ioc_subset_Icc_self ht)))
+  simpa only [coeff_eq, show π- -π=2*π by ring, smul_eq_mul] using hasSum_sq_fourierCoeffOn hab hL
 
 private theorem coeff_bound (f : ℝ → ℂ) (hc : Continuous f) :
     ∃ M : ℝ, ∀ n, ‖coefficient f n‖ ≤ M := by
@@ -90,6 +120,19 @@ theorem coefficient_deriv {f : ℝ → ℂ} (hp : Periodic f (2 * π)) (hf : Dif
   rw [h, ofReal_neg]
   field_simp [Real.pi_ne_zero]
   ring
+
+/-- The Fourier coefficient of a twice continuously differentiable periodic acceleration
+is minus the squared harmonic number times the position coefficient. -/
+theorem coefficient_second {f : ℝ → ℂ} (hf : ContDiff ℝ 2 f) (hp : Periodic f (2*π))
+    {n : ℤ} (hn : n ≠ 0) : coefficient (deriv (deriv f)) n = -(n : ℂ)^2 * coefficient f n := by
+  have hd : ContDiff ℝ 1 (deriv f) := hf.deriv'
+  have hc := mul_ne_zero I_ne_zero (Int.cast_ne_zero.mpr hn : (n : ℂ) ≠ 0)
+  have h := (eq_div_iff hc).mp (coefficient_deriv hp (hf.differentiable (by norm_num))
+    hd.continuous hn)
+  have h' := (eq_div_iff hc).mp (coefficient_deriv (deriv_period hp)
+    (hd.differentiable one_ne_zero) (hd.continuous_deriv le_rfl) hn)
+  rw [← h', ← h]
+  linear_combination coefficient f n * (n : ℂ)^2 * I_sq
 
 /-- A twice continuously differentiable periodic function has absolutely summable coefficients. -/
 theorem summable {f : ℝ → ℂ} (hf : ContDiff ℝ 2 f) (hp : Periodic f (2 * π)) :

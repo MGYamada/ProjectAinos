@@ -1047,8 +1047,10 @@ that tends to the radiated power; for slow sources the power is the dipole term 
 remainder, and the quadrupole and magnetic-dipole terms with `O(κ⁷)`. The flux of a point dipole
 splits exactly into the radiated power and the derivative of a near-zone energy. A fast charge
 radiates with Liénard's power, concentrated in the cone `c/γ`; on a circular orbit the loss per turn
-is explicit. The ledger rows ED §§63, 65–67, 71–73 are *proved* in their scopes, and §§74 and 77 are
-closed with stated remainders (ED 47 of 66).
+is explicit. The observer-time coefficients give its doubled-order Bessel line powers. In §77 the
+angular K⅓ and K⅔ spectrum is *proved* on bounded critical frequency and angle scales. §74
+includes the critical limit of the solid-angle integral, with a uniform estimate all the way to
+zero Bessel argument. Both rows are *proved* for the prescribed circle.
 [Guide](electrodynamics.md#radiation-63-6567-7174-77)
 
 For a high-frequency potential the wave operator expands exactly in powers of `1/ε`: the two
@@ -1078,7 +1080,7 @@ The radiated energy and spectrum of a Coulomb collision follow from the dipole p
 the low-frequency spectrum of a point charge is the jump of its velocity term, and on Kepler orbits
 the power decomposes into harmonics whose Cartesian coefficients are given by Jₙ(nε) and
 J′ₙ(nε). The Hankel evaluation for hyperbolic motion remains open. The ledger rows ED §§68, 69 are *proved* in their scopes and
-§70 is closed with a stated remainder (ED 60 of 66).
+§70 is closed with a stated remainder (ED 62 of 66).
 [Guide](electrodynamics.md#radiation-in-collisions-6870)
 
 

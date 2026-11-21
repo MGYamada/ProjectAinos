@@ -222,7 +222,9 @@ Maxwell's equations with causal support, and their time transform solves the Hel
 A point charge on a world line slower than light has the Liénard–Wiechert field and is its source,
 slow charges interact through the Darwin Lagrangian to second order, a localized source radiates
 the power of its far-field amplitude with dipole, quadrupole and magnetic-dipole terms, and a fast
-charge radiates with Liénard's power, concentrated in a narrow cone.
+charge radiates with Liénard's power, concentrated in a narrow cone. For circular motion the
+observed polarizations give the power in each harmonic. Near the critical frequency γ³|Ω| the
+angular spectrum has the two Macdonald profiles K⅓ and K⅔.
 [Guide](docs/electrodynamics.md#radiation-63-6567-7174-77)
 High-frequency fields satisfy the eikonal and transport equations at their leading orders, with
 null rays, conserved intensity and Fermat's principle; wave fronts focus by a Riccati law, ideal

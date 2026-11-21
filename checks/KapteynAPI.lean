@@ -94,3 +94,15 @@ example {e : ℝ} (he : |e| < 1) (M : ℝ) :
     HasSum (fun n : ℤ => Complex.besselJ n ((n : ℝ) * e) *
       Complex.exp (((n : ℂ) * M) * Complex.I)) ((deriv (eccentricAnomaly e) M : ℝ) : ℂ) :=
   hasSum_deriv_eccentric he M
+
+example {f : ℝ → ℂ} (hf : ContDiff ℝ 2 f) (hp : Periodic f (2*π))
+    {n : ℤ} (hn : n ≠ 0) : coefficient (deriv (deriv f)) n = -(n : ℂ)^2 * coefficient f n :=
+  coefficient_second hf hp hn
+
+example {f : ℝ → ℂ} (hp : Periodic f (2*π)) (a : ℝ) (n : ℤ) :
+    coefficient (fun t => f (t-a)) n = Complex.exp (-((n : ℂ)*a)*I) * coefficient f n :=
+  coefficient_translate hp a n
+
+example {f : ℝ → ℂ} (hf : Continuous f) :
+    HasSum (fun n : ℤ => ‖coefficient f n‖^2) ((2*π)⁻¹ * ∫ t in -π..π, ‖f t‖^2) :=
+  hasSum_sq hf

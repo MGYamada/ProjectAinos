@@ -385,3 +385,20 @@ These notes record mathematical distinctions and interface decisions in `Project
 **Interface decision.** The elliptic radiation calculation uses the same Cartesian acceleration, orbital period and Fourier convention as the Parseval power sum.
 
 **Proof status.** For every nonzero integer harmonic and 0 < ε < 1, the two acceleration coefficients equal the stated multiples of J′ₙ(nε) and Jₙ(nε). The hyperbolic orbit integral still needs its own transform. [Kepler harmonics](../ProjectAinos/Electrodynamics/Radiation/KeplerHarmonics.lean)
+
+## ED49. The observer's clock determines the harmonic spectrum of a circular orbit
+
+**Observation.** Differentiating the transverse retarded position twice gives the electric
+amplitude up to −e/(4π). In observer phase, the retarded orbital phase solves Kepler's equation
+with eccentricity β times the tangential viewing component. Both polarizations acquire the
+same phase when the observing meridian rotates.
+
+**Interface decision.** A positive spectral line collects both signs of the Fourier frequency.
+The polar integral of Jₙ² is obtained by integrating its absolutely convergent Cauchy product.
+The critical limit is stated for the measured electric field and allows both frequency and
+latitude to move throughout a bounded set in their scaled coordinates.
+
+**Proof status.** The exact angular power and its solid-angle integral are proved for each
+positive harmonic. With r = (n/2)⅓ and bounded r/γ and r sin(latitude), the scaled angular
+power has the K⅓ and K⅔ profile. The angle-integrated line converges after rescaling to the
+K⅔ boundary term minus the K⅓ tail integral with its Lorentz-factor weight. [Harmonic power](../ProjectAinos/Electrodynamics/Radiation/HarmonicPower.lean) · [Critical spectrum](../ProjectAinos/Electrodynamics/Radiation/CriticalSpectrum.lean)
