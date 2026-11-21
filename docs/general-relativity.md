@@ -1042,9 +1042,10 @@ exact experiment `verify_pseudotensor_expression` in
 [`verify_lorentz_geometry.py`](../experiments/ainos_experiments/verify_lorentz_geometry.py)
 checks the normalization for a nonconstant metric in four dimensions.
 
-**Scope.** The energy and momentum (96.16) as integrals over a spacelike hypersurface, their
-conservation and their four-vector character are not stated: they need the decay of the
-metric and of the matter at spatial infinity and co-ordinates that are Galilean there.
+**Scope.** The energy and momentum (96.16) as integrals over the slices, their conservation and
+their four-vector character need the decay of the metric and of the matter at spatial infinity
+and co-ordinates that are Galilean there; they are proved with §105 in the section on
+[charges at infinity](#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119).
 
 | Result | Declarations | Source |
 | --- | --- | --- |
@@ -1462,7 +1463,38 @@ flux through spheres changes by the integral of the conserved total over shells
 (`surfaceCharge_sub_surfaceCharge_eq`), and the charges are the limits of the surface integrals with
 their volume form (`tendsto_surfaceCharge`, `charge_eq_integral`); `P⁰ = M` for the isotropic far
 metric (`charge_zero_eq_mass`), and the charges are conserved when the flux vanishes
-(`charge_const_of_flux`). The four-vector character is the remainder.
+(`charge_const_of_flux`).
+
+**The four-vector character (§§96, 105).** Under `x = L x′` with a constant invertible `L`, the
+metric is `Lᵀ g L` (`CoordinateMetric.linearPullback`), and the superpotential and the total density
+`τ = |g|(G + t)` are tensor densities of weight 2 (`superpotential_linearPullback`,
+`totalDensity_linearPullback`). The slice `x′⁰ = t` is a tilted hyperplane; the flux of a conserved
+current through a hyperplane `x⁰ = c + ⟨v, x⟩` (`Hyperplane.graphFlux`, the three-form `ι_J vol` on
+its graph) is compared with a coordinate slice by tilting a family of hyperplanes, which turns the
+derivative of the integrand into a spatial divergence (`divergence_wedgeField`), so the side of the
+wedge is a sphere flux, `O(1/R)` for a current `O(r⁻⁴)` on the wedge (`abs_graphFluxBall_sub_le`,
+`integral_eq_graphFlux`). Hence `P′ = |det L| L⁻¹ P` for `(L⁻¹)₀₀ > 0` (`charge_linearPullback`) and
+`P′ = L⁻¹P` for an orthochronous Lorentz `L` (`charge_lorentz`): the components of one four-vector in
+the two frames, or actively the momentum of the field moved by `L⁻¹`. The decay on the wedge follows
+from uniform metric decay with matter of compact support there (`IsGalileanOnWedge`,
+`IsAsymptoticallyGalilean.isGalileanOnWedge`) or from the Einstein equations
+(`charge_linearPullback_of_einstein`). Beyond its matter the isotropic metric has
+`τ⁰⁰ = −4M²/r⁴` and `|τ^{ik}| ≤ 180M²/r⁴` (`totalDensity_isotropicMetric_zero_zero`,
+`abs_totalDensity_isotropicMetric_le`), and the boosted charges are `8πMγ(1, −β, 0, 0)`
+(`charge_boost_isotropicMetric`).
+
+**The stationary far field (§105).** For a smooth, symmetric, conserved stationary stress in a ball
+(`StationaryFarField.StationarySource`, instance `rotSource`), the linearized field in harmonic gauge
+is `h̄ = 2κ N[S]` (`retardedPerturbation_static`). Conservation alone gives `∫S_{0α} = 0`, the
+current dipole `−J/2`, `∫S_{αβ} = 0` and no stress dipole (`integral_momentum_eq_zero`,
+`currentDipole_eq`, `integral_stress_eq_zero`, `stressDipole_eq_zero`), so outside the source
+`h̄₀₀ = 2κM/4πr + O(r⁻³)` for a mass-centred source, `h̄_{0α} = −(κ/4π) J_{αβ}x^β/r³ + O(r⁻³)` and
+`h̄_{αβ} = O(r⁻³)`, uniformly (`abs_hbar_zero_zero_sub_le`, `abs_hbar_zero_succ_sub_angularMomentum_le`,
+`abs_hbar_succ_succ_le`). The mass and angular-momentum surface integrals are `−2κM` and `−2κJ` on
+every sphere outside the source (`massFlux_eq`, `angularMomentumFlux_eq`), and at `κ = 8π` with
+`J₁₂ = −Ma` the field is the Kerr exterior at leading order (`abs_spinComponent_sub_gtp_le`,
+`abs_metricPerturbation_zero_zero_sub_gtt_le`). The bounds of the nonlinear source of a general
+stationary exterior are outside the scope.
 
 **Waves on a curved background (§108).** The derivative of the Ricci tensor along `g + εh` is the
 Palatini form (`familyRicciDeriv_eq`), gauge invariant on Ricci-flat backgrounds
@@ -1503,14 +1535,16 @@ not by itself a caustic. Geodesic incompleteness is the remainder.
 | Result | Declarations | Source |
 | --- | --- | --- |
 | Charges at infinity | `CoordinateMetric.surfaceCharge`, `Sphere.flux_sub_flux`, `surfaceCharge_sub_surfaceCharge_eq`, `IsAsymptoticallyGalilean`, `abs_pseudotensor_le`, `tendsto_surfaceCharge`, `charge_eq_integral`, `charge_zero_eq_mass`, `charge_const_of_flux` | [PseudotensorFlux](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorFlux.lean), [AsymptoticCharge](../ProjectAinos/GeneralRelativity/AsymptoticCharge.lean) |
+| Four-vector character | `Hyperplane.graphFlux`, `graphIntegrand_eq_det`, `divergence_wedgeField`, `abs_graphFluxBall_sub_le`, `integral_eq_graphFlux`, `CoordinateMetric.linearPullback`, `coefficient_linearPullback`, `superpotential_linearPullback`, `totalDensity_linearPullback`, `charge_linearPullback`, `IsGalileanOnWedge`, `charge_linearPullback_of_einstein`, `charge_lorentz`, `totalDensity_isotropicMetric_zero_zero`, `abs_totalDensity_isotropicMetric_le`, `charge_boost_isotropicMetric` | [HyperplaneFlux](../ProjectAinos/SmoothGeometry/Lorentzian/HyperplaneFlux.lean) · [PseudotensorCovariance](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorCovariance.lean) · [ChargeCovariance](../ProjectAinos/GeneralRelativity/ChargeCovariance.lean) · [Isotropic test](../ProjectAinos/GeneralRelativity/ChargeCovarianceIsotropic.lean) |
+| Stationary far field | `StationaryFarField.StationarySource`, `retardedPerturbation_static`, `integral_momentum_eq_zero`, `currentDipole_eq`, `integral_stress_eq_zero`, `stressDipole_eq_zero`, `abs_hbar_zero_zero_sub_le`, `abs_hbar_zero_succ_sub_angularMomentum_le`, `abs_hbar_succ_succ_le`, `massFlux_eq`, `angularMomentumFlux_eq`, `abs_spinComponent_sub_gtp_le`, `abs_metricPerturbation_zero_zero_sub_gtt_le`, `rotSource` | [StationaryFarField](../ProjectAinos/GeneralRelativity/StationaryFarField.lean) |
 | Waves on a curved background | `CoordinateMetric.curvedChristoffel`, `palatini`, `familyChristoffelDeriv_eq`, `familyRicciDeriv_eq`, `familyRicciDeriv_lie_eq_zero`, `ShortWave.familyRicciDeriv_shortWave`, `shortWaveSymbol_eq_zero_iff`, `isGeodesicOn_ray` | [CurvedLinearization](../ProjectAinos/SmoothGeometry/Lorentzian/CurvedLinearization.lean), [ShortWave](../ProjectAinos/GeneralRelativity/ShortWave.lean) |
 | Transport and effective stress | `CoordinateMetric.covDerivOne`, `tensorPairing`, `christoffelOf_perturbation_eq`, `ricciOf_eq_of_christoffel`, `hasDerivAt_deriv_ricciOf_perturbation`, `secondRicci`, `ShortWave.transportOperator`, `transportTerm_eq`, `transportTerm_of_gauge`, `sum_transverse_transportTerm`, `harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`, `transportTerm_longitudinal`, `secondRicci_shortWave`, `tendsto_secondRicci_shortWave`, `effectiveStress`, `averagedSecondRicci_eq_effectiveStress`, `effectiveStress_eq_average_gradient`, `effectiveStress_conserved`, `effectiveStress_flux_eq_average`, `PlaneWave.effectiveStress_cross` | [CovariantLeibniz](../ProjectAinos/SmoothGeometry/Lorentzian/CovariantLeibniz.lean) · [SecondVariation](../ProjectAinos/SmoothGeometry/Lorentzian/SecondVariation.lean) · [ShortWaveTransport](../ProjectAinos/GeneralRelativity/ShortWaveTransport.lean) · [EffectiveStress](../ProjectAinos/GeneralRelativity/EffectiveStress.lean) |
 | Gravitational radiation | `LinearizedRadiation.retardedPerturbation`, `linearizedEinstein_retardedPerturbation`, `farZone_quadrupole`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `binary_power_smooth`, `Wave.integral_ttSquare` | [TransverseTraceless](../ProjectAinos/SmoothGeometry/Wave/TransverseTraceless.lean), [LinearizedRadiation](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) |
 | Focusing | `Focusing.trace_sq_ge`, `IsSynchronous.raychaudhuri`, `RiccatiComparison.lt_div_abs`, `StrongEnergyCondition`, `SatisfiesEinstein.ricci_timelike_nonneg`, `IsSynchronous.exists_notMem_of_focusing`, `deSitter_not_focusing` | [RiccatiComparison](../ProjectAinos/SmoothGeometry/ODE/RiccatiComparison.lean), [Focusing](../ProjectAinos/SmoothGeometry/Lorentzian/Focusing.lean), [EnergyCondition](../ProjectAinos/GeneralRelativity/EnergyCondition.lean) |
 
-The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/CurvedWavesAPI.lean`,
-`checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
-`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33 and GR40 of the
+The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/ChargeCovarianceAPI.lean`,
+`checks/CurvedWavesAPI.lean`, `checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
+`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33, GR40 and GR41 of the
 [notes](general-relativity-notes.md) and in G16 of the
 [smooth-geometry notes](smooth-geometry-notes.md).
 

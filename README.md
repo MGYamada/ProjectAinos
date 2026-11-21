@@ -316,7 +316,9 @@ the derivative of an actual family of metrics with two polarizations for every n
 and exact plane waves solve `L'' + β'²L = 0`, with a curved strong wave and a second-order residual
 of a first-order solution.
 [Guide](docs/general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109)
-The energy and momentum of an isolated system are surface integrals at infinity, a localized source
+The energy and momentum of an isolated system are surface integrals at infinity and form a four-vector
+under Lorentz changes of co-ordinates, a stationary source has the far field of its mass and angular
+momentum, a localized source
 radiates gravitational waves by the quadrupole formula, short waves travel along null geodesics of a
 curved background with their amplitude transported and carry the averaged effective stress of
 Isaacson, and the time lines of a synchronous system focus under the energy condition.

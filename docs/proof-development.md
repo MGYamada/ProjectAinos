@@ -960,6 +960,16 @@ transport, with the flux of §110. The ledger row §108 is *proved*; the approxi
 solutions needs local well-posedness and is outside its scope (GR 33 of 39).
 [Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 
+Under a constant change of co-ordinates the superpotential and the total density are tensor
+densities, and tilting a family of hyperplanes turns the difference of two slices into a sphere
+flux that vanishes at infinity for `O(r⁻⁴)` decay on the wedge between them. So the charges of an
+asymptotically Galilean metric transform as `P′ = L⁻¹P` under orthochronous Lorentz maps; the
+boosted isotropic metric is the nonzero test. For a stationary conserved source the linearized
+field in harmonic gauge has the far form of its mass and angular momentum, whose surface
+integrals are exact outside the source, and it matches the Kerr exterior at leading order. The
+ledger rows §§96 and 105 are *proved* (GR 35 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians
