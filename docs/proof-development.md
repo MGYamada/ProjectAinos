@@ -876,7 +876,7 @@ closed, open and flat dust and radiation models are exact solutions, and along a
 `1 + z = a_obs/a_em`. The ledger rows of §§104 and 111–114 are *proved* in their scopes
 (23 of 39).
 [Guide](general-relativity.md#the-rotating-field-104) ·
-[Guide](general-relativity.md#isotropic-cosmology-111-114)
+[Guide](general-relativity.md#isotropic-cosmology-111114)
 
 ## Homogeneous models and the Kasner solution
 
@@ -922,6 +922,23 @@ time. The general time-dependent scalar–vector–tensor decomposition remains 
 stated remainders (GR 31 of 39). Every row of the three ledgers is now *proved* or closed with a
 stated remainder.
 [Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
+## The remaining rows of the field ledgers
+
+[Issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks the proofs of the
+twelve rows that were closed with a remainder or proved modulo an interface, following the
+proof plans of the three ledgers, and the corrections that the review issues #172–#180 ask for
+in proved rows.
+
+Mathlib's covariant derivative constrains only sections that are differentiable at the point,
+so the Leibniz correction `(∇_u L)(w) = ∇_u(L w) − L(∇_u w)` defines a connection on the hom
+bundle of two bundles with connections, and recursion over the tensor shapes gives every
+shape: covectors, contravariant, mixed and general tensors. A germ condition of regularity
+passes through hom bundles, so the derivative of a smooth tensor is smooth and can be
+iterated. The connection recovers the bilinear and trilinear derivatives; for Levi-Civita
+the chart formulas hold, `∇g = 0`, and on `e^{2z}η` the covector `dz` has a nonzero
+derivative. The ledger row §85 is *proved* (GR 32 of 39).
+[Guide](general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92)
 
 ## Shared Variational Foundation
 

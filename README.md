@@ -262,7 +262,9 @@ circumference and the synchronization gap of a rotating disc.
 The curvature of every smooth Lorentz metric satisfies the second Bianchi
 identity, its contraction `∇^a Ric_{ab} = ½ ∂_b R` holds, and the Einstein
 tensor `Ric − (R/2) g` is divergence-free; a conformally flat metric on `ℝ⁴`
-with a nonzero Einstein tensor is the test case.
+with a nonzero Einstein tensor is the test case. Every tensor shape — covectors,
+contravariant, mixed and general tensors — has a covariant derivative, the connection that
+the Leibniz correction induces on hom bundles, with its chart formulas and `∇g = 0`.
 [Guide](docs/general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92)
 The relative Einstein–Hilbert action of a metric given by coefficients on an
 open set of `ℝ⁴` has, for a variation `g + εh` with compact support, the first
@@ -301,7 +303,7 @@ comoving fluid the Einstein equations of an isotropic universe are the Friedmann
 whose closed, open and flat models are exact solutions, and light is red-shifted by
 `a_obs/a_em`.
 [Guide](docs/general-relativity.md#the-rotating-field-104) ·
-[Guide](docs/general-relativity.md#isotropic-cosmology-111-114)
+[Guide](docs/general-relativity.md#isotropic-cosmology-111114)
 For a given invariant frame the Einstein equations of a homogeneous universe reduce to ordinary
 differential equations, the structure constants satisfy the Jacobi identity exactly when
 `n a = 0`, and the Kasner metric is a vacuum solution exactly when `Σp = Σp² = 1` or `p = 0`,

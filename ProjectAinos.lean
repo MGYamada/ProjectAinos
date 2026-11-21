@@ -84,6 +84,8 @@ public import ProjectAinos.Electrodynamics.Radiation.Relativistic
 public import ProjectAinos.Electrodynamics.Radiation.Synchrotron
 public import ProjectAinos.Electrodynamics.Radiation.Ultrarelativistic
 public import ProjectAinos.Electrodynamics.RadiationReaction
+public import ProjectAinos.Electrodynamics.RadiationReaction.RadiusScaling
+public import ProjectAinos.Electrodynamics.RadiationReaction.Rectilinear
 public import ProjectAinos.Electrodynamics.RetardedPotential
 public import ProjectAinos.Electrodynamics.RetardedSpectrum
 public import ProjectAinos.Electrodynamics.RetardedTime
@@ -547,6 +549,8 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.Regularity
 public import ProjectAinos.SmoothGeometry.Lorentzian.Restriction
 public import ProjectAinos.SmoothGeometry.Lorentzian.Ricci
 public import ProjectAinos.SmoothGeometry.Lorentzian.ScalarCurvatureVariation
+public import ProjectAinos.SmoothGeometry.Lorentzian.ShapeDerivative
+public import ProjectAinos.SmoothGeometry.Lorentzian.ShapeDerivativeExamples
 public import ProjectAinos.SmoothGeometry.Lorentzian.SignatureStability
 public import ProjectAinos.SmoothGeometry.Lorentzian.SpaceForm
 public import ProjectAinos.SmoothGeometry.Lorentzian.SpatialForm
@@ -662,6 +666,8 @@ public import ProjectAinos.SmoothGeometry.Tensor.Operations
 public import ProjectAinos.SmoothGeometry.Tensor.OperationsExamples
 public import ProjectAinos.SmoothGeometry.Tensor.Pullback
 public import ProjectAinos.SmoothGeometry.Tensor.Regularity
+public import ProjectAinos.SmoothGeometry.Tensor.ShapeDerivative
+public import ProjectAinos.SmoothGeometry.Tensor.ShapeDerivativeEvaluation
 public import ProjectAinos.SmoothGeometry.Tensor.Tensoriality
 public import ProjectAinos.SmoothGeometry.Tensor.TrilinearDerivative
 public import ProjectAinos.SmoothGeometry.Tensor.TrilinearTensoriality

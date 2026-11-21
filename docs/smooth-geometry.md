@@ -1791,6 +1791,13 @@ the contracted identity `∇^a Ric_{ab} = ½ ∂_b R`, and defines the Einstein 
 with its vanishing divergence. `Lorentzian/CoordinateConnection.lean` reads the
 connection of a coordinate metric off the Koszul formula, and
 `Lorentzian/ExponentialConformalExample.lean` is the four-dimensional regression.
+`Tensor/ShapeDerivative.lean` induces a connection of Mathlib on the hom bundle of two
+bundles with connections, by the Leibniz correction `(∇_u L)(w) = ∇_u(L w) − L(∇_u w)`, and
+by recursion over `Tensor.Shape` a connection on every tensor shape, with a germ condition
+of regularity that passes through hom bundles; `Tensor/ShapeDerivativeEvaluation.lean`
+recovers the bilinear and trilinear derivatives, and `Lorentzian/ShapeDerivative.lean` and
+`Lorentzian/ShapeDerivativeExamples.lean` give the chart formulas of Levi-Civita on
+covectors, endomorphisms and contravariant two-tensors, `∇g = 0`, and the curved regression.
 The statements are in the [general relativity guide](general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92).
 
 ## Varying a coordinate metric
@@ -1897,7 +1904,7 @@ Fourier solution of the wave equation. Their physics is in the
 [electrodynamics guide](electrodynamics.md#static-fields-the-moving-charge-and-waves-3638-4648-50).
 The physics of the Lorentzian layer is in the
 [general relativity guide](general-relativity.md#the-centrally-symmetric-field-100-101) and its
-sections on [isotropic cosmology](general-relativity.md#isotropic-cosmology-111-114) and
+sections on [isotropic cosmology](general-relativity.md#isotropic-cosmology-111114) and
 [homogeneous models](general-relativity.md#homogeneous-cosmological-models-116-117) and
 [the Newtonian limit and gravitational waves](general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109).
 

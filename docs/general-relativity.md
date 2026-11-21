@@ -550,10 +550,9 @@ decisions are recorded in [GR03–GR07](general-relativity-notes.md).
 **Covariant differentiation (§85).** The text differentiates vectors, covectors
 and tensors of every rank. The library has `leviCivita` on vector fields,
 `Tensor.bilinearCovariantDerivative` on covariant two-tensors and
-`twoFormDerivative`; this wave adds tangent-valued trilinear tensors. Covectors,
-contravariant and mixed tensors and the general shapes have no derivative yet:
-the pinned Mathlib induces no connection on dual or hom bundles, and the ledger
-row is closed with this remainder. `Tensor.ContMDiffTensorialAt.mkHom₃`
+`twoFormDerivative`; F10 added tangent-valued trilinear tensors, and R1 of
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) every tensor shape
+(below). `Tensor.ContMDiffTensorialAt.mkHom₃`
 turns an operation that is linear over scalar germs in each of three slots into a
 continuous trilinear map on the tangent spaces, and
 `Tensor.trilinearCovariantDerivative connection R hR x v w z u` is
@@ -571,6 +570,36 @@ chart formula `chartCurvatureDerivative_eq` is
 formulas for a vector field and for a covariant two-tensor.
 `bilinearDivergenceCovector g B x b` is the divergence `∇^a B_{ab}` of a smooth
 covariant two-tensor on its first index.
+
+**Every tensor shape (§85).** For connections `cA`, `cB` on two vector bundles,
+`SmoothBundle.homConnection cA cB` is a connection of Mathlib on the hom bundle: on a
+section `L` differentiable at `x` and any section `w` differentiable there,
+`(∇_u L)(w x) = ∇_u(L w) − L(∇_u w)` (`homConnection_apply`); the right side is tensorial in
+`u` and, for differentiable `L`, in `w`, so it descends to a map on the fibres, and on a
+section that is not differentiable at `x` the value is `0` (Mathlib's `CovariantDerivative`
+constrains only differentiable sections). `Tensor.Shape.connection cov s` recurses over
+the scalar, tangent and hom shapes, with the directional derivative on scalars: so
+covectors, contravariant, mixed and general tensors have a connection. It satisfies
+`∇(L w) = (∇L) w + L ∇w` (`connection_apply_section`), does not depend on the extension of
+`w` (`connection_hom_correction_eq`), is additive, has `∇(f T) = f ∇T + df ⊗ T`
+(`connection_smul`) and depends only on germs (`connection_congr`). Regularity is a germ
+condition, `Connection.IsLocallyRegular` (sections `C^{n+1}` at a point go to `C^n`), that
+passes through hom bundles; Levi-Civita has it (`leviCivita_isLocallyRegular`), so a smooth
+tensor of shape `s` has a smooth covariant derivative of shape `hom tangent s`
+(`Shape.covariantDerivative`) with smooth coefficients in bundle charts
+(`coefficients_covariantDerivative_contMDiffOn`), and the derivative can be iterated. The
+shape connection takes the direction first, as Mathlib does; on the covariant two-tensors
+and the tangent-valued trilinear tensors it is the earlier derivative with the direction
+moved (`connection_covariant_two_apply`, `connection_trilinear_apply`). For Levi-Civita the
+chart formulas are `(∇_i α)_k = ∂_i α_k − Γ^l_{ik} α_l` (`shapeConnection_cotangent_chart`),
+`∇_i dx^j = −Γ^j_{ik} dx^k` (`shapeConnection_chartCovector`),
+`(∇_i A)^j_k = ∂_i A^j_k + Γ^j_{il} A^l_k − Γ^l_{ik} A^j_l` for endomorphisms
+(`shapeConnection_endomorphism_chart`) and
+`(∇_i T)^{jk} = ∂_i T^{jk} + Γ^j_{il} T^{lk} + Γ^k_{il} T^{jl}`
+(`shapeConnection_contravariant_two_chart`), and `∇g = 0` (`shapeConnection_form`). On
+`e^{2z}η`, `∂_u g(∂_v, ∂_w) = 2u₃e^{2z}η(v, w)` is cancelled by the Christoffel terms
+(`metric_shapeConnection_form`), and `(∇_i dz)_k = η_{ik} − 2δ_{i3}δ_{k3}`, so
+`(∇_t dz)_t = −1` tests the sign of the covector formula (`metric_shapeConnection_dz_ne_zero`).
 
 **The second Bianchi identity (§92).** `curvature_second_bianchi` is
 `(∇_u R)(v, w)z + (∇_v R)(w, u)z + (∇_w R)(u, v)z = 0` for any tangent vectors
@@ -616,6 +645,9 @@ sides of the identity are nonzero.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
+| Connection on hom bundles | `Tensor.SmoothBundle.Connection`, `scalarConnection`, `homDerivativeAux`, `homConnectionFun`, `homConnection`, `homConnection_apply`, `Connection.IsLocallyRegular`, `IsLocallyRegular.contMDiffCovariantDerivative`, `scalarConnection_isLocallyRegular`, `homConnection_isLocallyRegular` | [ShapeDerivative](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivative.lean) |
+| Every tensor shape | `Tensor.Shape.connection`, `connection_hom_apply`, `connection_apply_section`, `connection_hom_correction_eq`, `connection_add`, `connection_smul`, `connection_congr`, `connection_isLocallyRegular`, `covariantDerivative`, `coefficients_covariantDerivative_contMDiffOn`, `connection_covariant_two_apply`, `connection_trilinear_apply` | [ShapeDerivative](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivative.lean) · [ShapeDerivativeEvaluation](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivativeEvaluation.lean) |
+| Levi-Civita on every shape | `LorentzMetric.leviCivita_isLocallyRegular`, `shapeCovariantDerivative`, `shapeConnection_cotangent_chart`, `shapeConnection_endomorphism_chart`, `shapeConnection_chartCovector`, `shapeConnection_contravariant_two_chart`, `shapeConnection_form`, `ExponentialConformalExample.metric_shapeConnection_form`, `metric_chartChristoffel`, `metric_shapeConnection_dz`, `metric_shapeConnection_dz_ne_zero` | [Lorentzian ShapeDerivative](../ProjectAinos/SmoothGeometry/Lorentzian/ShapeDerivative.lean) · [Examples](../ProjectAinos/SmoothGeometry/Lorentzian/ShapeDerivativeExamples.lean) |
 | Tensoriality in three slots | `Tensor.ContMDiffTensorialAt.pointwise₃`, `mkHom₃`, `mkHom₃_apply` | [TrilinearTensoriality](../ProjectAinos/SmoothGeometry/Tensor/TrilinearTensoriality.lean) |
 | Derivative of trilinear tensors | `Tensor.trilinearBundle`, `IsSmoothTrilinear`, `trilinearCovariantDerivative`, `trilinearCovariantDerivative_apply` | [TrilinearDerivative](../ProjectAinos/SmoothGeometry/Tensor/TrilinearDerivative.lean) |
 | Derivative of the curvature, second Bianchi | `LorentzMetric.curvatureDerivative`, `curvatureDerivative_apply`, `leviCivita_chart_components`, `bilinearCovariantDerivative_chart`, `chartCurvatureDerivative_eq`, `covariantField_chartField_comm`, `curvature_second_bianchi`, `chartCurvatureDerivative_bianchi` | [CurvatureDerivative](../ProjectAinos/SmoothGeometry/Lorentzian/CurvatureDerivative.lean) |
@@ -624,9 +656,10 @@ sides of the identity are nonzero.
 | Connection of a coordinate metric | `CoordinateMetric.toLorentzMetric_pairing_derivative`, `toLorentzMetric_leviCivita_eq`, `toLorentzMetric_curvature_of_connection`, `toLorentzMetric_curvatureDerivative_of_connection` | [CoordinateConnection](../ProjectAinos/SmoothGeometry/Lorentzian/CoordinateConnection.lean) |
 | Four-dimensional regression | `ExponentialConformalExample.metric_leviCivita`, `metric_curvature`, `metric_ricci_chartField`, `metric_scalarCurvature`, `metric_einstein_chartField`, `metric_einstein_ne_zero`, `metric_curvatureDerivative_dz`, `metric_curvatureDerivative_ne_zero`, `metric_scalarCurvature_derivative`, `metric_ricci_divergence` | [ExponentialConformalExample](../ProjectAinos/SmoothGeometry/Lorentzian/ExponentialConformalExample.lean) |
 
-The typed examples are in `checks/BianchiAPI.lean`. The decisions are recorded
+The typed examples are in `checks/BianchiAPI.lean` and, for every tensor shape,
+`checks/TensorShapeDerivativeAPI.lean`. The decisions are recorded
 in [GR01, GR08 and GR09](general-relativity-notes.md) and in
-[G03](smooth-geometry-notes.md).
+[G03 and G18](smooth-geometry-notes.md).
 
 ## The first variation of the Einstein–Hilbert action (§93)
 
@@ -1228,13 +1261,17 @@ equations hold (`isEinstein_iff_friedmann`, `satisfiesEinstein_iff_friedmann`). 
 equation follows from the two by an exact identity, without dividing by `H`
 (`continuity_of_friedmann`). Conversely, where `ȧ ≠ 0`, the first equation and continuity give
 the second (`second_of_first_of_continuity`); a static counterexample shows that this needs
-`ȧ ≠ 0` (`not_secondFriedmann_static`). `k` has the sign of `ρ − 3H²/κ` (`curvature_sign`).
+`ȧ ≠ 0` (`not_secondFriedmann_static`). With the first Friedmann equation, unit lapse `N = 1`,
+`Λ = 0` and `κ > 0`, `k` has the sign of `ρ − 3H²/κ` (`curvature_sign`); with `Λ ≠ 0` the
+criterion changes (flat de Sitter space has `k = 0`, `ρ = 0`, `H = 1`, `Λ = 3`).
 
 **Exact models.** In conformal time (`N = a`) the closed dust `a = a₀(1 − cos η)` (112.8), the
 closed radiation `a = a₀ sin η`, the open dust `a = a₀(cosh η − 1)` (113.3), the open radiation
 `a = a₀ sinh η` and the flat models `a = a₀η²`, `a = a₀η` are exact solutions
-(`isEinstein_closedDust`, …, `isEinstein_flatRadiation`), with their cosmic times, for
-example `t = a₀(η − sin η)` (`hasDerivAt_closedDustTime`), as the proper time of the comoving
+(`isEinstein_closedDust`, …, `isEinstein_flatRadiation`), with their cosmic times: `a₀(η − sin η)`
+and `a₀(1 − cos η)` for closed dust and radiation, `a₀(sinh η − η)` and `a₀(cosh η − 1)` for open
+dust and radiation, `a₀η³/3` and `a₀η²/2` for flat dust and radiation (`hasDerivAt_closedDustTime`,
+…, `hasDerivAt_flatRadiationTime`); the closed dust time is the proper time of the comoving
 observers (`properTime_closedDust`). The closed dust reaches its maximal radius `a_m = 2a₀` at
 the age `πa_m/2` (`closedDustTime_pi_sub_zero`, `tendsto_closedDust_age`). An open or flat
 universe that expands at one time expands at all times (`open_expands_forever`).
@@ -1442,8 +1479,10 @@ the radiated power (`tendsto_pseudotensorFlux`), which for slow sources is `(G/4
 
 **Focusing (§119).** For a synchronous congruence `∂ₜθ = −θ²/d − σ² − R₀₀` (`IsSynchronous.raychaudhuri`),
 the strong energy condition with Einstein's equations and `Λ ≤ 0` gives `R₀₀ ≥ 0`
-(`SatisfiesEinstein.ricci_timelike_nonneg`), and the synchronous system breaks down within `3/|θ|`
-(`IsSynchronous.exists_notMem_of_focusing`). Geodesic incompleteness is the remainder.
+(`SatisfiesEinstein.ricci_timelike_nonneg`), and the time line leaves the domain of the synchronous
+chart within `3/|θ|` (`IsSynchronous.exists_notMem_of_focusing`); `θ → −∞` there only when the line
+stays in the domain up to that time (`IsSynchronous.tendsto_expansion_atBot`). Leaving the chart is
+not by itself a caustic. Geodesic incompleteness is the remainder.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
