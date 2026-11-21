@@ -241,7 +241,8 @@ The straight-edge Fresnel intensity equals one quarter on the shadow boundary.
 Light diffracted by an aperture is the unique radiating solution with the aperture data on the plane,
 with one polarization of the Maxwell field, and has the Fresnel and Fraunhofer forms with explicit
 remainders, a
-radiating charge feels a damping force, and free and bound charges scatter waves with the Thomson
+radiating charge feels a damping force — for a rigid charge of finite size the self-consistent motion
+follows the reduced equation of radiation damping — and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·
 [Guide](docs/electrodynamics.md#radiation-damping-and-scattering-75-76-7880)

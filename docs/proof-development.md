@@ -988,6 +988,15 @@ Einstein equations for dust in the trace-reversed form up to `O(c⁻⁴)`. The l
 outside its scope (GR 36 of 39).
 [Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
 
+The self-mass of a rigid charge scales as the inverse of its radius. To first order in the
+displacement its self-force is a distributed delay whose memory is the light-crossing time, and a
+shared theory of such delay equations gives existence and uniqueness for every nonzero bare mass,
+stability when the bare mass exceeds the self-mass, and runaways when the bare mass is negative.
+At a fixed radius a slow force keeps the motion within `O(κ⁴)` of the reduced equation of
+radiation damping, one order below the damping term; the point limit at fixed observed mass would
+need a negative bare mass. The ledger row §75 is *proved* in this model (ED 65 of 66).
+[Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

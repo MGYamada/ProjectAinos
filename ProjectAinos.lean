@@ -88,8 +88,10 @@ public import ProjectAinos.Electrodynamics.Radiation.Relativistic
 public import ProjectAinos.Electrodynamics.Radiation.Synchrotron
 public import ProjectAinos.Electrodynamics.Radiation.Ultrarelativistic
 public import ProjectAinos.Electrodynamics.RadiationReaction
+public import ProjectAinos.Electrodynamics.RadiationReaction.EffectiveComparison
 public import ProjectAinos.Electrodynamics.RadiationReaction.RadiusScaling
 public import ProjectAinos.Electrodynamics.RadiationReaction.Rectilinear
+public import ProjectAinos.Electrodynamics.RadiationReaction.RigidChargeDynamics
 public import ProjectAinos.Electrodynamics.RetardedPotential
 public import ProjectAinos.Electrodynamics.RetardedSpectrum
 public import ProjectAinos.Electrodynamics.RetardedTime
@@ -622,6 +624,7 @@ public import ProjectAinos.SmoothGeometry.ODE.Averaging
 public import ProjectAinos.SmoothGeometry.ODE.CommutingFlows
 public import ProjectAinos.SmoothGeometry.ODE.ContinuousFamily
 public import ProjectAinos.SmoothGeometry.ODE.CoordinateCurvature
+public import ProjectAinos.SmoothGeometry.ODE.DistributedDelay
 public import ProjectAinos.SmoothGeometry.ODE.FlatFrame
 public import ProjectAinos.SmoothGeometry.ODE.Flow
 public import ProjectAinos.SmoothGeometry.ODE.FlowBounded
