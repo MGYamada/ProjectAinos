@@ -1912,6 +1912,47 @@ example {nsq : FreeSmoothRing (Fin 3)} {S : ActionSpace (Fin 3)}
         FreeSmoothRing.lift Q (partialDerivation i nsq) :=
   isRay_of_isHamiltonJacobi hS hβ hnd
 
+example (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) :
+    FreeSmoothRing.lift c (rayHamiltonian nsq) =
+      algebraMap ℝ TimeFunction (1 / 2) * (∑ i, c (Sum.inr i) * c (Sum.inr i) -
+        FreeSmoothRing.lift (fun k => c (Sum.inl k)) nsq) :=
+  lift_rayHamiltonian nsq c
+
+example (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) :
+    IsPhysicalRay nsq c ↔ IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c ∧
+      FreeSmoothRing.lift c (rayHamiltonian nsq) = 0 :=
+  Iff.rfl
+
+example {nsq : FreeSmoothRing (Fin 3)} {c : Fin 3 ⊕ Fin 3 → TimeFunction}
+    (h : IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c) {s : Fin 1 → ℝ}
+    (h0 : FreeSmoothRing.lift c (rayHamiltonian nsq) s = 0) :
+    IsPhysicalRay nsq c :=
+  isPhysicalRay_of_isTrajectory h h0
+
+example (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) :
+    IsPhysicalRay nsq c ↔ IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c ∧
+      ∑ i, timeDerivative (c (Sum.inl i)) * timeDerivative (c (Sum.inl i)) =
+        FreeSmoothRing.lift (fun k => c (Sum.inl k)) nsq :=
+  isPhysicalRay_iff nsq c
+
+example {nsq : FreeSmoothRing (Fin 3)} {S : ActionSpace (Fin 3)}
+    (hS : IsHamiltonJacobi (rayHamiltonian nsq) S) (Q : Fin 3 → TimeFunction) (α : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim Q (momentum S Q α)) (rayHamiltonian nsq) =
+      -along Q α (partialDerivation (tIndex : Fin 3 ⊕ Fin 3 ⊕ Unit) S) :=
+  lift_rayHamiltonian_of_isHamiltonJacobi hS Q α
+
+example {nsq : FreeSmoothRing (Fin 3)} {S : ActionSpace (Fin 3)}
+    (hS : IsHamiltonJacobi (rayHamiltonian nsq) S) {Q : Fin 3 → TimeFunction} {α : Fin 3 → ℝ}
+    (hβ : ∀ i, timeDerivative (along Q α (partialDerivation (αIndex i) S)) = 0)
+    (hnd : ∀ w : Fin 3 → TimeFunction,
+      (∀ i, ∑ k, along Q α (partialDerivation (αIndex i) (partialDerivation (qIndex k) S)) *
+        w k = 0) → ∀ k, w k = 0)
+    {s : Fin 1 → ℝ}
+    (h0 : FreeSmoothRing.lift (Sum.elim Q (momentum S Q α)) (rayHamiltonian nsq) s = 0) :
+    IsPhysicalRay nsq (Sum.elim Q (momentum S Q α)) ∧
+      ∑ i, timeDerivative (Q i) * timeDerivative (Q i) = FreeSmoothRing.lift Q nsq :=
+  isPhysicalRay_of_isHamiltonJacobi hS hβ hnd h0
+
 example :
     ActionSpace (Fin 3) :=
   rayTime
@@ -2065,6 +2106,58 @@ example (nsq : ℝ) (α β : Fin 3 → ℝ) :
       (Sum.elim (constantIndexRay α β)
         (momentum (constantIndexAction nsq) (constantIndexRay α β) α)) :=
   isTrajectory_constantIndexRay nsq α β
+
+example (n0sq g : ℝ) (Q : Fin 3 → TimeFunction) (α : Fin 3 → ℝ) (k : Fin 3) :
+    momentum (linearIndexAction n0sq g) Q α k = algebraMap ℝ TimeFunction (α k) +
+      if k = 2 then algebraMap ℝ TimeFunction g * TimeFunction.time else 0 :=
+  momentum_linearIndexAction n0sq g Q α k
+
+example (n0sq g : ℝ) (α β : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim (linearIndexRay g α β)
+        (momentum (linearIndexAction n0sq g) (linearIndexRay g α β) α))
+        (rayHamiltonian (linearIndexSq n0sq g)) =
+      algebraMap ℝ TimeFunction ((∑ i, α i ^ 2 - n0sq - 2 * g * β 2) / 2) :=
+  lift_rayHamiltonian_linearIndexRay n0sq g α β
+
+example (r : ℝ) :
+    algebraMap ℝ TimeFunction r = 0 ↔ r = 0 :=
+  algebraMap_timeFunction_eq_zero_iff r
+
+example (n0sq g : ℝ) (α β : Fin 3 → ℝ) :
+    IsPhysicalRay (linearIndexSq n0sq g) (Sum.elim (linearIndexRay g α β)
+        (momentum (linearIndexAction n0sq g) (linearIndexRay g α β) α)) ↔
+      ∑ i, α i ^ 2 = n0sq + 2 * g * β 2 :=
+  isPhysicalRay_linearIndexRay_iff n0sq g α β
+
+example (nsq : ℝ) (α β : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim (constantIndexRay α β)
+        (momentum (constantIndexAction nsq) (constantIndexRay α β) α))
+        (rayHamiltonian (algebraMap ℝ (FreeSmoothRing (Fin 3)) nsq)) =
+      algebraMap ℝ TimeFunction ((∑ i, α i ^ 2 - nsq) / 2) :=
+  lift_rayHamiltonian_constantIndexRay nsq α β
+
+example (nsq : ℝ) (α β : Fin 3 → ℝ) :
+    IsPhysicalRay (algebraMap ℝ (FreeSmoothRing (Fin 3)) nsq) (Sum.elim (constantIndexRay α β)
+        (momentum (constantIndexAction nsq) (constantIndexRay α β) α)) ↔
+      ∑ i, α i ^ 2 = nsq :=
+  isPhysicalRay_constantIndexRay_iff nsq α β
+
+/- In a homogeneous medium with `n = 1`, the constant curve `α = 0` is a trajectory of the ray
+Hamiltonian but not a physical ray, while `α = e₃` gives one. -/
+example (β : Fin 3 → ℝ) :
+    IsTrajectory (canonical (Fin 3)) (rayHamiltonian (algebraMap ℝ (FreeSmoothRing (Fin 3)) 1))
+        (Sum.elim (constantIndexRay 0 β)
+          (momentum (constantIndexAction 1) (constantIndexRay 0 β) 0)) ∧
+      ¬ IsPhysicalRay (algebraMap ℝ (FreeSmoothRing (Fin 3)) 1) (Sum.elim (constantIndexRay 0 β)
+        (momentum (constantIndexAction 1) (constantIndexRay 0 β) 0)) :=
+  ⟨isTrajectory_constantIndexRay 1 0 β, fun h => by
+    simpa using (isPhysicalRay_constantIndexRay_iff 1 0 β).mp h⟩
+
+example (β : Fin 3 → ℝ) :
+    IsPhysicalRay (algebraMap ℝ (FreeSmoothRing (Fin 3)) 1)
+      (Sum.elim (constantIndexRay ![0, 0, 1] β)
+        (momentum (constantIndexAction 1) (constantIndexRay ![0, 0, 1] β) ![0, 0, 1])) :=
+  (isPhysicalRay_constantIndexRay_iff 1 ![0, 0, 1] β).mpr (by simp [Fin.sum_univ_three])
 
 example (z : E3 × E3) :
     ℝ :=

@@ -129,7 +129,8 @@ lake exe mk_all --check --lib ProjectAinos
 checks/run.sh
 ```
 
-`checks/run.sh` compiles every check file with warnings as errors and prints
+`checks/run.sh` compiles every check file with warnings as errors and with
+`autoImplicit` and `relaxedAutoImplicit` off, as the library is, and prints
 one verdict per file. Pass specific check files to run a subset, and set
 `JOBS` to change parallelism. `checks/ci.py` also supports local subject
 builds and artifact integration with Python 3.12 or newer. Give each subject

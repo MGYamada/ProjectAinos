@@ -64,8 +64,9 @@ exterior Schwarzschild co-ordinates `(t, r, θ, φ)` of `SchwarzschildExterior`.
 * `junction_oppenheimerSnyder`: the boundary of the ball matches a Lemaître shell `R = R_b`,
   with equal induced metrics and second fundamental forms, exactly when `R_b = τ_c` and
   `2M = (κ/3) ρ r_b³`. The closed model `k = +1` (`closedInterior`, whose shells have the rate
-  `cos χ`) cannot be matched to a Lemaître shell
-  (`secondFundamental_closedInterior_ne_lemaitre`).
+  `cos χ`) cannot be matched to a Lemaître shell `R = R_b` of constant `R`
+  (`secondFundamental_closedInterior_ne_lemaitre`); a boundary that moves in the Lemaître chart is
+  not covered.
 
 Not stated: that the glued metric solves the Einstein equations across the boundary without a
 surface layer (with a jump of the density the glued metric is only `C^{1,1}`, while a
@@ -2362,13 +2363,14 @@ theorem shellEnergy_closedInterior {I : Set ℝ} {hI : IsOpen I} {a : ℝ → �
   simp
   field_simp
 
-/-- **The closed dust ball cannot be matched to the Lemaître chart.** For the closed model
-`k = +1` with any scale factor, and a shell `R = R_b` of the Lemaître chart, at points where the
-induced metrics of the boundaries `χ = χ_b` and `R = R_b` agree, the second fundamental forms
-differ (for `ε ≠ 0`): the Lemaître shells have the rate `∂_R r/e^{λ/2} = 1` (they fall from rest
-at infinity) and the closed shells `cos χ_b < 1` (they fall from rest at a finite radius). The
-exterior of a closed dust ball needs a comoving chart of the Schwarzschild field with bound
-shells (`f(R_b) = −sin²χ_b`). -/
+/-- **The closed dust ball cannot be matched to a constant-`R` shell of the Lemaître chart.** For
+the closed model `k = +1` with any scale factor, and a comoving shell `R = R_b` (constant `R`) of
+the Lemaître chart, at points where the induced metrics of the boundaries `χ = χ_b` and
+`R = R_b` agree, the second fundamental forms differ (for `ε ≠ 0`): the Lemaître shells have the
+rate `∂_R r/e^{λ/2} = 1` (they fall from rest at infinity) and the closed shells `cos χ_b < 1`
+(they fall from rest at a finite radius). A boundary that moves in the Lemaître chart
+(`R = R(τ)`) has another normal and is not covered. The exterior of a closed dust ball needs a
+comoving chart of the Schwarzschild field with bound shells (`f(R_b) = −sin²χ_b`). -/
 theorem secondFundamental_closedInterior_ne_lemaitre (hM : 0 < M) {I : Set ℝ} {hI : IsOpen I}
     {a : ℝ → ℝ} {ha : ContDiffOn ℝ ∞ a I} {hpos : ∀ τ ∈ I, 0 < a τ}
     {xL xI : MinkowskiModel 3} (hxL : xL ∈ lemaitreDomain) (hxI : xI ∈ closedDomain I hI)

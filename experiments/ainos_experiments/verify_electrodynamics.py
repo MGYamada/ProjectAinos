@@ -137,8 +137,7 @@ def verify_static_fields_and_waves():
     point = {t: sp.Rational(1, 3), x: sp.Rational(7, 5), y: sp.Rational(-2, 3), z: sp.Rational(1, 2),
              velocity: sp.Rational(3, 5), q: 2}
     residual = (electric - expected).subs(point)
-    if any(abs(sp.N(entry, 30)) > sp.Float("1e-25") for entry in residual):
-        raise AssertionError(f"moving charge (38.8): residual {residual}")
+    check_zero("moving charge (38.8)", residual.applyfunc(sp.simplify))
 
     phi = sp.Function("phi")(*coordinates)
     a = [sp.Function(f"a{i}")(*coordinates) for i in range(3)]
@@ -276,8 +275,7 @@ def verify_retarded_potentials():
     wave = at(sp.diff(base, s, 2) - sum(sp.diff(base, v, 2) for v in (a, b, c)))
     sample = {t: sp.Rational(1, 3), x: sp.Rational(1, 2), y: sp.Rational(-1, 4), z: 1,
               y1: sp.Rational(2, 7), y2: sp.Rational(-3, 5), y3: sp.Rational(1, 9)}
-    check_zero("retarded field divergence", sp.nsimplify(sp.N((divergence - wave / r).subs(sample),
-                                                            60), tolerance=1e-50))
+    check_zero("retarded field divergence", sp.factor((divergence - wave / r).subs(sample)))
     nu = sp.symbols("nu", positive=True)
     amplitude = sp.Function("A")(x, y, z)
     current = sp.Function("j")(x, y, z)

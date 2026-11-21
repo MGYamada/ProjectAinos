@@ -202,5 +202,5 @@ audit from the repository root:
 ```sh
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 ```

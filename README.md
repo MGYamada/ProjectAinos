@@ -139,7 +139,9 @@ The plans carry forward [issue #8](https://github.com/MGYamada/ProjectAinos/issu
 and identify the next proofs for free relativistic particles, the Maxwell
 action with a prescribed current, and the differential Bianchi identity.
 Each plan has a ledger with one status for each section;
-[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135) tracks the proofs.
+[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135) tracked the proofs, and
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks the rows that were closed
+with a remainder.
 For the free relativistic particle the library proves the coordinate-time
 Hamiltonian `√(m² + Σ pᵢ²)` with its trajectories and its flow, the Poincaré
 algebra of the orbital charges with its contraction to the Galilei algebra,
@@ -164,7 +166,9 @@ massive and the massless particle together.
 The measure `dᵈπ/E` of the shell is invariant under the Lorentz group, the
 number of particles through a hypersurface is invariant, and for a system of
 particles the orbital moment is conserved and the centre of energy moves
-uniformly.
+uniformly. The final states of two or more outgoing particles at a fixed total momentum carry a
+covariant measure into which the product of the shell measures disintegrates, so the
+cross-section is a Lorentz scalar for a scalar transition weight.
 [Guide](docs/special-relativity.md#measures-and-charges)
 The universal C∞ cotangent module, with the full chain rule and its universal property, matches
 the covectors of space-time, which completes the special-relativity ledger.
@@ -234,7 +238,9 @@ For a single real wave with a nonstationary spatial phase on the amplitude suppo
 energy tends to half the leading intensity of the quadrature pair.
 [Guide](docs/electrodynamics.md#geometrical-optics-5358)
 The straight-edge Fresnel intensity equals one quarter on the shadow boundary.
-Light diffracted by an aperture has the Fresnel and Fraunhofer forms with explicit remainders, a
+Light diffracted by an aperture is the unique radiating solution with the aperture data on the plane,
+with one polarization of the Maxwell field, and has the Fresnel and Fraunhofer forms with explicit
+remainders, a
 radiating charge feels a damping force, and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·
@@ -262,7 +268,9 @@ circumference and the synchronization gap of a rotating disc.
 The curvature of every smooth Lorentz metric satisfies the second Bianchi
 identity, its contraction `∇^a Ric_{ab} = ½ ∂_b R` holds, and the Einstein
 tensor `Ric − (R/2) g` is divergence-free; a conformally flat metric on `ℝ⁴`
-with a nonzero Einstein tensor is the test case.
+with a nonzero Einstein tensor is the test case. Every tensor shape — covectors,
+contravariant, mixed and general tensors — has a covariant derivative, the connection that
+the Leibniz correction induces on hom bundles, with its chart formulas and `∇g = 0`.
 [Guide](docs/general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92)
 The relative Einstein–Hilbert action of a metric given by coefficients on an
 open set of `ℝ⁴` has, for a variation `g + εh` with compact support, the first
@@ -301,7 +309,7 @@ comoving fluid the Einstein equations of an isotropic universe are the Friedmann
 whose closed, open and flat models are exact solutions, and light is red-shifted by
 `a_obs/a_em`.
 [Guide](docs/general-relativity.md#the-rotating-field-104) ·
-[Guide](docs/general-relativity.md#isotropic-cosmology-111-114)
+[Guide](docs/general-relativity.md#isotropic-cosmology-111114)
 For a given invariant frame the Einstein equations of a homogeneous universe reduce to ordinary
 differential equations, the structure constants satisfy the Jacobi identity exactly when
 `n a = 0`, and the Kasner metric is a vacuum solution exactly when `Σp = Σp² = 1` or `p = 0`,
@@ -312,9 +320,12 @@ the derivative of an actual family of metrics with two polarizations for every n
 and exact plane waves solve `L'' + β'²L = 0`, with a curved strong wave and a second-order residual
 of a first-order solution.
 [Guide](docs/general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109)
-The energy and momentum of an isolated system are surface integrals at infinity, a localized source
+The energy and momentum of an isolated system are surface integrals at infinity and form a four-vector
+under Lorentz changes of co-ordinates, a stationary source has the far field of its mass and angular
+momentum, a localized source
 radiates gravitational waves by the quadrupole formula, short waves travel along null geodesics of a
-curved background, and the time lines of a synchronous system focus under the energy condition.
+curved background with their amplitude transported and carry the averaged effective stress of
+Isaacson, and the time lines of a synchronous system focus under the energy condition.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, test bodies follow the
 post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,

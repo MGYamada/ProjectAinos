@@ -62,8 +62,9 @@ scalar model of diffraction (Landau–Lifshitz, *The Classical Theory of Fields*
 Not proved here: the relation of the scalar model to the screen problem of Maxwell's equations.
 The values of Kirchhoff's approximation are not the trace of a solution, and the vector problem
 of a screen is a mixed boundary problem with edge singularities (the conditions of Meixner),
-which the library cannot state. Nor is the uniqueness of the radiating solution of the
-half-space Dirichlet problem, which needs Green's representation formula on bounded domains.
+which the library cannot state. The uniqueness of the radiating solution of the half-space
+Dirichlet problem is proved in `Diffraction/Uniqueness.lean`, and one Maxwell polarization in
+`Diffraction/MaxwellAperture.lean`.
 -/
 
 @[expose] public section

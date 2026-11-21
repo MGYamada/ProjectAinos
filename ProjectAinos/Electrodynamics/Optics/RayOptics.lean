@@ -24,15 +24,27 @@ Classical Theory of Fields*, §53). With the parameter `σ` along the ray chosen
   (`timeDerivative_timeDerivative_of_isTrajectory`).
 * `isRay_of_isHamiltonJacobi`: the rays from a complete integral `S(q, α, σ)` of
   `∂S/∂σ + (|∇S|² − n²)/2 = 0`, by Jacobi's theorem
-  (`CompleteIntegral.isTrajectory_of_isHamiltonJacobi`).
+  (`CompleteIntegral.isTrajectory_of_isHamiltonJacobi`). Jacobi's theorem gives the equations of
+  motion at every value of `H`; in a homogeneous medium with `n = 1` and `α = 0` the constant
+  curve is a trajectory with `q′ = 0`.
+* **Physical rays** (`IsPhysicalRay`): the trajectories on the surface `H = 0`, along which
+  `|q′|² = n²(q)` (`isPhysicalRay_iff`, from `lift_rayHamiltonian`: `H = (|p|² − n²(q))/2`
+  along a curve). `isPhysicalRay_of_isTrajectory`: the energy condition propagates, because `H` is
+  constant along its trajectories, so `H = 0` at one value of `σ` is enough. Along the curve of a
+  complete integral `H = −∂S/∂σ` (`lift_rayHamiltonian_of_isHamiltonJacobi`), and
+  `isPhysicalRay_of_isHamiltonJacobi` is the corollary of Jacobi's theorem on `H = 0`.
 * Instances: a homogeneous medium, `S = α · q − (|α|² − n²) σ/2` (`constantIndexAction`,
   `isHamiltonJacobi_constantIndex`, the straight rays `isTrajectory_constantIndexRay`), and the
   linear gradient `n² = n₀² + 2 g z` (`linearIndexSq`), whose complete integral
   `S = α · q + g σ z − (|α|² − n₀²) σ/2 − g α₃ σ²/2 − g² σ³/6` is a polynomial
   (`linearIndexAction`, `isHamiltonJacobi_linearIndex`), with the parabolic rays
   `q = β + α σ + g σ² e₃/2` (`isTrajectory_linearIndexRay`,
-  `timeDerivative_timeDerivative_linearIndexRay`: `q″ = g e₃`). A quadratic graded-index lens has
-  no complete integral that is smooth on all of `ℝ³ × ℝ³ × ℝ` and is not treated.
+  `timeDerivative_timeDerivative_linearIndexRay`: `q″ = g e₃`). Their energy is the constant
+  `H = (|α|² − n₀² − 2 g β₃)/2` (`lift_rayHamiltonian_linearIndexRay`), so the parabola is a
+  physical ray exactly when `|α|² = n₀² + 2 g β₃` (`isPhysicalRay_linearIndexRay_iff`), and the
+  straight ray exactly when `|α|² = n²` (`lift_rayHamiltonian_constantIndexRay`,
+  `isPhysicalRay_constantIndexRay_iff`). A quadratic graded-index lens has no complete integral
+  that is smooth on all of `ℝ³ × ℝ³ × ℝ` and is not treated.
 * **Fermat's principle** `fermat`: for a path with `|γ′| = n(γ)`, the optical length
   `Optics.opticalLength n γ a b = ∫ n(γ) |γ′|` is stationary (`OpticalStationary`) if and only if
   `γ″ = ∇(n²/2)`. The optical Lagrangian `n |q′|` is the Jacobi length `2 √((E − U) T)` of
@@ -98,6 +110,85 @@ theorem isRay_of_isHamiltonJacobi {nsq : FreeSmoothRing (Fin 3)} {S : ActionSpac
   refine ⟨fun i => h'.1 i, fun i => ?_⟩
   have e := timeDerivative_timeDerivative_of_isTrajectory h i
   simpa using e
+
+/-! ### Physical rays: the surface `H = 0` -/
+
+/-- The ray Hamiltonian along a curve of the phase space: `H(c) = (|p|² − n²(q))/2`. -/
+theorem lift_rayHamiltonian (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) :
+    FreeSmoothRing.lift c (rayHamiltonian nsq) =
+      algebraMap ℝ TimeFunction (1 / 2) * (∑ i, c (Sum.inr i) * c (Sum.inr i) -
+        FreeSmoothRing.lift (fun k => c (Sum.inl k)) nsq) := by
+  rw [rayHamiltonian, SmoothRingHom.map_add, lift_positionsToPhase, kineticEnergy,
+    SmoothRingHom.map_sum]
+  simp only [SmoothRingHom.map_mul, SmoothRingHom.map_algebraMap, SmoothRingHom.map_neg, p,
+    lift_generator, inv_one]
+  rw [mul_sub, Finset.mul_sum]
+  ring
+
+/-- A **physical ray**: a trajectory of the ray Hamiltonian on the surface `H = 0`, along which
+`|q′|² = n²(q)` (`isPhysicalRay_iff`), so that the parameter `σ` has `|dq/dσ| = n`. A trajectory
+at another value of `H` solves the same equations of motion and is not a ray of light. -/
+def IsPhysicalRay (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) : Prop :=
+  IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c ∧
+    FreeSmoothRing.lift c (rayHamiltonian nsq) = 0
+
+/-- **The energy condition propagates**: the ray Hamiltonian is constant along its trajectories
+(`IsTrajectory.lift_hamiltonian_eq`), so a trajectory with `H = 0` at one value `s` of the
+parameter is a physical ray. -/
+theorem isPhysicalRay_of_isTrajectory {nsq : FreeSmoothRing (Fin 3)}
+    {c : Fin 3 ⊕ Fin 3 → TimeFunction}
+    (h : IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c) {s : Fin 1 → ℝ}
+    (h0 : FreeSmoothRing.lift c (rayHamiltonian nsq) s = 0) : IsPhysicalRay nsq c :=
+  ⟨h, DFunLike.ext _ _ fun t => (h.lift_hamiltonian_eq t s).trans
+    (h0.trans (SmoothRingHom.map_zero (SmoothOperation.eval t)).symm)⟩
+
+/-- A physical ray is a trajectory of the ray Hamiltonian along which `|q′|² = n²(q)`. -/
+theorem isPhysicalRay_iff (nsq : FreeSmoothRing (Fin 3)) (c : Fin 3 ⊕ Fin 3 → TimeFunction) :
+    IsPhysicalRay nsq c ↔ IsTrajectory (canonical (Fin 3)) (rayHamiltonian nsq) c ∧
+      ∑ i, timeDerivative (c (Sum.inl i)) * timeDerivative (c (Sum.inl i)) =
+        FreeSmoothRing.lift (fun k => c (Sum.inl k)) nsq := by
+  refine and_congr_right fun h => ?_
+  have hq := ((isTrajectory_rayHamiltonian_iff nsq c).mp h).1
+  simp only [lift_rayHamiltonian, hq]
+  have h2 : algebraMap ℝ TimeFunction 2 * algebraMap ℝ TimeFunction (1 / 2) = 1 := by
+    rw [← map_mul]
+    norm_num
+  constructor
+  · intro h0
+    have e := congrArg (algebraMap ℝ TimeFunction 2 * ·) h0
+    simp only [← mul_assoc, h2, one_mul, mul_zero] at e
+    exact sub_eq_zero.mp e
+  · intro e
+    rw [e, sub_self, mul_zero]
+
+/-- Along a curve with the momenta `∂S/∂q` of a solution `S` of the Hamilton–Jacobi equation,
+the ray Hamiltonian is `−∂S/∂σ`. -/
+theorem lift_rayHamiltonian_of_isHamiltonJacobi {nsq : FreeSmoothRing (Fin 3)}
+    {S : ActionSpace (Fin 3)} (hS : IsHamiltonJacobi (rayHamiltonian nsq) S)
+    (Q : Fin 3 → TimeFunction) (α : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim Q (momentum S Q α)) (rayHamiltonian nsq) =
+      -along Q α (partialDerivation (tIndex : Fin 3 ⊕ Fin 3 ⊕ Unit) S) := by
+  have e := congrArg (along Q α) hS
+  rw [SmoothRingHom.map_add, along_substitution, SmoothRingHom.map_zero] at e
+  linear_combination e
+
+/-- **The physical rays from a complete integral**: under the hypotheses of Jacobi's theorem
+(`isRay_of_isHamiltonJacobi`), a curve on which the energy `H(q, ∇S) = −∂S/∂σ` vanishes at one
+value `s` of the parameter is a physical ray at every `σ`: with `q′ = ∇S` and `q″ = ½ ∇n²`,
+also `|q′|² = n²(q)`. -/
+theorem isPhysicalRay_of_isHamiltonJacobi {nsq : FreeSmoothRing (Fin 3)}
+    {S : ActionSpace (Fin 3)} (hS : IsHamiltonJacobi (rayHamiltonian nsq) S)
+    {Q : Fin 3 → TimeFunction} {α : Fin 3 → ℝ}
+    (hβ : ∀ i, timeDerivative (along Q α (partialDerivation (αIndex i) S)) = 0)
+    (hnd : ∀ w : Fin 3 → TimeFunction,
+      (∀ i, ∑ k, along Q α (partialDerivation (αIndex i) (partialDerivation (qIndex k) S)) *
+        w k = 0) → ∀ k, w k = 0)
+    {s : Fin 1 → ℝ}
+    (h0 : FreeSmoothRing.lift (Sum.elim Q (momentum S Q α)) (rayHamiltonian nsq) s = 0) :
+    IsPhysicalRay nsq (Sum.elim Q (momentum S Q α)) ∧
+      ∑ i, timeDerivative (Q i) * timeDerivative (Q i) = FreeSmoothRing.lift Q nsq := by
+  have hp := isPhysicalRay_of_isTrajectory (isTrajectory_of_isHamiltonJacobi hS hβ hnd) h0
+  exact ⟨hp, by simpa using ((isPhysicalRay_iff nsq _).mp hp).2⟩
 
 /-! ### Complete integrals -/
 
@@ -378,6 +469,80 @@ theorem isTrajectory_constantIndexRay (nsq : ℝ) (α β : Fin 3 → ℝ) :
         (momentum (constantIndexAction nsq) (constantIndexRay α β) α)) := by
   have h := isTrajectory_linearIndexRay nsq 0 α β
   rwa [linearIndexSq_zero, linearIndexAction_zero, linearIndexRay_zero] at h
+
+/-! ### The physical rays of the examples -/
+
+/-- The momenta of the complete integral of the linear gradient along a curve,
+`p = α + g σ e₃`. -/
+theorem momentum_linearIndexAction (n0sq g : ℝ) (Q : Fin 3 → TimeFunction) (α : Fin 3 → ℝ)
+    (k : Fin 3) :
+    momentum (linearIndexAction n0sq g) Q α k = algebraMap ℝ TimeFunction (α k) +
+      if k = 2 then algebraMap ℝ TimeFunction g * TimeFunction.time else 0 := by
+  rw [CompleteIntegral.momentum, partialDerivation_q_linearIndexAction]
+  split_ifs <;>
+    simp [along_parameter, along_rayTime, SmoothRingHom.map_algebraMap]
+
+/-- **The energy of the rays of the linear gradient** is the constant
+`H = (|α|² − n₀² − 2 g β₃)/2`. -/
+theorem lift_rayHamiltonian_linearIndexRay (n0sq g : ℝ) (α β : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim (linearIndexRay g α β)
+        (momentum (linearIndexAction n0sq g) (linearIndexRay g α β) α))
+        (rayHamiltonian (linearIndexSq n0sq g)) =
+      algebraMap ℝ TimeFunction ((∑ i, α i ^ 2 - n0sq - 2 * g * β 2) / 2) := by
+  have h2 : (2 : TimeFunction) * algebraMap ℝ TimeFunction (1 / 2) = 1 := by
+    rw [← map_ofNat (algebraMap ℝ TimeFunction) 2, ← map_mul]
+    norm_num
+  rw [lift_rayHamiltonian, show (∑ i, α i ^ 2 - n0sq - 2 * g * β 2) / 2 =
+    1 / 2 * (α 0 * α 0 + α 1 * α 1 + α 2 * α 2 - n0sq - 2 * g * β 2) by
+      rw [Fin.sum_univ_three]; ring]
+  simp only [Sum.elim_inr, Sum.elim_inl, momentum_linearIndexAction, Fin.sum_univ_three,
+    linearIndexSq, SmoothRingHom.map_add, SmoothRingHom.map_mul, SmoothRingHom.map_algebraMap,
+    lift_generator, linearIndexRay]
+  simp only [map_mul, map_sub, map_add, map_ofNat]
+  simp only [show ((0 : Fin 3) = 2) = False by decide, show ((1 : Fin 3) = 2) = False by decide,
+    ↓reduceIte, add_zero]
+  rw [show g / 2 = g * (1 / 2) by ring, map_mul]
+  linear_combination (-(algebraMap ℝ TimeFunction (1 / 2) * algebraMap ℝ TimeFunction g *
+    algebraMap ℝ TimeFunction g * (TimeFunction.time * TimeFunction.time))) * h2
+
+/-- `algebraMap ℝ TimeFunction` is injective: a constant function of time determines its value. -/
+theorem algebraMap_timeFunction_eq_zero_iff (r : ℝ) : algebraMap ℝ TimeFunction r = 0 ↔ r = 0 :=
+  ⟨fun h => by simpa using congrArg (SmoothOperation.eval (fun _ => 0)) h,
+    fun h => by rw [h, map_zero]⟩
+
+/-- **The physical rays of the linear gradient**: the parabola `q = β + α σ + g σ² e₃/2` is a ray
+of light, `H = 0`, exactly when `|α|² = n₀² + 2 g β₃`, the squared index at the point `β` of
+`σ = 0`. -/
+theorem isPhysicalRay_linearIndexRay_iff (n0sq g : ℝ) (α β : Fin 3 → ℝ) :
+    IsPhysicalRay (linearIndexSq n0sq g) (Sum.elim (linearIndexRay g α β)
+        (momentum (linearIndexAction n0sq g) (linearIndexRay g α β) α)) ↔
+      ∑ i, α i ^ 2 = n0sq + 2 * g * β 2 := by
+  rw [IsPhysicalRay, and_iff_right (isTrajectory_linearIndexRay n0sq g α β),
+    lift_rayHamiltonian_linearIndexRay, algebraMap_timeFunction_eq_zero_iff]
+  constructor <;> intro h <;> linarith
+
+/-- The energy of the straight rays of a homogeneous medium is the constant `H = (|α|² − n²)/2`. -/
+theorem lift_rayHamiltonian_constantIndexRay (nsq : ℝ) (α β : Fin 3 → ℝ) :
+    FreeSmoothRing.lift (Sum.elim (constantIndexRay α β)
+        (momentum (constantIndexAction nsq) (constantIndexRay α β) α))
+        (rayHamiltonian (algebraMap ℝ (FreeSmoothRing (Fin 3)) nsq)) =
+      algebraMap ℝ TimeFunction ((∑ i, α i ^ 2 - nsq) / 2) := by
+  have h := lift_rayHamiltonian_linearIndexRay nsq 0 α β
+  rw [linearIndexSq_zero, linearIndexAction_zero, linearIndexRay_zero] at h
+  rw [h]
+  congr 2
+  ring
+
+/-- **The physical rays of a homogeneous medium**: the straight line `q = β + α σ` is a ray of
+light, `H = 0`, exactly when `|α|² = n²`. For `α = 0` the constant curve is a trajectory of the
+ray Hamiltonian (`isTrajectory_constantIndexRay`) at the energy `−n²/2` and is not a ray. -/
+theorem isPhysicalRay_constantIndexRay_iff (nsq : ℝ) (α β : Fin 3 → ℝ) :
+    IsPhysicalRay (algebraMap ℝ (FreeSmoothRing (Fin 3)) nsq) (Sum.elim (constantIndexRay α β)
+        (momentum (constantIndexAction nsq) (constantIndexRay α β) α)) ↔
+      ∑ i, α i ^ 2 = nsq := by
+  have h := isPhysicalRay_linearIndexRay_iff nsq 0 α β
+  rwa [linearIndexSq_zero, linearIndexAction_zero, linearIndexRay_zero, mul_zero, zero_mul,
+    add_zero] at h
 
 /-! ### Fermat's principle -/
 

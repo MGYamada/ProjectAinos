@@ -6,9 +6,12 @@
 #   JOBS=2 checks/run.sh   # choose the parallelism
 #   checks/run.sh checks/FlowAPI.lean checks/SmallAngleAPI.lean
 #
-# Each `checks/*.lean` file is compiled with warnings as errors. `CoreImports`
-# and `ForbiddenOptions` are scripts and are run with `--run`. A new check file
-# is picked up automatically. The exit status is nonzero if any check fails.
+# Each `checks/*.lean` file is compiled with warnings as errors and with the
+# library's explicit-binder settings `autoImplicit = false` and
+# `relaxedAutoImplicit = false` of `lakefile.toml`, so an undeclared name in a
+# check is an error. `CoreImports` and `ForbiddenOptions` are scripts and are
+# run with `--run`. A new check file is picked up automatically. The exit
+# status is nonzero if any check fails.
 set -u
 
 cd "$(dirname "$0")/.."
@@ -28,7 +31,8 @@ run_one() {
   if [ -n "${CHECK_LEAN_PATH:-}" ]; then
     command+=(env "LEAN_PATH=$CHECK_LEAN_PATH")
   fi
-  command+=(lean -DwarningAsError=true)
+  command+=(lean -DwarningAsError=true -DautoImplicit=false
+    -DrelaxedAutoImplicit=false)
   name="$(basename "$file" .lean)"
   start="$(date +%s)"
   if [ "$name" = CoreImports ] || [ "$name" = ForbiddenOptions ]; then

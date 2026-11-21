@@ -550,10 +550,9 @@ decisions are recorded in [GR03–GR07](general-relativity-notes.md).
 **Covariant differentiation (§85).** The text differentiates vectors, covectors
 and tensors of every rank. The library has `leviCivita` on vector fields,
 `Tensor.bilinearCovariantDerivative` on covariant two-tensors and
-`twoFormDerivative`; this wave adds tangent-valued trilinear tensors. Covectors,
-contravariant and mixed tensors and the general shapes have no derivative yet:
-the pinned Mathlib induces no connection on dual or hom bundles, and the ledger
-row is closed with this remainder. `Tensor.ContMDiffTensorialAt.mkHom₃`
+`twoFormDerivative`; F10 added tangent-valued trilinear tensors, and R1 of
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) every tensor shape
+(below). `Tensor.ContMDiffTensorialAt.mkHom₃`
 turns an operation that is linear over scalar germs in each of three slots into a
 continuous trilinear map on the tangent spaces, and
 `Tensor.trilinearCovariantDerivative connection R hR x v w z u` is
@@ -571,6 +570,36 @@ chart formula `chartCurvatureDerivative_eq` is
 formulas for a vector field and for a covariant two-tensor.
 `bilinearDivergenceCovector g B x b` is the divergence `∇^a B_{ab}` of a smooth
 covariant two-tensor on its first index.
+
+**Every tensor shape (§85).** For connections `cA`, `cB` on two vector bundles,
+`SmoothBundle.homConnection cA cB` is a connection of Mathlib on the hom bundle: on a
+section `L` differentiable at `x` and any section `w` differentiable there,
+`(∇_u L)(w x) = ∇_u(L w) − L(∇_u w)` (`homConnection_apply`); the right side is tensorial in
+`u` and, for differentiable `L`, in `w`, so it descends to a map on the fibres, and on a
+section that is not differentiable at `x` the value is `0` (Mathlib's `CovariantDerivative`
+constrains only differentiable sections). `Tensor.Shape.connection cov s` recurses over
+the scalar, tangent and hom shapes, with the directional derivative on scalars: so
+covectors, contravariant, mixed and general tensors have a connection. It satisfies
+`∇(L w) = (∇L) w + L ∇w` (`connection_apply_section`), does not depend on the extension of
+`w` (`connection_hom_correction_eq`), is additive, has `∇(f T) = f ∇T + df ⊗ T`
+(`connection_smul`) and depends only on germs (`connection_congr`). Regularity is a germ
+condition, `Connection.IsLocallyRegular` (sections `C^{n+1}` at a point go to `C^n`), that
+passes through hom bundles; Levi-Civita has it (`leviCivita_isLocallyRegular`), so a smooth
+tensor of shape `s` has a smooth covariant derivative of shape `hom tangent s`
+(`Shape.covariantDerivative`) with smooth coefficients in bundle charts
+(`coefficients_covariantDerivative_contMDiffOn`), and the derivative can be iterated. The
+shape connection takes the direction first, as Mathlib does; on the covariant two-tensors
+and the tangent-valued trilinear tensors it is the earlier derivative with the direction
+moved (`connection_covariant_two_apply`, `connection_trilinear_apply`). For Levi-Civita the
+chart formulas are `(∇_i α)_k = ∂_i α_k − Γ^l_{ik} α_l` (`shapeConnection_cotangent_chart`),
+`∇_i dx^j = −Γ^j_{ik} dx^k` (`shapeConnection_chartCovector`),
+`(∇_i A)^j_k = ∂_i A^j_k + Γ^j_{il} A^l_k − Γ^l_{ik} A^j_l` for endomorphisms
+(`shapeConnection_endomorphism_chart`) and
+`(∇_i T)^{jk} = ∂_i T^{jk} + Γ^j_{il} T^{lk} + Γ^k_{il} T^{jl}`
+(`shapeConnection_contravariant_two_chart`), and `∇g = 0` (`shapeConnection_form`). On
+`e^{2z}η`, `∂_u g(∂_v, ∂_w) = 2u₃e^{2z}η(v, w)` is cancelled by the Christoffel terms
+(`metric_shapeConnection_form`), and `(∇_i dz)_k = η_{ik} − 2δ_{i3}δ_{k3}`, so
+`(∇_t dz)_t = −1` tests the sign of the covector formula (`metric_shapeConnection_dz_ne_zero`).
 
 **The second Bianchi identity (§92).** `curvature_second_bianchi` is
 `(∇_u R)(v, w)z + (∇_v R)(w, u)z + (∇_w R)(u, v)z = 0` for any tangent vectors
@@ -616,6 +645,9 @@ sides of the identity are nonzero.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
+| Connection on hom bundles | `Tensor.SmoothBundle.Connection`, `scalarConnection`, `homDerivativeAux`, `homConnectionFun`, `homConnection`, `homConnection_apply`, `Connection.IsLocallyRegular`, `IsLocallyRegular.contMDiffCovariantDerivative`, `scalarConnection_isLocallyRegular`, `homConnection_isLocallyRegular` | [ShapeDerivative](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivative.lean) |
+| Every tensor shape | `Tensor.Shape.connection`, `connection_hom_apply`, `connection_apply_section`, `connection_hom_correction_eq`, `connection_add`, `connection_smul`, `connection_congr`, `connection_isLocallyRegular`, `covariantDerivative`, `coefficients_covariantDerivative_contMDiffOn`, `connection_covariant_two_apply`, `connection_trilinear_apply` | [ShapeDerivative](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivative.lean) · [ShapeDerivativeEvaluation](../ProjectAinos/SmoothGeometry/Tensor/ShapeDerivativeEvaluation.lean) |
+| Levi-Civita on every shape | `LorentzMetric.leviCivita_isLocallyRegular`, `shapeCovariantDerivative`, `shapeConnection_cotangent_chart`, `shapeConnection_endomorphism_chart`, `shapeConnection_chartCovector`, `shapeConnection_contravariant_two_chart`, `shapeConnection_form`, `ExponentialConformalExample.metric_shapeConnection_form`, `metric_chartChristoffel`, `metric_shapeConnection_dz`, `metric_shapeConnection_dz_ne_zero` | [Lorentzian ShapeDerivative](../ProjectAinos/SmoothGeometry/Lorentzian/ShapeDerivative.lean) · [Examples](../ProjectAinos/SmoothGeometry/Lorentzian/ShapeDerivativeExamples.lean) |
 | Tensoriality in three slots | `Tensor.ContMDiffTensorialAt.pointwise₃`, `mkHom₃`, `mkHom₃_apply` | [TrilinearTensoriality](../ProjectAinos/SmoothGeometry/Tensor/TrilinearTensoriality.lean) |
 | Derivative of trilinear tensors | `Tensor.trilinearBundle`, `IsSmoothTrilinear`, `trilinearCovariantDerivative`, `trilinearCovariantDerivative_apply` | [TrilinearDerivative](../ProjectAinos/SmoothGeometry/Tensor/TrilinearDerivative.lean) |
 | Derivative of the curvature, second Bianchi | `LorentzMetric.curvatureDerivative`, `curvatureDerivative_apply`, `leviCivita_chart_components`, `bilinearCovariantDerivative_chart`, `chartCurvatureDerivative_eq`, `covariantField_chartField_comm`, `curvature_second_bianchi`, `chartCurvatureDerivative_bianchi` | [CurvatureDerivative](../ProjectAinos/SmoothGeometry/Lorentzian/CurvatureDerivative.lean) |
@@ -624,9 +656,10 @@ sides of the identity are nonzero.
 | Connection of a coordinate metric | `CoordinateMetric.toLorentzMetric_pairing_derivative`, `toLorentzMetric_leviCivita_eq`, `toLorentzMetric_curvature_of_connection`, `toLorentzMetric_curvatureDerivative_of_connection` | [CoordinateConnection](../ProjectAinos/SmoothGeometry/Lorentzian/CoordinateConnection.lean) |
 | Four-dimensional regression | `ExponentialConformalExample.metric_leviCivita`, `metric_curvature`, `metric_ricci_chartField`, `metric_scalarCurvature`, `metric_einstein_chartField`, `metric_einstein_ne_zero`, `metric_curvatureDerivative_dz`, `metric_curvatureDerivative_ne_zero`, `metric_scalarCurvature_derivative`, `metric_ricci_divergence` | [ExponentialConformalExample](../ProjectAinos/SmoothGeometry/Lorentzian/ExponentialConformalExample.lean) |
 
-The typed examples are in `checks/BianchiAPI.lean`. The decisions are recorded
+The typed examples are in `checks/BianchiAPI.lean` and, for every tensor shape,
+`checks/TensorShapeDerivativeAPI.lean`. The decisions are recorded
 in [GR01, GR08 and GR09](general-relativity-notes.md) and in
-[G03](smooth-geometry-notes.md).
+[G03 and G18](smooth-geometry-notes.md).
 
 ## The first variation of the Einstein–Hilbert action (§93)
 
@@ -1009,9 +1042,10 @@ exact experiment `verify_pseudotensor_expression` in
 [`verify_lorentz_geometry.py`](../experiments/ainos_experiments/verify_lorentz_geometry.py)
 checks the normalization for a nonconstant metric in four dimensions.
 
-**Scope.** The energy and momentum (96.16) as integrals over a spacelike hypersurface, their
-conservation and their four-vector character are not stated: they need the decay of the
-metric and of the matter at spatial infinity and co-ordinates that are Galilean there.
+**Scope.** The energy and momentum (96.16) as integrals over the slices, their conservation and
+their four-vector character need the decay of the metric and of the matter at spatial infinity
+and co-ordinates that are Galilean there; they are proved with §105 in the section on
+[charges at infinity](#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119).
 
 | Result | Declarations | Source |
 | --- | --- | --- |
@@ -1228,13 +1262,17 @@ equations hold (`isEinstein_iff_friedmann`, `satisfiesEinstein_iff_friedmann`). 
 equation follows from the two by an exact identity, without dividing by `H`
 (`continuity_of_friedmann`). Conversely, where `ȧ ≠ 0`, the first equation and continuity give
 the second (`second_of_first_of_continuity`); a static counterexample shows that this needs
-`ȧ ≠ 0` (`not_secondFriedmann_static`). `k` has the sign of `ρ − 3H²/κ` (`curvature_sign`).
+`ȧ ≠ 0` (`not_secondFriedmann_static`). With the first Friedmann equation, unit lapse `N = 1`,
+`Λ = 0` and `κ > 0`, `k` has the sign of `ρ − 3H²/κ` (`curvature_sign`); with `Λ ≠ 0` the
+criterion changes (flat de Sitter space has `k = 0`, `ρ = 0`, `H = 1`, `Λ = 3`).
 
 **Exact models.** In conformal time (`N = a`) the closed dust `a = a₀(1 − cos η)` (112.8), the
 closed radiation `a = a₀ sin η`, the open dust `a = a₀(cosh η − 1)` (113.3), the open radiation
 `a = a₀ sinh η` and the flat models `a = a₀η²`, `a = a₀η` are exact solutions
-(`isEinstein_closedDust`, …, `isEinstein_flatRadiation`), with their cosmic times, for
-example `t = a₀(η − sin η)` (`hasDerivAt_closedDustTime`), as the proper time of the comoving
+(`isEinstein_closedDust`, …, `isEinstein_flatRadiation`), with their cosmic times: `a₀(η − sin η)`
+and `a₀(1 − cos η)` for closed dust and radiation, `a₀(sinh η − η)` and `a₀(cosh η − 1)` for open
+dust and radiation, `a₀η³/3` and `a₀η²/2` for flat dust and radiation (`hasDerivAt_closedDustTime`,
+…, `hasDerivAt_flatRadiationTime`); the closed dust time is the proper time of the comoving
 observers (`properTime_closedDust`). The closed dust reaches its maximal radius `a_m = 2a₀` at
 the age `πa_m/2` (`closedDustTime_pi_sub_zero`, `tendsto_closedDust_age`). An open or flat
 universe that expands at one time expands at all times (`open_expands_forever`).
@@ -1425,13 +1463,60 @@ flux through spheres changes by the integral of the conserved total over shells
 (`surfaceCharge_sub_surfaceCharge_eq`), and the charges are the limits of the surface integrals with
 their volume form (`tendsto_surfaceCharge`, `charge_eq_integral`); `P⁰ = M` for the isotropic far
 metric (`charge_zero_eq_mass`), and the charges are conserved when the flux vanishes
-(`charge_const_of_flux`). The four-vector character is the remainder.
+(`charge_const_of_flux`).
+
+**The four-vector character (§§96, 105).** Under `x = L x′` with a constant invertible `L`, the
+metric is `Lᵀ g L` (`CoordinateMetric.linearPullback`), and the superpotential and the total density
+`τ = |g|(G + t)` are tensor densities of weight 2 (`superpotential_linearPullback`,
+`totalDensity_linearPullback`). The slice `x′⁰ = t` is a tilted hyperplane; the flux of a conserved
+current through a hyperplane `x⁰ = c + ⟨v, x⟩` (`Hyperplane.graphFlux`, the three-form `ι_J vol` on
+its graph) is compared with a coordinate slice by tilting a family of hyperplanes, which turns the
+derivative of the integrand into a spatial divergence (`divergence_wedgeField`), so the side of the
+wedge is a sphere flux, `O(1/R)` for a current `O(r⁻⁴)` on the wedge (`abs_graphFluxBall_sub_le`,
+`integral_eq_graphFlux`). Hence `P′ = |det L| L⁻¹ P` for `(L⁻¹)₀₀ > 0` (`charge_linearPullback`) and
+`P′ = L⁻¹P` for an orthochronous Lorentz `L` (`charge_lorentz`): the components of one four-vector in
+the two frames, or actively the momentum of the field moved by `L⁻¹`. The decay on the wedge follows
+from uniform metric decay with matter of compact support there (`IsGalileanOnWedge`,
+`IsAsymptoticallyGalilean.isGalileanOnWedge`) or from the Einstein equations
+(`charge_linearPullback_of_einstein`). Beyond its matter the isotropic metric has
+`τ⁰⁰ = −4M²/r⁴` and `|τ^{ik}| ≤ 180M²/r⁴` (`totalDensity_isotropicMetric_zero_zero`,
+`abs_totalDensity_isotropicMetric_le`), and the boosted charges are `8πMγ(1, −β, 0, 0)`
+(`charge_boost_isotropicMetric`).
+
+**The stationary far field (§105).** For a smooth, symmetric, conserved stationary stress in a ball
+(`StationaryFarField.StationarySource`, instance `rotSource`), the linearized field in harmonic gauge
+is `h̄ = 2κ N[S]` (`retardedPerturbation_static`). Conservation alone gives `∫S_{0α} = 0`, the
+current dipole `−J/2`, `∫S_{αβ} = 0` and no stress dipole (`integral_momentum_eq_zero`,
+`currentDipole_eq`, `integral_stress_eq_zero`, `stressDipole_eq_zero`), so outside the source
+`h̄₀₀ = 2κM/4πr + O(r⁻³)` for a mass-centred source, `h̄_{0α} = −(κ/4π) J_{αβ}x^β/r³ + O(r⁻³)` and
+`h̄_{αβ} = O(r⁻³)`, uniformly (`abs_hbar_zero_zero_sub_le`, `abs_hbar_zero_succ_sub_angularMomentum_le`,
+`abs_hbar_succ_succ_le`). The mass and angular-momentum surface integrals are `−2κM` and `−2κJ` on
+every sphere outside the source (`massFlux_eq`, `angularMomentumFlux_eq`), and at `κ = 8π` with
+`J₁₂ = −Ma` the field is the Kerr exterior at leading order (`abs_spinComponent_sub_gtp_le`,
+`abs_metricPerturbation_zero_zero_sub_gtt_le`). The bounds of the nonlinear source of a general
+stationary exterior are outside the scope.
 
 **Waves on a curved background (§108).** The derivative of the Ricci tensor along `g + εh` is the
 Palatini form (`familyRicciDeriv_eq`), gauge invariant on Ricci-flat backgrounds
 (`familyRicciDeriv_lie_eq_zero`); a short wave has the exact expansion `familyRicciDeriv_shortWave`,
 whose symbol in the gauge vanishes iff the phase is null (`shortWaveSymbol_eq_zero_iff`), and the
-rays are null geodesics (`isGeodesicOn_ray`).
+rays are null geodesics (`isGeodesicOn_ray`). With no field equation for the background, the
+`ε⁻¹` coefficient is `R₁ = −½(2∇_k a + θa) + ½(k ⊗ B + B ⊗ k)` with `B = div ā`
+(`ShortWave.transportTerm_eq`, `transportTerm_of_gauge`); on the transverse polarizations it is the
+transport operator (`sum_transverse_transportTerm`), and for the full amplitude the `ε⁻¹` order
+vanishes iff `2∇_k a + (∇·k)a = 0` once the next-order harmonic gauge `div ā = 0` holds
+(`harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`); a longitudinal amplitude in flat space
+shows that the gauge is needed (`transportTerm_longitudinal`). The perturbed Christoffel symbols
+are exactly `Γ + s(g + sh)⁻¹X` (`christoffelOf_perturbation_eq`), so the second variation of the
+Ricci tensor along an actual family exists and is `secondRicci`
+(`hasDerivAt_deriv_ricciOf_perturbation`). For the short wave with amplitude `ε` its order-one
+coefficient tends to a profile in the phase (`tendsto_secondRicci_shortWave`), whose phase average is
+`−κ(t − ½g tr t)` with the effective stress `t = (a·a − ½(tr a)²) k ⊗ k/(8κ)`
+(`averagedSecondRicci_eq_effectiveStress`), the average `(1/4κ)⟨∇h∇h − ½∇h̄∇h̄⟩`
+(`effectiveStress_eq_average_gradient`). It is symmetric, traceless for a null phase and conserved
+given transport (`effectiveStress_conserved`), and its flux is the phase average of the flux of §110
+(`effectiveStress_flux_eq_average`). Flat space and the Rosen waves are instances
+(`PlaneWave.effectiveStress_cross`).
 
 **The radiation of gravitational waves (§110).** The retarded perturbation `h̄ = 2κRT` of a
 localized conserved stress is harmonic and solves the linearized equations
@@ -1442,19 +1527,25 @@ the radiated power (`tendsto_pseudotensorFlux`), which for slow sources is `(G/4
 
 **Focusing (§119).** For a synchronous congruence `∂ₜθ = −θ²/d − σ² − R₀₀` (`IsSynchronous.raychaudhuri`),
 the strong energy condition with Einstein's equations and `Λ ≤ 0` gives `R₀₀ ≥ 0`
-(`SatisfiesEinstein.ricci_timelike_nonneg`), and the synchronous system breaks down within `3/|θ|`
-(`IsSynchronous.exists_notMem_of_focusing`). Geodesic incompleteness is the remainder.
+(`SatisfiesEinstein.ricci_timelike_nonneg`), and the time line leaves the domain of the synchronous
+chart within `3/|θ|` (`IsSynchronous.exists_notMem_of_focusing`); `θ → −∞` there only when the line
+stays in the domain up to that time (`IsSynchronous.tendsto_expansion_atBot`). Leaving the chart is
+not by itself a caustic. Geodesic incompleteness is the remainder.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
 | Charges at infinity | `CoordinateMetric.surfaceCharge`, `Sphere.flux_sub_flux`, `surfaceCharge_sub_surfaceCharge_eq`, `IsAsymptoticallyGalilean`, `abs_pseudotensor_le`, `tendsto_surfaceCharge`, `charge_eq_integral`, `charge_zero_eq_mass`, `charge_const_of_flux` | [PseudotensorFlux](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorFlux.lean), [AsymptoticCharge](../ProjectAinos/GeneralRelativity/AsymptoticCharge.lean) |
+| Four-vector character | `Hyperplane.graphFlux`, `graphIntegrand_eq_det`, `divergence_wedgeField`, `abs_graphFluxBall_sub_le`, `integral_eq_graphFlux`, `CoordinateMetric.linearPullback`, `coefficient_linearPullback`, `superpotential_linearPullback`, `totalDensity_linearPullback`, `charge_linearPullback`, `IsGalileanOnWedge`, `charge_linearPullback_of_einstein`, `charge_lorentz`, `totalDensity_isotropicMetric_zero_zero`, `abs_totalDensity_isotropicMetric_le`, `charge_boost_isotropicMetric` | [HyperplaneFlux](../ProjectAinos/SmoothGeometry/Lorentzian/HyperplaneFlux.lean) · [PseudotensorCovariance](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorCovariance.lean) · [ChargeCovariance](../ProjectAinos/GeneralRelativity/ChargeCovariance.lean) · [Isotropic test](../ProjectAinos/GeneralRelativity/ChargeCovarianceIsotropic.lean) |
+| Stationary far field | `StationaryFarField.StationarySource`, `retardedPerturbation_static`, `integral_momentum_eq_zero`, `currentDipole_eq`, `integral_stress_eq_zero`, `stressDipole_eq_zero`, `abs_hbar_zero_zero_sub_le`, `abs_hbar_zero_succ_sub_angularMomentum_le`, `abs_hbar_succ_succ_le`, `massFlux_eq`, `angularMomentumFlux_eq`, `abs_spinComponent_sub_gtp_le`, `abs_metricPerturbation_zero_zero_sub_gtt_le`, `rotSource` | [StationaryFarField](../ProjectAinos/GeneralRelativity/StationaryFarField.lean) |
 | Waves on a curved background | `CoordinateMetric.curvedChristoffel`, `palatini`, `familyChristoffelDeriv_eq`, `familyRicciDeriv_eq`, `familyRicciDeriv_lie_eq_zero`, `ShortWave.familyRicciDeriv_shortWave`, `shortWaveSymbol_eq_zero_iff`, `isGeodesicOn_ray` | [CurvedLinearization](../ProjectAinos/SmoothGeometry/Lorentzian/CurvedLinearization.lean), [ShortWave](../ProjectAinos/GeneralRelativity/ShortWave.lean) |
+| Transport and effective stress | `CoordinateMetric.covDerivOne`, `tensorPairing`, `christoffelOf_perturbation_eq`, `ricciOf_eq_of_christoffel`, `hasDerivAt_deriv_ricciOf_perturbation`, `secondRicci`, `ShortWave.transportOperator`, `transportTerm_eq`, `transportTerm_of_gauge`, `sum_transverse_transportTerm`, `harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`, `transportTerm_longitudinal`, `secondRicci_shortWave`, `tendsto_secondRicci_shortWave`, `effectiveStress`, `averagedSecondRicci_eq_effectiveStress`, `effectiveStress_eq_average_gradient`, `effectiveStress_conserved`, `effectiveStress_flux_eq_average`, `PlaneWave.effectiveStress_cross` | [CovariantLeibniz](../ProjectAinos/SmoothGeometry/Lorentzian/CovariantLeibniz.lean) · [SecondVariation](../ProjectAinos/SmoothGeometry/Lorentzian/SecondVariation.lean) · [ShortWaveTransport](../ProjectAinos/GeneralRelativity/ShortWaveTransport.lean) · [EffectiveStress](../ProjectAinos/GeneralRelativity/EffectiveStress.lean) |
 | Gravitational radiation | `LinearizedRadiation.retardedPerturbation`, `linearizedEinstein_retardedPerturbation`, `farZone_quadrupole`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `binary_power_smooth`, `Wave.integral_ttSquare` | [TransverseTraceless](../ProjectAinos/SmoothGeometry/Wave/TransverseTraceless.lean), [LinearizedRadiation](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) |
 | Focusing | `Focusing.trace_sq_ge`, `IsSynchronous.raychaudhuri`, `RiccatiComparison.lt_div_abs`, `StrongEnergyCondition`, `SatisfiesEinstein.ricci_timelike_nonneg`, `IsSynchronous.exists_notMem_of_focusing`, `deSitter_not_focusing` | [RiccatiComparison](../ProjectAinos/SmoothGeometry/ODE/RiccatiComparison.lean), [Focusing](../ProjectAinos/SmoothGeometry/Lorentzian/Focusing.lean), [EnergyCondition](../ProjectAinos/GeneralRelativity/EnergyCondition.lean) |
 
-The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/CurvedWavesAPI.lean`,
-`checks/GravitationalRadiationAPI.lean` and `checks/FocusingAPI.lean`. The decisions are recorded
-in GR30–GR33 of the [notes](general-relativity-notes.md) and in G16 of the
+The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/ChargeCovarianceAPI.lean`,
+`checks/CurvedWavesAPI.lean`, `checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
+`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33, GR40 and GR41 of the
+[notes](general-relativity-notes.md) and in G16 of the
 [smooth-geometry notes](smooth-geometry-notes.md).
 
 ## Collapse, post-Newtonian motion, perturbations and the oscillating regime (§§102, 103, 106, 115, 118)

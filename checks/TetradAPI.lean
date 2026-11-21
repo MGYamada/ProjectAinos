@@ -206,6 +206,8 @@ namespace CoordinateMetric
 
 open LorentzMetric
 
+variable {σ : LorentzConvention} {d : ℕ}
+
 example (U : Opens (MinkowskiModel d)) :
     (minkowski σ d U).toLorentzMetric.OrthonormalFrame univ :=
   minkowskiFrame U
