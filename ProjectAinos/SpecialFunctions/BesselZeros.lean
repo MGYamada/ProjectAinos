@@ -5,11 +5,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import ProjectAinos.SpecialFunctions.BesselIntegral
+public import ProjectAinos.SpecialFunctions.BesselRealAxis
 import Mathlib.Analysis.Calculus.LocalExtr.Rolle
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Tactic
 
-/-! # Zeros of integer-order Bessel functions
+/-! # Zeros of real-order Bessel functions
 
 Two consecutive orders cannot vanish together: the recurrence would annihilate every Laurent
 coefficient of the nonzero generating function. For existence of positive zeros, test the real
@@ -49,23 +50,25 @@ theorem deriv_ne_zero_of_zero (n : ℤ) {z : ℂ} (hz : z ∈ slitPlane) (hn : b
   rw [(hasDerivAt_besselJ n z hz).deriv, hn, mul_zero, zero_sub, neg_ne_zero]
   simpa using adjacent_ne_zero n hz hn
 
-private def j (n : ℤ) (t : ℝ) := (besselJ n t).re
-private def j' (n : ℤ) (t : ℝ) := (deriv (besselJ n) t).re
-private def j'' (n : ℤ) (t : ℝ) := (deriv (deriv (besselJ n)) t).re
+private def j (n : ℝ) (t : ℝ) := (besselJ n t).re
+private def j' (n : ℝ) (t : ℝ) := (deriv (besselJ n) t).re
+private def j'' (n : ℝ) (t : ℝ) := (deriv (deriv (besselJ n)) t).re
 
-private theorem dj (n : ℤ) (t : ℝ) : HasDerivAt (j n) (j' n t) t :=
-  (analyticAt_besselJ_int n t).differentiableAt.hasDerivAt.real_of_complex
+private theorem dj (n : ℝ) {t : ℝ} (ht : 0 < t) : HasDerivAt (j n) (j' n t) t :=
+  (analyticAt_besselJ n (mem_slitPlane_iff.mpr (Or.inl ht))).differentiableAt.hasDerivAt
+    |>.real_of_complex
 
-private theorem dj' (n : ℤ) (t : ℝ) : HasDerivAt (j' n) (j'' n t) t :=
-  (analyticAt_besselJ_int n t).deriv.differentiableAt.hasDerivAt.real_of_complex
+private theorem dj' (n : ℝ) {t : ℝ} (ht : 0 < t) : HasDerivAt (j' n) (j'' n t) t :=
+  (analyticAt_besselJ n (mem_slitPlane_iff.mpr (Or.inl ht))).deriv.differentiableAt.hasDerivAt
+    |>.real_of_complex
 
-private theorem real_equation (n : ℤ) {t : ℝ} (ht : 0 < t) :
+private theorem real_equation (n : ℝ) {t : ℝ} (ht : 0 < t) :
     t ^ 2 * j'' n t + t * j' n t + (t ^ 2 - n ^ 2 : ℝ) * j n t = 0 := by
   have h := congrArg Complex.re (equation n t (by simp [mem_slitPlane_iff, ht]))
-  simpa [j, j', j'', ← Complex.ofReal_intCast, ← Complex.ofReal_pow, ← Complex.ofReal_sub] using h
+  simpa [j, j', j'', ← Complex.ofReal_pow, ← Complex.ofReal_sub] using h
 
 /-- Every open interval of length `2π` starting beyond `2|n|+2` contains a positive zero. -/
-theorem exists_zero_Ioo (n : ℤ) {a : ℝ} (ha : 2 * |(n : ℝ)| + 2 < a) :
+theorem exists_real_order_zero_Ioo (n : ℝ) {a : ℝ} (ha : 2 * |(n : ℝ)| + 2 < a) :
     ∃ t ∈ Ioo a (a + 2 * π), besselJ n (t : ℂ) = 0 := by
   let φ (t : ℝ) := 1 - Real.cos (t - a)
   let s (t : ℝ) := Real.sin (t - a)
@@ -74,15 +77,17 @@ theorem exists_zero_Ioo (n : ℤ) {a : ℝ} (ha : 2 * |(n : ℝ)| + 2 < a) :
     simpa [φ, s] using (((hasDerivAt_id t).sub_const a).cos.const_sub 1)
   have ds t : HasDerivAt s (Real.cos (t - a)) t := by
     simpa [s] using ((hasDerivAt_id t).sub_const a).sin
-  have dW t : HasDerivAt W ((j' n t * φ t - j n t * s t) + t *
+  have dW (t : ℝ) (ht : 0 < t) : HasDerivAt W ((j' n t * φ t - j n t * s t) + t *
       (j'' n t * φ t - j n t * Real.cos (t - a))) t := by
-    convert (hasDerivAt_id t).mul (((dj' n t).mul (dφ t)).sub ((dj n t).mul (ds t))) using 1
+    convert (hasDerivAt_id t).mul (((dj' n ht).mul (dφ t)).sub ((dj n ht).mul (ds t))) using 1
     · rfl
     · dsimp only [id_eq, Pi.sub_apply, Pi.mul_apply]; ring
-  have hcont : Continuous W := continuous_iff_continuousAt.mpr fun t => (dW t).continuousAt
+  have ha₀ : 0 < a := by linarith [abs_nonneg n]
+  have hcont : ContinuousOn W (Icc a (a+2*π)) :=
+    fun t ht => (dW t (ha₀.trans_le ht.1)).continuousAt.continuousWithinAt
   have end_eq : W a = W (a + 2 * π) := by simp [W, φ, s]
   obtain ⟨t, ht, hW⟩ := exists_hasDerivAt_eq_zero (show a < a + 2 * π by linarith [pi_pos])
-    hcont.continuousOn end_eq (fun t _ => dW t)
+    hcont end_eq (fun t ht => dW t (ha₀.trans ht.1))
   have hsize : 2 * |(n : ℝ)| + 2 < t := ha.trans ht.1
   have hpos : 0 < t := by linarith [abs_nonneg (n : ℝ)]
   have hq : 0 < t ^ 2 + t * s t - (n : ℝ) ^ 2 * φ t := by
@@ -100,8 +105,12 @@ theorem exists_zero_Ioo (n : ℤ) {a : ℝ} (ha : 2 * |(n : ℝ)| + 2 < a) :
     linear_combination φ t * real_equation n hpos - t * hW
   have hj := (mul_eq_zero.mp hz).resolve_right hq.ne'
   refine ⟨t, ht, ?_⟩
-  have he := integral n t
-  rw [j, he, Complex.ofReal_re] at hj
-  rw [he, hj, Complex.ofReal_zero]
+  change (besselJ n t).re=0 at hj
+  rw [← ofReal_re_besselJ n hpos,hj,Complex.ofReal_zero]
+
+/-- The interval bound specialized to the integer-order API. -/
+theorem exists_zero_Ioo (n : ℤ) {a : ℝ} (ha : 2 * |(n : ℝ)| + 2 < a) :
+    ∃ t ∈ Ioo a (a + 2 * π), besselJ n (t : ℂ) = 0 := by
+  simpa using exists_real_order_zero_Ioo (n : ℝ) ha
 
 end ProjectAinos.SpecialFunctions.Bessel

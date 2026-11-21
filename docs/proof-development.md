@@ -94,9 +94,11 @@ coefficients, yielding all 2ℓ + 1 charge moments of ED §41. A geometric bound
 displacement justifies integrating the expansion over both separated charges to obtain their energy.
 For the first-kind Bessel family the regularized hypergeometric series gives the complex-order
 ODE and derivative identities. Grouping two exponential series by integer order gives the
-Laurent generating function, Bessel’s cosine integral and its derivative integral. The order
-recurrence proves simplicity of positive integer-order zeros, and Rolle’s theorem applied to a
-weighted Wronskian gives zeros at arbitrarily large positive arguments.
+Laurent generating function, Bessel’s cosine integral and its derivative integral. For a real
+nonintegral order the Schläfli ray supplies the extra term. Its Gamma limit at zero fixes the
+normalization, and the conserved determinant of adjacent orders proves the connection with the
+first-kind series. All real orders have simple positive zeros. Rolle’s theorem applied to a
+weighted Wronskian locates a zero in every interval of length 2π beyond 2|ν|+2.
 [Chapter correspondence and proof map](courant-hilbert.md)
 
 Rayleigh’s expansion of a complex plane wave follows by interchanging its Taylor series with
@@ -110,7 +112,7 @@ ball satisfy both wall conditions and have nonzero central field. [Ball](../Proj
 The Gaussian primitive on the ray (1 − i)R evaluates both Fresnel integrals at positive
 infinity. This gives the limit of the rectangular Fresnel fields at a straight edge in ED §60.
 Integrating a smooth amplitude against the scaled Fresnel primitive gives the quadratic
-stationary-phase limit and hence the leading term of each integer-order cylindrical Bessel
+stationary-phase limit and hence the leading term of each fixed real-order cylindrical Bessel
 function for large positive argument. Integration by parts along the gradient gives decay to
 every order in any finite dimension where the phase is nonstationary on the amplitude support.
 

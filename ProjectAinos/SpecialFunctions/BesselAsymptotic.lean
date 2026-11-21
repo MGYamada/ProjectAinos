@@ -4,13 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 
-public import ProjectAinos.SpecialFunctions.BesselIntegral
+public import ProjectAinos.SpecialFunctions.BesselConnection
 public import ProjectAinos.SpecialFunctions.QuadraticPhase
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
 
-/-! # Large positive argument of the integer-order Bessel functions
+/-! # Large positive argument of the real-order Bessel functions
 
 Split Bessel's cosine integral about its stationary point at π/2. On each half,
 `s = 2 sin(β/2)` makes the phase exactly quadratic. The smooth amplitude at the endpoint
@@ -37,7 +37,7 @@ private theorem cis_norm (t : ℝ) : ‖cis t‖ = 1 := by simp [cis]
 
 private def angle (s : ℝ) := 2 * Real.arcsin (s / 2)
 private def jac (s : ℝ) := 1 / √(1 - (s / 2) ^ 2)
-private def weight (n : ℤ) (s : ℝ) : ℂ := ((jac s * Real.cos (n * angle s) : ℝ) : ℂ)
+private def weight (n : ℝ) (s : ℝ) : ℂ := ((jac s * Real.cos (n * angle s) : ℝ) : ℂ)
 
 private theorem small {s : ℝ} (hs : s ∈ Icc 0 (√2)) : -1 < s / 2 ∧ s / 2 < 1 := by
   have h := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
@@ -54,7 +54,7 @@ private theorem smooth_jac {s : ℝ} (hs : s ∈ Icc 0 (√2)) : ContDiffAt ℝ 
     ((contDiffAt_const.sub (hu.contDiffAt.pow 2)).sqrt (rad_pos hs).ne')
     (Real.sqrt_pos.mpr (rad_pos hs)).ne'
 
-private theorem smooth {s : ℝ} (hs : s ∈ Icc 0 (√2)) (n : ℤ) : ContDiffAt ℝ 1 (weight n) s := by
+private theorem smooth {s : ℝ} (hs : s ∈ Icc 0 (√2)) (n : ℝ) : ContDiffAt ℝ 1 (weight n) s := by
   have h := small hs
   have hu : ContDiff ℝ 1 (fun x : ℝ => x / 2) := by fun_prop
   have har := (Real.contDiffAt_arcsin (n := 1) h.1.ne' h.2.ne).comp s
@@ -72,7 +72,7 @@ private theorem da {s : ℝ} (hs : s ∈ Icc 0 (√2)) :
   · dsimp [jac]
     ring
 
-private theorem quadratic (n : ℤ) (x : ℝ) :
+private theorem quadratic (n : ℝ) (x : ℝ) :
     (∫ β in 0..π/2, (Real.cos (n * β) : ℂ) * cis (x * (1-Real.cos β))) =
     ∫ s in 0..√2, weight n s * cis (x/2*s^2) := by
   let f (β : ℝ) := (Real.cos (n * β) : ℂ) * cis (x * (1 - Real.cos β))
@@ -98,8 +98,10 @@ private theorem quadratic (n : ℤ) (x : ℝ) :
   rw [show x * (s^2/2) = x/2*s^2 by ring]
   ring
 
-private theorem halves (n : ℤ) (x : ℝ) :
-    (besselJ n (x : ℂ)).re =
+private abbrev cosineArc (n x : ℝ) := 1/π * ∫ t in 0..π, Real.cos (n*t-x*Real.sin t)
+
+private theorem halves (n : ℝ) (x : ℝ) :
+    cosineArc n x =
       2 / π * (cis (n * (π/2) - x) *
         ∫ β in 0..π/2, (Real.cos (n*β) : ℂ) * cis (x * (1 - Real.cos β))).re := by
   let f (t : ℝ) := Real.cos (n * t - x * Real.sin t)
@@ -129,14 +131,14 @@ private theorem halves (n : ℤ) (x : ℝ) :
   have hreal := Complex.reCLM.intervalIntegral_comp_comm
     (a := 0) (b := π/2) (μ := volume) (f := g)
     (Continuous.intervalIntegrable (by unfold g cis; fun_prop) ..)
-  rw [integral, Complex.ofReal_re, ← hs]
+  rw [cosineArc, ← hs]
   simp_rw [hg, intervalIntegral.integral_const_mul]
   change _ = 2 / π * (cis a * ∫ t in 0..π/2, _).re
   rw [← intervalIntegral.integral_const_mul (cis a), ← show (∫ t in 0..π/2, (g t).re) =
     (∫ t in 0..π/2, g t).re from hreal]
   ring
 
-private theorem scaled (n : ℤ) :
+private theorem scaled (n : ℝ) :
     Tendsto (fun r : ℝ => (r : ℂ) * ∫ s in 0..√2,
       weight n s * cis (π*r^2/2*s^2)) atTop (𝓝 ((1+I)/2)) := by
   have h := Oscillatory.quadratic_endpoint (b := √2) (by positivity) (A := weight n)
@@ -145,9 +147,8 @@ private theorem scaled (n : ℤ) :
   have he r s : π*r^2/2*s^2 = π/2*(r*s)^2 := by ring
   simpa [cis, he, weight, jac, angle] using h
 
-/-- Leading positive-real asymptotic for each integer order, including the phase shift π/4. -/
-theorem tendsto_large_argument (n : ℤ) :
-    Tendsto (fun x : ℝ => √x * (besselJ n (x : ℂ)).re -
+private theorem angular_asymptotic (n : ℝ) :
+    Tendsto (fun x : ℝ => √x * cosineArc n x -
       √(2 / π) * Real.cos (x - n * (π / 2) - π / 4)) atTop (𝓝 0) := by
   let r (x : ℝ) := √(x/π)
   have hr : Tendsto r atTop atTop :=
@@ -185,5 +186,38 @@ theorem tendsto_large_argument (n : ℤ) :
   rw [Real.sqrt_div hx, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 2)]
   field_simp
   linear_combination -2 * √x * (A x * Q x).re * hπ
+
+private theorem ray_large (a : ℝ) :
+    Tendsto (fun x : ℝ => √x * Schlaefli.realRay a x) atTop (𝓝 0) := by
+  have bound : ∀ᶠ x : ℝ in atTop, 0 ≤ √x * Schlaefli.realRay a x ∧
+      √x * Schlaefli.realRay a x ≤ 2/√x := by
+    filter_upwards [eventually_gt_atTop (2*|a|+1)] with x ht
+    have hx : 0 < x := by linarith [abs_nonneg a]
+    have ha : a < x := by linarith [le_abs_self a,abs_nonneg a]
+    obtain ⟨h₀,h₁⟩ := Schlaefli.realRay_bounds a hx ha
+    refine ⟨mul_nonneg (Real.sqrt_nonneg _) h₀,
+      (mul_le_mul_of_nonneg_left h₁ (Real.sqrt_nonneg _)).trans ?_⟩
+    rw [le_div_iff₀ (Real.sqrt_pos.mpr hx)]
+    field_simp [sub_pos.mpr ha]
+    nlinarith [Real.sq_sqrt hx.le,le_abs_self a]
+  exact squeeze_zero' (bound.mono fun _ h => h.1) (bound.mono fun _ h => h.2)
+    (tendsto_const_nhds.div_atTop Real.tendsto_sqrt_atTop)
+
+/-- Leading oscillation on the positive real axis for every fixed real Bessel order. -/
+theorem tendsto_large_argument_real (a : ℝ) :
+    Tendsto (fun x : ℝ => √x * (besselJ a (x : ℂ)).re -
+      √(2 / π) * Real.cos (x - a * (π / 2) - π / 4)) atTop (𝓝 0) := by
+  have h := (angular_asymptotic a).sub ((ray_large (-a)).const_mul (Real.sin (π*a)/π))
+  simp only [mul_zero,sub_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+  rw [integral_real_order a hx,ofReal_re,cosineArc]
+  ring
+
+/-- Leading positive-real asymptotic for each integer order, including the phase shift π/4. -/
+theorem tendsto_large_argument (n : ℤ) :
+    Tendsto (fun x : ℝ => √x * (besselJ n (x : ℂ)).re -
+      √(2 / π) * Real.cos (x - n * (π / 2) - π / 4)) atTop (𝓝 0) := by
+  simpa only [integral,ofReal_re,cosineArc] using angular_asymptotic (n : ℝ)
 
 end ProjectAinos.SpecialFunctions.Bessel

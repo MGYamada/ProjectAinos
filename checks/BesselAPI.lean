@@ -72,3 +72,56 @@ open scoped Topology Real
 
 example (n : ℤ) : Tendsto (fun x : ℝ => √x * (besselJ n (x : ℂ)).re -
     √(2 / π) * Real.cos (x - n * (π / 2) - π / 4)) atTop (𝓝 0) := tendsto_large_argument n
+
+open ProjectAinos.SpecialFunctions.Bessel.Schlaefli
+
+example : ℝ → ℝ → ℝ := realRay
+
+example (a x : ℝ) : (realRay a x : ℂ) = ray a x := ofReal_realRay a x
+
+example {p : ℝ} (hp : 0 < p) :
+    Tendsto (fun u : ℝ => u^p * realRay p (2*u)) (𝓝[>] 0) (𝓝 (Real.Gamma p)) :=
+  tendsto_scaled_ray hp
+
+example {a : ℝ} (ha : a < 0) : Tendsto (realRay a) (𝓝[>] 0) (𝓝 (-1/a)) :=
+  tendsto_realRay_zero ha
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) (ha : a < x) :
+    0 ≤ realRay a x ∧ realRay a x ≤ 1/(x-a) := realRay_bounds a hx ha
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) : ((besselJ a x).re : ℂ) = besselJ a x :=
+  ofReal_re_besselJ a hx
+
+example (a : ℝ) : Tendsto (fun u : ℝ => u^(-a) * (besselJ a (2*u : ℝ)).re)
+    (𝓝[>] 0) (𝓝 (Real.Gamma (a+1))⁻¹) := tendsto_scaled_besselJ a
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) : besselJ a x =
+    (((∫ t in 0..π, Real.cos (a*t-x*Real.sin t)) - Real.sin (π*a)*realRay (-a) x)/π : ℝ) :=
+  integral_real_order a hx
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) : (hankelFirst a x).re = (besselJ a x).re :=
+  hankelFirst_re a hx
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) (hj : besselJ a x = 0) : deriv (besselJ a) x ≠ 0 :=
+  deriv_ne_zero_of_real_order_zero a hx hj
+
+example (a : ℝ) {b : ℝ} (hb : 2*|a|+2 < b) :
+    ∃ x ∈ Set.Ioo b (b+2*π), besselJ a (x : ℂ) = 0 := exists_real_order_zero_Ioo a hb
+
+example (a : ℝ) : Tendsto (fun x : ℝ => √x * (besselJ a (x : ℂ)).re -
+    √(2/π) * Real.cos (x-a*(π/2)-π/4)) atTop (𝓝 0) := tendsto_large_argument_real a
+
+example (a z : ℂ) : hankelFirst (-a) z = exp (a*π*I)*hankelFirst a z :=
+  hankelFirst_neg_order a z
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) : neumann a x = ((hankelFirst a x).im : ℝ) :=
+  neumann_real a hx
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) (ha : Real.sin (π*a) ≠ 0) : neumann a x =
+    ((Real.cos (π*a)*(besselJ a x).re-(besselJ (-a) x).re)/Real.sin (π*a) : ℝ) :=
+  neumann_nonintegral a hx ha
+
+open scoped ComplexConjugate
+
+example (a : ℝ) {x : ℝ} (hx : 0 < x) : hankelSecond a x = conj (hankelFirst a x) :=
+  hankelSecond_real_axis a hx

@@ -677,9 +677,12 @@ public import ProjectAinos.SpecialFunctions.AiryMacdonald
 public import ProjectAinos.SpecialFunctions.AiryVertical
 public import ProjectAinos.SpecialFunctions.Bessel
 public import ProjectAinos.SpecialFunctions.BesselAsymptotic
+public import ProjectAinos.SpecialFunctions.BesselConnection
 public import ProjectAinos.SpecialFunctions.BesselContour
 public import ProjectAinos.SpecialFunctions.BesselGenerating
 public import ProjectAinos.SpecialFunctions.BesselIntegral
+public import ProjectAinos.SpecialFunctions.BesselRayLimit
+public import ProjectAinos.SpecialFunctions.BesselRealAxis
 public import ProjectAinos.SpecialFunctions.BesselSquare
 public import ProjectAinos.SpecialFunctions.BesselTurningIntegral
 public import ProjectAinos.SpecialFunctions.BesselTurningPoint
