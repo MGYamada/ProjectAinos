@@ -307,3 +307,27 @@ Only these types are constructed: the pinned Mathlib induces no connection on th
 **Interface decision.** The background is an FLRW datum with lapse 1 and `k = 0`, so the Friedmann lemmas are reused; the linearization uses the covariant first variation of `CurvedLinearization`. The equations are in trace-reversed form with the velocity normalized to first order. Whether every comoving solution is a combination of the two explicit modes (the second-order equation for `δ` with uniqueness) is not stated.
 
 **Proof status.** Proved and built. The ledger row of §115 is closed with a stated remainder (decision 14): `k = ±1` needs harmonics on `S³` and `H³`, and the reduction of a general `k = 0` perturbation to modes needs the assembly of Mathlib's Schwartz-space Fourier transform with time-dependent families. [CosmologicalPerturbation](../ProjectAinos/GeneralRelativity/CosmologicalPerturbation.lean)
+
+## GR39. Curved dust scalar modes have two regular time solutions through maximum expansion
+
+**Observation.** For lapse a exp(εU) and spatial scale (a/ψ) exp(−εU), differentiation of
+the coordinate Ricci tensor and the dust source gives U″ + 3HU′ − 2kU = 0 in conformal
+time. For a scalar harmonic with spatial eigenvalue −q the time and momentum constraints
+fix its density contrast and covelocity. With H = a′/a, the potential amplitudes H/a² and
+1 − 2(H/a²)∫a² dη have Wronskian (H²+k)/(2a²). It stays positive at the turnaround of
+the closed dust solution.
+
+**Interface decision.** The physical operator acts in the stereographic chart of the existing
+closed and open dust metrics. For each degree ℓ, multiplying a solid harmonic by ψ⁻ˡ and
+a radial profile of 2/ψ−1 gives the Gegenbauer equation with the curvature sign. The closed
+solutions are polynomials. The open profiles are derivatives of the continuous zonal
+eigenfunction, with the sine seed replaced by r at the spectral threshold. Inverting the even
+cosh series as a function of r² shows that every profile is smooth at the chart origin.
+
+**Proof status.** Both explicit Einstein dust backgrounds satisfy the linearized residual with
+the specified metric, density and velocity for every scalar mode constructed here. Ordinary
+dust density makes the two time solutions independent. The decomposition of a general
+time-dependent perturbation into scalar, vector and tensor parts remains open.
+[Curved dust modes](../ProjectAinos/GeneralRelativity/CurvedCosmology.lean) ·
+[First variation](../ProjectAinos/GeneralRelativity/CurvedPerturbation.lean) ·
+[Time solutions](../ProjectAinos/GeneralRelativity/CurvedDustGrowth.lean)

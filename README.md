@@ -208,10 +208,14 @@ A smooth charge has a unique decaying potential with `−Δφ = ρ` and a finite
 has the boosted field, in Lorenz gauge the field equations are wave equations, plane waves have
 two polarizations, and the coherency matrix of partially polarized light is positive.
 [Guide](docs/electrodynamics.md#static-fields-the-moving-charge-and-waves-3638-4648-50)
-Localized charges and currents have multipole expansions with uniform remainders, a conserved
+Localized charges and currents have multipole expansions with uniform remainders. In order ℓ,
+the electric potential has exactly 2ℓ + 1 real spherical components. The corresponding series
+for the mutual energy converges when the enclosing charge balls are disjoint. A conserved
 current has a unique static magnetic field with a magnetic moment of `e/2m` times the angular
 momentum, the wave equation and the Coulomb field are resolved in Fourier components, and the field
-in a periodic box is a sum of modes.
+in a periodic box is a sum of modes. A perfectly conducting circular cylinder admits axial
+Maxwell modes at arbitrarily high zeros of J₀(kR). In a conducting ball the dipole modes
+satisfy both wall conditions at the positive zeros of j₁(kR).
 [Guide](docs/electrodynamics.md#multipoles-magnetostatics-and-the-fourier-resolution-4044-49-51-52)
 The retarded potentials of a conserved current are given by an explicit integral that solves
 Maxwell's equations with causal support, and their time transform solves the Helmholtz equation.
@@ -219,19 +223,26 @@ Maxwell's equations with causal support, and their time transform solves the Hel
 A point charge on a world line slower than light has the Liénard–Wiechert field and is its source,
 slow charges interact through the Darwin Lagrangian to second order, a localized source radiates
 the power of its far-field amplitude with dipole, quadrupole and magnetic-dipole terms, and a fast
-charge radiates with Liénard's power, concentrated in a narrow cone.
+charge radiates with Liénard's power, concentrated in a narrow cone. For circular motion the
+observed polarizations give the power in each harmonic. Near the critical frequency γ³|Ω| the
+angular spectrum has the two Macdonald profiles K⅓ and K⅔.
 [Guide](docs/electrodynamics.md#radiation-63-6567-7174-77)
 High-frequency fields satisfy the eikonal and transport equations at their leading orders, with
 null rays, conserved intensity and Fermat's principle; wave fronts focus by a Riccati law, ideal
 instruments are similarities, and the error of geometrical optics is bounded by the wave energy.
+For a single real wave with a nonstationary spatial phase on the amplitude supports, ε² times its
+energy tends to half the leading intensity of the quadrature pair.
 [Guide](docs/electrodynamics.md#geometrical-optics-5358)
+The straight-edge Fresnel intensity equals one quarter on the shadow boundary.
 Light diffracted by an aperture has the Fresnel and Fraunhofer forms with explicit remainders, a
 radiating charge feels a damping force, and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·
 [Guide](docs/electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
 Colliding charges radiate with the dipole spectrum, whose low-frequency end is fixed by the
-change of velocity.
+change of velocity. On a Kepler ellipse the two Cartesian acceleration harmonics are given by
+Jₙ(nε) and J′ₙ(nε). For either sign of the Coulomb interaction, the hyperbolic collision
+spectrum is given by the outgoing Hankel function at imaginary order and argument.
 [Guide](docs/electrodynamics.md#radiation-in-collisions-6870)
 
 For general relativity, an observer with a timelike velocity measures
@@ -307,7 +318,9 @@ curved background, and the time lines of a synchronous system focus under the en
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, test bodies follow the
 post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,
-and the approach to a cosmological singularity passes between Kasner epochs.
+and the approach to a cosmological singularity passes between Kasner epochs. On closed and open
+dust backgrounds, discrete S³ harmonics and continuous H³ harmonics give scalar density and
+velocity perturbations with two independent time solutions.
 [Guide](docs/general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
 
 Topic 6 follows the provisional Boltzmannian typicality plan in
@@ -338,6 +351,15 @@ the mathematical foundations for mechanics, special relativity,
 electrodynamics, and general relativity. The foundation’s implementation
 plan and the Lean results for these subjects are documented in
 [Shared smooth algebra and geometry](docs/shared-smooth-algebra-and-geometry.md).
+
+The [Courant–Hilbert 2.0 correspondence](docs/courant-hilbert.md) maps the fourteen
+chapters of the German first editions to Lean proofs and open problems. The shared
+special-functions library starts with Jacobi elliptic functions and the Legendre
+polynomials used in orthogonal expansions and the exterior Newton kernel. Fischer
+decomposition gives harmonic polynomials in every positive dimension, with
+2ℓ + 1 independent restrictions of degree ℓ on the two-sphere. In every positive
+ambient dimension these degree spaces form the orthogonal Hilbert sum of real L²
+for surface measure.
 
 See the [proof development record](docs/proof-development.md) for the history of the Lean formalization.
 

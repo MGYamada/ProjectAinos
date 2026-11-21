@@ -369,3 +369,50 @@ These notes record mathematical distinctions and interface decisions in `Project
 **Interface decision.** Real vector functions are transformed through the norm-preserving complexification `ℝ³ → ℂ³`; the observer time is inverted by `Function.invFun`, so the definitions carry no proof arguments. The sphere integral of the limit is evaluated for a sudden start by Archimedes; for two nonzero asymptotic velocities the integrand is not axially symmetric and needs a Feynman-parameter reduction, not stated.
 
 **Proof status.** Proved and built; the ledger row of §69 is *proved* in the scope of decision 15. [CollisionSpectrum](../ProjectAinos/Electrodynamics/Radiation/CollisionSpectrum.lean)
+
+## ED47. Nonstationary spatial phase fixes the energy of one real wave
+
+**Observation.** The doubled phase in the square of a real wave contributes zero in the short-wavelength limit if the spatial gradient is nonzero on the closed amplitude supports at the observation time. The other half of the square is the nonoscillating intensity.
+
+**Interface decision.** The regularity and support assumptions concern the given wave. Its phase may have critical points elsewhere. A transported bump supplies a positive-intensity instance.
+
+**Proof status.** For ED §58 the normalized energy of a single wave tends to L/2, where L is the leading energy of the quadrature pair in ED41. For positive L this gives E ≥ L/(4ε²) at sufficiently short wavelength. [Single-wave energy](../ProjectAinos/Electrodynamics/Optics/SingleWave.lean)
+
+## ED48. Eccentric anomaly identifies the harmonics of the existing elliptic orbit
+
+**Observation.** The angular Jacobian lifts the eccentric anomaly along the polar-angle flow of ED45 through every period. The mean anomaly grows at the constant rate 2π/T. Its inverse Jacobian cancels the change of variables in the Fourier coefficient.
+
+**Interface decision.** The elliptic radiation calculation uses the same Cartesian acceleration, orbital period and Fourier convention as the Parseval power sum.
+
+**Proof status.** For every nonzero integer harmonic and 0 < ε < 1, the two acceleration coefficients equal the stated multiples of J′ₙ(nε) and Jₙ(nε). The hyperbolic orbit integral still needs its own transform. [Kepler harmonics](../ProjectAinos/Electrodynamics/Radiation/KeplerHarmonics.lean)
+
+## ED49. The observer's clock determines the harmonic spectrum of a circular orbit
+
+**Observation.** Differentiating the transverse retarded position twice gives the electric
+amplitude up to −e/(4π). In observer phase, the retarded orbital phase solves Kepler's equation
+with eccentricity β times the tangential viewing component. Both polarizations acquire the
+same phase when the observing meridian rotates.
+
+**Interface decision.** A positive spectral line collects both signs of the Fourier frequency.
+The polar integral of Jₙ² is obtained by integrating its absolutely convergent Cauchy product.
+The critical limit is stated for the measured electric field and allows both frequency and
+latitude to move throughout a bounded set in their scaled coordinates.
+
+**Proof status.** The exact angular power and its solid-angle integral are proved for each
+positive harmonic. With r = (n/2)⅓ and bounded r/γ and r sin(latitude), the scaled angular
+power has the K⅓ and K⅔ profile. The angle-integrated line converges after rescaling to the
+K⅔ boundary term minus the K⅓ tail integral with its Lorentz-factor weight. [Harmonic power](../ProjectAinos/Electrodynamics/Radiation/HarmonicPower.lean) · [Critical spectrum](../ProjectAinos/Electrodynamics/Radiation/CriticalSpectrum.lean)
+
+## ED50. Hyperbolic anomaly gives the imaginary-order scattering spectrum
+
+**Observation.** The scattering solution in Mechanics §19 has time (H sinh u + a u)/v∞
+and radius H cosh u + a, with H = √(a² + ρ²). Positivity of the radius makes the time
+change global for both signs of a. Moving the oscillatory contour down by iπ/2 gives the
+absolutely convergent Macdonald integral.
+
+**Interface decision.** Rotating the two Schläfli rays proves equality of the outgoing
+Hankel and Macdonald representations throughout the open first quadrant. The latter
+therefore supplies the positive imaginary axis and its argument derivative.
+
+**Proof status.** The two acceleration transforms give the Hankel spectral density for
+positive frequency and the net longitudinal impulse at zero. [Contour continuation](../ProjectAinos/SpecialFunctions/HankelUpper.lean) · [Scattering transform](../ProjectAinos/SpecialFunctions/HyperbolicTransform.lean) · [ED §70](../ProjectAinos/Electrodynamics/Radiation/HyperbolicSpectrum.lean)
