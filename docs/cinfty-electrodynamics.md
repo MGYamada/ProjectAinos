@@ -15,11 +15,10 @@ It does not inherit the mechanics manuscript's historical infrastructure gaps.
 
 ## Implementation plan and current progress
 
-The proof-status baseline is `main` at
-[`8bb80ce`](https://github.com/MGYamada/ProjectAinos/commit/8bb80ce), reviewed
-on 17 November 2026. **Proved** refers to the cited Lean statement with its
-actual hypotheses. **Target** marks a proposed theorem or construction.
-A **conditional target** carries a named mathematical or physical premise.
+The component table starts from `8bb80ce` on 17 November 2026. At the review
+of `02045fb` on 22 November, all 66 [ledger](#ledger) rows were closed.
+The three sections with remainders concern diffraction and radiation
+damping. [Proof strategy for the remaining targets](#proof-strategy-for-the-remaining-targets)
 
 | Component | Status at the baseline | Reuse and remaining obligation |
 | --- | --- | --- |
@@ -131,6 +130,84 @@ completion.
 Count: 63 proved, 3 informal.
 
 Closed with a stated remainder: §59 (the relation to the Maxwell screen problem and the uniqueness of the half-space problem); §75 (the limit of the self-consistent extended-charge dynamics); §76 (the derivation of the covariant self-force and the selection of physical solutions).
+
+### Proof strategy for the remaining targets
+
+**§59. Uniqueness for the scalar aperture field.** The Rayleigh–Sommerfeld
+integral already gives a Helmholtz solution, the limit at each fixed
+boundary point along its normal, and the outgoing estimate `IsRadiating`.
+Use the scaled Poisson kernel and uniform continuity of the compactly
+supported data to prove joint continuity up to the plane. For uniqueness
+at `k > 0`, take the difference of two solutions with the same trace.
+First prove odd reflection for zero-trace solutions smooth up to the
+plane, then justify the reflection
+for a solution continuous up to the plane and classical in the interior.
+On the reflected space derive Green's identity from `Sphere.flux_sub_flux`,
+applied to the real and imaginary parts. Excise a small ball about the pole
+of the outgoing fundamental solution. Its inner flux recovers the value
+at the pole and the outer boundary term tends to zero by `IsRadiating`.
+Apply the uniqueness theorem to the aperture bump and then to arbitrary
+continuous compactly supported data.
+[Diffraction checks](../checks/DiffractionAPI.lean) ·
+[Sphere flux theorem](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorFlux.lean)
+
+For the Maxwell comparison, first take smooth compact aperture data and
+set `E = curl (0,0,u)` for its outgoing scalar field. Prove Maxwell's
+equations with `B = curl E/(ik)` in vacuum units `c = ε₀ = μ₀ = 1`, using
+the time dependence `exp(−ikt)`. Move tangential derivatives onto the
+aperture data to obtain the conducting boundary condition off the opening.
+This constructs one polarization with prescribed trace. The scattering
+problem must determine the aperture trace from the incident field.
+Formulate tangential traces in the space of square-integrable fields with
+square-integrable curl, match the two sides across the opening, and impose
+finite local energy at the edge. To justify a scalar screen approximation,
+specify the aperture, polarization and limiting regime and bound the error
+in the resulting trace or far field. [Aperture field](../ProjectAinos/Electrodynamics/Diffraction/Aperture.lean)
+
+**§75. Size dependence before a limit of motions.** The small parameter
+`κ` in `selfForce_expansion` slows a prescribed path at fixed charge
+profile. Introduce an independent radius `a > 0` and a smooth radial unit
+bump `ηₐ(x) = a⁻³ η(x/a)`. Change variables in the two integrals defining
+`selfMass` and `selfEnergy` to prove their exact `1/a` scaling at fixed
+charge. Rotation invariance and `trace_selfMass` then fix the isotropic mass
+counterterm. Check the normalized bump on the existing oscillating path.
+[Self-force and damping checks](../checks/RadiationReactionAPI.lean)
+
+Next write the retarded force at positive radius as a functional of a
+subluminal history. Give the history, external force, bare mass and time
+interval explicitly. Start with inertial history and zero external force
+as an exact solution. For driven data, prove local existence and stability
+at fixed radius, then track the radius dependence of the existence time,
+remainder and stability constants after fixing the observed mass. Specify
+a joint regime for `a` and `κ` and compare the resulting trajectories to
+the effective equation with the same observed mass and compatible data.
+Bound the trajectory error on a common slow-time interval to the order
+needed to resolve the damping term.
+[Radiation reaction](../ProjectAinos/Electrodynamics/RadiationReaction.lean)
+
+**§76. Solution selection and derivation of the force.** Selection can
+start independently of the shrinking-charge limit. For rectilinear motion
+parametrized by proper time, express the four-velocity through the rapidity
+and let `α` be the proper-time derivative of the rapidity. Project the
+Lorentz–Dirac equation onto the unit spacelike direction of motion for a
+prescribed proper force `f(t)`.
+The target is `mα = f + mτ α′` with `mτ = (2/3)e²/(4π) > 0` and `m > 0`.
+For smooth compactly supported forcing, an integrating factor gives the
+unique future-bounded proper acceleration
+`α(t) = (mτ)⁻¹ ∫ₜ^∞ exp(−(s−t)/τ) f(s) ds`. Test zero force against
+`abrahamLorentz_free_eq_zero` and a positive pulse for acceleration before
+the pulse. Extension to a general external field requires a boundary
+condition at future times, existence and uniqueness in a stated class,
+and a bound comparing the selected motion to the reduced equation.
+
+For the independent derivation, specify an accelerated world tube, its
+caps and the source or excision prescription. Integrate stress flux and
+the change of bound field momentum, isolate the divergent inertial term,
+and estimate the remainder as the tube radius shrinks. The finite term
+must reproduce `lorentzDiracForce` with the existing normalization and
+the integrated Schott balance. Use the hyperbolic-motion example, where
+the self-force vanishes and the radiated four-momentum is nonzero.
+[Covariant force and balance checks](../checks/RadiationReactionAPI.lean)
 
 ### After the mechanics programme
 
@@ -1070,7 +1147,9 @@ exposes the numbered contents. The preview suppresses the first section title
 of each chapter. The entries below are our formalization tasks, not copied
 section titles or claims about a particular translation's wording.
 
-Each section has one primary row. Dependencies refer to targets E1–E33 and
+The last column records progress at the design baseline or the cited wave.
+The [ledger](#ledger) gives the current status of each section.
+Dependencies refer to targets E1–E33 and
 analytic interfaces below. **Partial** means a proved core with the listed
 extension still open; **proved core** never claims complete textbook coverage.
 The targets and additional hypotheses are project design, not a summary
@@ -1274,6 +1353,11 @@ rather than being relegated to prose after an overstrong API is defined.
 
 ## Milestones
 
+ED0–ED8 record the original programme, including extensions beyond the
+section dictionary. The next section-level proofs start with scalar
+uniqueness, charge-radius scaling and the rectilinear selection theorem
+in the [current proof strategy](#proof-strategy-for-the-remaining-targets).
+
 | Stage | Deliverable | Acceptance gate |
 | --- | --- | --- |
 | ED0 | Consolidated current proof map | Verify declarations, flat/curved distinctions and exact existing regressions |
@@ -1307,10 +1391,8 @@ The [completion criterion](#after-the-mechanics-programme) decides when the
 volume is done.
 
 Closing issue #8 records the completion of this documentation migration.
-These milestones remain research work. The issue's former interface
-ratification requirement is retained here: proposed bundle/jet/variation
-interfaces require review and concrete comparison theorems before they are
-treated as a stable public API.
+The issue calls for review and concrete comparison theorems for proposed
+bundle, jet and variation interfaces before they become a stable public API.
 
 ## Evidence and proof ledger
 

@@ -12,20 +12,22 @@ It follows the research-manuscript structure of
 The [research outline](../README.md) remains the subject-level plan;
 [the GR implementation guide](general-relativity.md) records existing APIs.
 
-The proof-status baseline is `main` at
-[`8bb80ce`](https://github.com/MGYamada/ProjectAinos/commit/8bb80ce), reviewed
-on 17 November 2026. It includes the native Lorentz geometry and particle
-limit tracked by [#52](https://github.com/MGYamada/ProjectAinos/issues/52)
+The original design used `8bb80ce` on 17 November 2026. It includes the
+native Lorentz geometry and particle limit tracked by [#52](https://github.com/MGYamada/ProjectAinos/issues/52)
 and the flat Maxwell action from
 [#44](https://github.com/MGYamada/ProjectAinos/issues/44). This is the GR
 volume of the design from [#8](https://github.com/MGYamada/ProjectAinos/issues/8).
+At the review of `02045fb` on 22 November, all 39 [ledger](#ledger) rows
+were closed, including eight with remainders.
+[Proof strategy for the remaining targets](#proof-strategy-for-the-remaining-targets)
 
 ## Implementation plan and current progress
 
 The existing library already goes substantially beyond a coordinate
 prototype. Its Lorentz metrics, connections, curvature, differential forms,
 and particle variations live on actual tangent bundles.
-The next major step is to make the metric dynamical.
+The table records the starting point and early implementations. The ledger
+includes subsequent proofs for the dynamical metric, waves and cosmology.
 
 | Component | Status at the baseline | Next obligation |
 | --- | --- | --- |
@@ -96,7 +98,7 @@ completion.
 | 105 | Gravitational fields at large distances from bodies | informal | Closed with a stated remainder. Proved (F24a): `CoordinateMetric.superpotential_self`, `totalDensity`, `sum_fderiv_superpotential`, `divergence_chargeField`, `Sphere.flux`, `Sphere.flux_sub_flux`, `surfaceCharge`, `surfaceCharge_sub_surfaceCharge_eq`, `surfaceCharge_eq_integral_ball`, `hasDerivAt_surfaceCharge_time`, `GeneralRelativity.IsAsymptoticallyGalilean`, `isAsymptoticallyGalilean_minkowski`, `isotropicMetric`, `isAsymptoticallyGalilean_isotropicMetric`, `IsAsymptoticallyGalileanAt.abs_pseudotensor_le`, `tendsto_surfaceCharge`, `charge`, `charge_eq_integral`, `surfaceCharge_isotropicMetric`, `charge_zero_eq_mass`, `charge_const_of_flux`, `charge_const`: for coordinates Galilean at spatial infinity on the slices `x⁰ = const` (`g − η = O(1/r)`, `∂g = O(1/r²)`, `∂²g = O(1/r³)`), the pseudotensor is `O(1/r⁴)` by the quadratic form (96.9); the superpotential flux through spheres differs between two radii by the integral of the conserved total `|g|(κT + t)` over the shell (a divergence theorem on spheres from the rotation invariance of the sphere measure), so the charges `P^i` are the limits of surface integrals and equal the volume integrals for compact matter; `P⁰ = M` for the metric `η + (2M/r)(dt² + dx²)` outside a ball (the library's charge is `κ` times L&L's); and the charges are constant in time when the flux through large spheres vanishes. Minkowski space is the instance of the limit theorems. Not proved: the four-vector character of `P^i` under linear Lorentz changes of coordinates, which needs the pullback of a coordinate metric along a linear map with the tensor law of the pseudotensor and the charges on tilted hyperplanes (a Fubini decomposition of space-time with a spatial cut-off); and the far form of the stationary field with mass and angular momentum (GR31) |
 | 106 | The equations of motion of a system of bodies in the second approximation | informal | Closed with a stated remainder. Proved (F24c): `PostNewtonian.PostNewtonianMetricFamily`, `Example.family`, `coefficient_acceleration`, `postNewtonianCorrection`, `postNewtonianAcceleration`, `acceleration_sub_eq`, `acceleration_error`, `native_acceleration_error`, `geodesic_acceleration_error`, `lagrangian`, `eulerLagrange_lagrangian`, `eulerLagrange_acceleration_error`, `eulerLagrange_sub_acceleration`, `exists_eulerLagrange_rest`: for a given 1PN metric family `g_tt = −c² − 2Φ − 2(Φ² + ψ)/c² + O(c⁻⁴)`, `g_ti = B_i/c² + O(c⁻⁴)`, `g_ij = (1 − 2Φ/c²)δ_ij + O(c⁻⁴)` with uniform bounds (decision 15 on #135: test-body motion), the coordinate-time acceleration of a geodesic equals the explicit 1PN acceleration up to `O(c⁻⁴)` uniformly for bounded velocities, and so does the acceleration of every path satisfying the Euler–Lagrange equations of the test-body Lagrangian `−mc² + mv²/2 − mΦ + (mv⁴/8 − (3/2)mΦv² − mΦ²/2 − mψ + mB·v)/c²` (106.x). Not proved: the Einstein–Infeld–Hoffmann Lagrangian (106.17) for `N` bodies, whose term-by-term match with the field of the other bodies holds in a particular gauge of `B` and is within reach as an algebraic model statement, and not stated; and that the EIH dynamics approximate solutions of the Einstein equations for `N` bodies — point masses have no distributional Einstein equations and their self-fields diverge, and the post-Newtonian expansion for extended bodies needs the well-posedness of the Einstein–Euler system, absent from Mathlib and the library (GR36) |
 | 107 | Weak gravitational waves | proved | `CoordinateMetric.linearizedRicci`, `CoordinateMetric.hasDerivAt_ricciOf_linear`, `CoordinateMetric.hasDerivAt_einsteinOf_linear`, `CoordinateMetric.isAdmissible_linear`, `CoordinateMetric.hasDerivAt_ricci_linearMetricFamily`, `CoordinateMetric.linearizedRicci_add_lie`, `CoordinateMetric.linearizedRicci_of_isHarmonicGauge`, `CoordinateMetric.linearizedEinstein_of_isHarmonicGauge`, `WeakWaves.planeWave`, `WeakWaves.isHarmonicGauge_planeWave_iff`, `WeakWaves.linearizedRicci_planeWave`, `WeakWaves.gaugeSpace_le_polarizationSpace`, `WeakWaves.finrank_polarizationSpace`, `WeakWaves.finrank_gaugeSpace`, `WeakWaves.finrank_polarizationQuotient`, `WeakWaves.polarizationBasis`. Scope: perturbations `η + εh` of Minkowski coefficients on an open set; for bounded `h` and small `ε` these are actual Lorentz metrics. The linearized Ricci and Einstein tensors are the `ε`-derivatives, also of the native tensors of the actual family. They are invariant under `h ↦ h + L_ξη`, and in harmonic gauge they are `−½□h` and `−½□h̄`. A plane wave `e cos(k·x)` with null `k` and harmonic amplitude is a linearized vacuum solution. For every nonzero null `k` the harmonic amplitudes form a 6-dimensional space containing the 4-dimensional gauge space, and the quotient has dimension 2, with the plus and cross polarizations as a basis for an axial `k`. Not stated: gauge fixing, which needs a solution of `□χ = f`, and the energy flux (107.11) |
-| 108 | Gravitational waves in curved space-time | informal | Closed with a stated remainder. Proved (F24b): `CoordinateMetric.covDerivTwo`, `curvedChristoffel`, `palatini`, `perturbationFamily`, `familyChristoffelDeriv_eq`, `familyChristoffelDeriv_eq_of_family`, `familyRicciDeriv_eq`, `hasDerivAt_ricciOf_perturbation`, `coordinateLieMetric`, `familyRicciDeriv_lie_eq_zero`, `familyRicciDeriv_add_lie`, `ShortWave.shortWaveSymbol`, `IsShortWaveGauge`, `familyRicciDeriv_shortWave`, `familyRicciDeriv_phase`, `tendsto_shortWave`, `shortWaveSymbol_eq_zero_iff`, `isGeodesicOn_ray`, `curvedChristoffel_minkowski`, `isGeodesicOn_planeWave_ray`, `familyRicciDeriv_lie_strong`: on a background given by coefficients on an open set, the derivative of `Γ` along `g + εh` is `½ g^{kl}(∇_i h_jl + ∇_j h_li − ∇_l h_ij)` and that of the Ricci tensor is the Palatini form; on a Ricci-flat background `h = L_X g` gives `δRic = 0` (by comparison with the pullback along `z ↦ z + εX` and naturality, without a flow); for `h = a cos(ψ/ε)` the first variation is exactly `ε⁻² cos · S + ε⁻¹ sin · R₁ + cos · δRic[a]`, and in the gauge `k^a ā_ab = 0` the symbol `S = ½ g(k, k) a` vanishes iff `k = dψ` is null (the sign corrects the outline); the integral curves of the raised gradient of a null phase are null geodesics. Flat space and the Rosen plane waves, including the strong one, are instances. Not proved: the covariant transport equation (the `ε⁻¹` coefficient is stated exactly, and its covariant reduction is within reach and not stated); the effective stress (108.x) of the waves as a source of the background curvature, which needs the second variation of the Ricci tensor and a two-scale expansion with back-reaction, absent from the library; and the approximation of exact solutions, which needs the local well-posedness of the Einstein equations (quasilinear hyperbolic theory, absent from Mathlib) (GR33) |
+| 108 | Gravitational waves in curved space-time | informal | Closed with a stated remainder. Proved (F24b): `CoordinateMetric.covDerivTwo`, `curvedChristoffel`, `palatini`, `perturbationFamily`, `familyChristoffelDeriv_eq`, `familyChristoffelDeriv_eq_of_family`, `familyRicciDeriv_eq`, `hasDerivAt_ricciOf_perturbation`, `coordinateLieMetric`, `familyRicciDeriv_lie_eq_zero`, `familyRicciDeriv_add_lie`, `ShortWave.shortWaveSymbol`, `IsShortWaveGauge`, `familyRicciDeriv_shortWave`, `familyRicciDeriv_phase`, `tendsto_shortWave`, `shortWaveSymbol_eq_zero_iff`, `isGeodesicOn_ray`, `curvedChristoffel_minkowski`, `isGeodesicOn_planeWave_ray`, `familyRicciDeriv_lie_strong`: on a background given by coefficients on an open set, the derivative of `Γ` along `g + εh` is `½ g^{kl}(∇_i h_jl + ∇_j h_li − ∇_l h_ij)` and that of the Ricci tensor is the Palatini form; on a Ricci-flat background `h = L_X g` gives `δRic = 0` (by comparison with the pullback along `z ↦ z + εX` and naturality, without a flow); for `h = a cos(ψ/ε)` the first variation is exactly `ε⁻² cos · S − ε⁻¹ sin · R₁ + cos · δRic[a]`, and in the gauge `k^a ā_ab = 0` the symbol `S = ½ g(k, k) a` vanishes iff `k = dψ` is null (the sign corrects the outline); the integral curves of the raised gradient of a null phase are null geodesics. Flat space and the Rosen plane waves, including the strong one, are instances. Not proved: the covariant transport equation (the `ε⁻¹` coefficient is stated exactly, and its covariant reduction is within reach and not stated); the effective stress (108.x) of the waves as a source of the background curvature, which needs the second variation of the Ricci tensor and a two-scale expansion with back-reaction, absent from the library; and the approximation of exact solutions, which needs the local well-posedness of the Einstein equations (quasilinear hyperbolic theory, absent from Mathlib) (GR33) |
 | 109 | Strong gravitational waves | proved | `ExactPlaneWave.metric`, `ExactPlaneWave.christoffelOf_eq`, `ExactPlaneWave.ricciOf_eq_null`, `ExactPlaneWave.ricciOf_eq_zero_iff`, `ExactPlaneWave.ricciOf_toData_eq_zero_iff`, `ExactPlaneWave.ricciOf_strong`, `ExactPlaneWave.chartCurvature_strong_ne_zero`, `ExactPlaneWave.ricciOf_weak`, `ExactPlaneWave.hasDerivAt_ricciOf_weak`, `ExactPlaneWave.not_ricciFlat_weak`. Scope: plane waves of diagonal Rosen form `−dt² + a(u)² dx² + b(u)² dy² + dz²`, `u = t − z`, on the slab where `a, b > 0`. The exact Ricci tensor is `−(a''/a + b''/b) ℓ_iℓ_k` with `ℓ = du`. With `a = Le^β`, `b = Le^{−β}` the vacuum equation is `L'' + β'²L = 0`. The explicit vacuum wave `L = cos u`, `β = u` on `|u| < π/2` has `R¹₀₁₀ = −2 tan u`, nonzero wherever `u ≠ 0`, and its co-ordinates break down at the focusing `u = ±π/2`. For `a = e^{εf}`, `b = e^{−εf}` the first-order part of the Ricci tensor vanishes, while the exact residual `−2ε²f'²ℓℓ` does not. Not stated: the general non-diagonal `γ_ab(u)` and the global structure of the focusing surface |
 | 110 | The radiation of gravitational waves | proved | `LinearizedRadiation.LocalizedStress`, `retardedPerturbation`, `metricPerturbation`, `flatBox_retardedPerturbation`, `harmonic_retardedPerturbation`, `isHarmonicGauge_metricPerturbation`, `linearizedEinstein_retardedPerturbation`, `secondMoment`, `integral_stress_eq_moment`, `farZone_quadrupole`, `tendstoUniformlyOn_mul_retardedPerturbation`, `quadraticPseudotensor`, `gravitationalPower`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `tendsto_pseudotensorFlux_slow`, `Wave.planeFlux_traceReverse`, `Wave.integral_ttSquare`, `binary_power`, `binary_power_smooth`. Scope: linearized theory on Minkowski space with `κ = 8πG`, `c = 1`; a smooth symmetric stress conserved in the flat sense and supported in a fixed ball; the flat retarded integral replaces the Green-operator hypothesis. `h̄ = +2κ R T` is in harmonic gauge and solves the linearized Einstein equations `δG = κT`; `∫ T_{αβ} = ½ Ï_{αβ}` for the second moment; in the far zone `R h̄_{αβ}` tends to `(κ/2π) ∫ T_{αβ}` at the retarded time, which for a slow source is `(κ/4π) ε² Ï` with an `O(ε³)` remainder. The energy flux, defined by the quadratic part of the pseudotensor of `η + h` (divided by `κ`), through large spheres at fixed retarded time tends to the radiated power, which in harmonic gauge is `¼ Σ (ΛȦ)²` with the transverse-traceless projection; for a slow source it is `(κ/360π) ε⁶ Σ D⃛²` with an `O(ε⁷)` remainder, L&L's (110.16) `(G/45) D⃛²` exactly. A circular binary, as a smooth conserved source built from a superpotential, radiates `(32/5)G μ² a⁴ Ω⁶` up to `O(Ω⁷)`. The quadratic pseudotensor is defined as an array; that it is the limit of the pseudotensor of the actual metrics `η + εh` divided by `ε²` is not stated (GR32) |
 | 111 | Isotropic space | proved | `SpaceForm.coefficient`, `SpaceForm.christoffelOf_eq`, `SpaceForm.curvatureOf_eq`, `SpaceForm.ricciOf_eq`, `SpaceForm.sphere_embedding`, `SpaceForm.sphereHomeomorph`, `SpaceForm.hyperboloid_embedding`, `SpaceForm.hyperboloidHomeomorph`, `SpaceForm.sphere_firstFundamentalForm`, `SpaceForm.hyperboloid_firstFundamentalForm`, `SpaceForm.integral_inv_conformalFactor_pow_three`. Scope: explicit models, the alternative of the dictionary. The conformally flat metric `ψ_k⁻² δ` with `ψ_k = 1 + k|x|²/4` has the curvature `k(δ^l_i h_jm − δ^l_j h_im)` and `Ric = 2k h` (111.1)–(111.2). For `k = 1`, ℝ³ is the sphere `S³` minus a point; for `k = −1`, the ball `|x| < 2` is the whole hyperboloid `H³`; `k = 0` is ℝ³. Both are stated by embeddings with their homeomorphisms and the pulled-back metric. The closed space of radius `a` has volume `2π²a³`. Not stated: the local classification of homogeneous isotropic three-metrics |
@@ -111,7 +113,151 @@ completion.
 
 Count: 31 proved, 8 informal.
 
-Closed with a stated remainder: §85 (the derivatives of covectors, of contravariant and mixed tensors, and of the general tensor shapes); §96 (the four-vector character of the energy and momentum; their expression as integrals over the slices and their conservation are proved with §105); §102 (the Einstein equations across the junction and the event horizon); §105 (the four-vector character of the charges and the far form of the stationary field); §106 (the Einstein–Infeld–Hoffmann Lagrangian and its justification by the Einstein equations); §108 (the effective stress of the waves and the approximation of exact solutions); §115 (the scalar–vector–tensor reduction of a general perturbation); §119 (geodesic incompleteness, which needs global causal theory, and the structure of the general solution near the singularity).
+Closed with a stated remainder: §85 (the derivatives of covectors, of contravariant and mixed tensors, and of the general tensor shapes); §96 (the four-vector character of the energy and momentum; their expression as integrals over the slices and their conservation are proved with §105); §102 (the Einstein equations across the junction and the event horizon); §105 (the four-vector character of the charges and the far form of the stationary field); §106 (the Einstein–Infeld–Hoffmann Lagrangian and its justification by the Einstein equations); §108 (covariant amplitude transport, the effective stress of the waves and the approximation of exact solutions); §115 (the scalar–vector–tensor reduction of a general perturbation); §119 (geodesic incompleteness, which needs global causal theory, and the structure of the general solution near the singularity).
+
+### Proof strategy for the remaining targets
+
+Start with the covector and hom-bundle construction (§85), the algebraic
+many-body Lagrangian (§106), and flat Fourier assembly (§115). Each can be
+checked against existing theorems. §§96 and 105 need the same charge on a
+tilted slice. The global parts of §§102 and 119 need causal curves on a
+time-oriented spacetime.
+
+**§85. One connection for each tensor shape.** Induct on the existing
+constructors of `Tensor.Shape`. Use the directional derivative on scalars
+and the given tangent connection on vectors. For a hom bundle, construct
+the induced connection from
+`(∇ₓ A)(v) = ∇ₓ(A v) − A(∇ₓ v)`. Prove independence of the local extension
+of `v`, linearity in each fibre argument, the Leibniz rule in `A`, and
+regularity in a bundle chart. This gives the dual, contravariant and mixed
+cases by recursion. Check the chart signs on a covector and an endomorphism.
+Recover the existing bilinear and trilinear derivatives by evaluation and
+test metric compatibility on a curved metric.
+[Tensor shapes](../ProjectAinos/SmoothGeometry/Tensor/Bundle.lean) ·
+[Bianchi and derivative checks](../checks/BianchiAPI.lean)
+
+**§§96 and 105. Four-momentum on tilted hyperplanes.** The §96 guide
+records the local pseudotensor identity proved in F13. The later §105
+guide establishes `charge_eq_integral` and `charge_const` on coordinate
+time slices under decay and flux hypotheses. The open part of §96 is
+the transformation law for the resulting four components.
+[Local pseudotensor (§96)](general-relativity.md#the-energy-momentum-pseudotensor-96) ·
+[Coordinate-slice charges (§105)](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
+First pull the metric coefficients through a constant Lorentz matrix and
+derive the transformation of the total density from the superpotential
+and `|det L| = 1`. For each free index integrate the resulting conserved
+current as an oriented three-form on a spacelike affine hyperplane.
+Prove agreement with `charge` on a coordinate slice. Compare that slice
+with a fixed boost's tilted slice using a spatial cutoff at radius `R`.
+The lateral boundary has area of order `R²` and time extent of order `R`.
+Uniform `O(R⁻⁴)` total density on that wedge makes the side integral
+`O(1/R)`. Prove the bound from uniform metric decay and matter support
+on the wedge, then pass to the limit to obtain `P′ = L P` with the
+corresponding active transformation. Check zero charge on Minkowski space
+and establish the wedge estimate directly for the stationary isotropic
+example. Its rest energy `8πM` gives a nonzero boosted test in the library's
+units. This would discharge §96 and the covariance part of §105.
+[Asymptotic charge checks](../checks/AsymptoticChargeAPI.lean)
+
+For the stationary far field still required by §105, fix asymptotically
+Cartesian, mass-centred coordinates and a gauge. First integrate the
+stationary linearized equations for a localized conserved source. Extract
+the mass monopole and the current dipole by Taylor expansion of the Newton
+kernel with a differentiated remainder. Compare the coefficients with the
+mass and angular momentum surface integrals. Check the zero-spin limit and
+the leading spin term of the Kerr exterior in compatible coordinates. A
+general stationary exterior also needs bounds for the nonlinear source
+and its contribution at the claimed order.
+[Linearized source](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) ·
+[Kerr exterior](../ProjectAinos/GeneralRelativity/Kerr.lean)
+
+**§106. The Einstein–Infeld–Hoffmann Lagrangian.** Work on the open set of
+collision-free configurations of finitely many bodies. Fix the vector
+potential gauge of GR36, omit each body's own potential, and derive the
+velocity-pair and three-mass coefficients of (106.17) with their
+symmetry factors. Differentiate the resulting Lagrangian in positions
+and velocities. Check permutation invariance, the Newtonian limit and the
+test-mass limit against `eulerLagrange_acceleration_error`. To compare
+actual trajectories with Einstein evolution, choose smooth extended
+bodies, specify their centres and separation scale, and prove field and
+stability bounds uniform on a common interval in that gauge. The existing
+`O(c⁻⁴)` acceleration estimate assumes a supplied 1PN metric family.
+[Post-Newtonian checks](../checks/PostNewtonianAPI.lean) ·
+[Gauge choice in GR36](general-relativity-notes.md#gr36-post-newtonian-test-body-motion-follows-from-the-lowered-geodesic-equation)
+
+**§108. Transport before wave stress.** The transport contribution in
+`familyRicciDeriv_shortWave` is `−ε⁻¹ sin(ψ/ε) transportTerm`. Expand it
+on a Ricci-flat patch for a smooth null phase with nonzero gradient and a
+symmetric amplitude satisfying `IsShortWaveGauge`. Project onto the
+transverse, trace-free polarizations along the ray. The target there
+is `2∇ₖ a + (div k) a = 0` for the transported polarization, with `k`
+the raised phase gradient. For an equation on the full amplitude, derive
+the longitudinal terms and impose the next-order harmonic gauge equation
+explicitly. The coordinate proof can use `covDerivTwo` before §85 is
+complete. Test a linear phase in Minkowski space and a curved Rosen wave.
+Next compute the second variation on an actual metric family, average its
+quadratic term with a specified wavelength scaling, and check the flux
+normalization against §110. Approximation by exact solutions further
+requires constraint-compatible data, a common existence interval and a
+stability estimate in a stated norm. [Curved wave checks](../checks/CurvedWavesAPI.lean) ·
+[Radiation flux checks](../checks/GravitationalRadiationAPI.lean)
+
+**§115. Reconstruct a perturbation from modes.** The flat synchronous
+scalar, vector and tensor equations are proved for individual modes.
+`closed_dust_modes` and `open_dust_modes` also give two independent
+scalar time solutions in longitudinal gauge, including the density and
+covelocity. At each nonzero flat spatial frequency, split a symmetric
+Fourier coefficient into scalar, transverse vector and transverse
+traceless parts and prove that the projectors sum to the identity.
+Assemble smooth frequency packets supported on an annulus. Commute the
+derivatives of the linearized residual with the integral using uniform
+integrable bounds, and recover the input by Fourier inversion. Test a
+packet with both scalar and tensor components. Then remove the cutoffs
+under derivative-weighted integrability assumptions, handling zero
+frequency and the residual synchronous gauge separately.
+[Flat mode checks](../checks/CosmologicalPerturbationAPI.lean) ·
+[Curved dust modes](../checks/CurvedDustAPI.lean)
+
+On S³ and H³, use the existing scalar harmonic completeness and hyperbolic
+synthesis to reconstruct scalar data in the curved chart. Prove convergence
+in a norm controlling the derivatives in the field equation. Full curved
+reconstruction additionally requires vector and tensor harmonics, their
+orthogonality and completeness, and the treatment of gauge and exceptional
+eigenmodes on each spatial domain. [Spherical completeness](../ProjectAinos/SpecialFunctions/SphericalCompleteness.lean) ·
+[Hyperbolic synthesis and completeness checks](../checks/HyperbolicHarmonicsAPI.lean)
+
+**§102. A weak junction and a global horizon.** Begin with the proved flat
+dust interior matched to the Lemaître exterior. Construct common Gaussian
+normal coordinates on a collar of the timelike boundary. Integrate the
+curvature against compactly supported tensor densities on the two smooth sides.
+With a common normal the surface Einstein term is proportional to
+`[K_ab] − h_ab [tr K]`. Use the matched induced metric and second
+fundamental form to cancel it and recover the piecewise dust/vacuum
+equations weakly. Test a mismatched normal derivative to detect a genuine
+surface term. For the horizon, construct an asymptotically flat exterior
+with a specified future null infinity. Trace the outgoing null generator
+from its crossing of the stellar surface at `r = 2M` back into the dust,
+and prove escape and non-escape on its two sides using causal comparison.
+This identifies the boundary of the causal past of future null infinity.
+[Collapse and junction checks](../checks/CollapseAPI.lean)
+
+**§119. From focusing to incompleteness.** The proved Raychaudhuri bound
+controls the lifetime of a synchronous chart. First exhibit a past-directed
+comoving unit timelike geodesic in a nonflat Kasner model on `t > 0`.
+Prove that it has finite proper time to `t = 0` and no endpoint in the
+spacetime. A curvature invariant diverging there would also obstruct a
+smooth extension through that endpoint. For a general focusing theorem,
+assume a time-oriented globally hyperbolic spacetime, a compact spacelike
+Cauchy surface with uniformly negative future expansion, and timelike
+Ricci convergence. Prove existence of proper-time maximizers from the
+surface and exclusion of focal points along their maximizing segments.
+The uniform focusing bound then bounds their lengths and yields future
+timelike incompleteness. The §102 causal-curve definitions can be reused.
+The exact Bianchi II bounce of §118 supplies a model check for an epoch
+transition. Generic BKL asymptotics near a singularity remain a research
+question. [Focusing checks](../checks/FocusingAPI.lean) ·
+[Kasner checks](../checks/KasnerAPI.lean) · [Single-bounce checks](../checks/BKLAPI.lean)
 
 ### After the mechanics programme
 
@@ -1032,8 +1178,8 @@ The topic labels below are paraphrases. Targets, premises, and status are this
 project's design, not claims that the textbook already supplies formal proofs.
 There is exactly one row for each integer from 81 through 119.
 
-`Existing + planned` means that the row contains a proved ingredient and a
-new obligation. It does not mark the whole textbook section complete.
+The last column records progress at the design baseline or the cited wave.
+The [ledger](#ledger) gives the current status and scope of each section.
 The dependency names refer to the interfaces and milestones below.
 
 | § | Topic and formalization target | Hypotheses and boundary | Tier / dependency | Status |
@@ -1053,7 +1199,7 @@ The dependency names refer to the interfaces and milestones below.
 | 93 | Gravitational action: differentiate the actual relative action | Compactly supported symmetric variation, signature preservation | [B: Variation,Stokes,C] / G2 | Proved (F11) for coefficients on an open set of the model space, with a four-dimensional curved regression; chart-supported variations on a manifold not stated |
 | 94 | Matter response: derive Hilbert stress-energy and conservation | Concrete differentiable matter action, field equations for conservation | [B: Variation,C] / G3 | Proved (F12) for a scalar field and a fixed Maxwell field on an open set of the model space, with conservation through the Einstein equations and, for the scalar field, from its own field equation |
 | 95 | Einstein dynamics: prove stationarity equivalence and trace reversal | κ positive, constant Λ, realized arbitrary compact metric tests | [C,B: Support] / G3 | Proved (F12) for `κ ≠ 0` on an open set of the model space, with native trace and trace reversal |
-| 96 | Gravitational energy bookkeeping: distinguish pseudotensors and charges | Declared coordinates or asymptotic structure, convergence and flux bounds | [A*,C,D] / boundary and charge interfaces | Closed with a remainder (F13): the coordinate identities and the expression (96.9); the charges at infinity not stated |
+| 96 | Gravitational energy bookkeeping: distinguish pseudotensors and charges | Declared coordinates or asymptotic structure, convergence and flux bounds | [A*,C,D] / boundary and charge interfaces | The coordinate identities and (96.9) are proved (F13). Limits of the charges on coordinate slices and conservation are proved with §105 (F24a). Lorentz covariance remains |
 | 97 | Synchronous slicing: construct local geodesic coordinates and constraints | Spacelike initial slice, positive lapse; restrict before caustics | [C,B: ODE] / G4 | Proved (F13) for given normal geodesics and for synchronous coefficients on an open set, with the constraint components of the Ricci tensor |
 | 98 | Frame formulation: prove tetrad/metric equation equivalence locally | Local coframe, Lorentz transition maps, torsion-free connection | [A*,C] / frame and Einstein APIs | Proved (F13) for a given smooth orthonormal frame on an open set |
 | 99 | Newtonian field equation: derive a controlled Poisson limit | Einstein–matter family, explicit scaling and derivative remainders | [P,B: Limit,C] / G5 | Proved (F18): static weak-field families, `R₀₀ = N Δ_γ N`, the exact remainder, the bound of order `ε` and the Poisson limit |
@@ -1062,10 +1208,10 @@ The dependency names refer to the interfaces and milestones below.
 | 102 | Spherical collapse: match interior/exterior geometry and track trapping | Specified matter solution, junction data, causal domains | [C,D] / G4,G6 | Closed with a stated remainder (F25b): free fall, the red shift, trapping and the Oppenheimer–Snyder junction; the distributional Einstein equations and the event horizon not stated |
 | 103 | Dust collapse: derive reduced evolution and matching | Nonnegative density, dust conservation, pre-shell-crossing interval | [C,B: ODE,D] / matter and junctions | Proved (F25b): the equations of Tolman, the solutions, the collapse at a finite time and the matching to the exterior |
 | 104 | Rotation and nonspherical collapse: exact rotating metrics and bounded claims | Regular metric domain; global collapse/uniqueness hypotheses separate | [A*,C,D,P] / G6 | Proved (F14, PR B): Kerr on its exterior domain with a certified Christoffel table, Killing fields, ergoregion, frame dragging and the Schwarzschild limit |
-| 105 | Far gravitational fields: define asymptotic moments and charges | Quantified decay, admissible coordinate changes, finite flux | [C,B: Asymptotics,D] / G5,G7 | Closed with a stated remainder (F24a): the charges as limits of surface integrals, `P⁰ = M` and conservation; the four-vector character not stated |
+| 105 | Far gravitational fields: define asymptotic moments and charges | Quantified decay, admissible coordinate changes, finite flux | [C,B: Asymptotics,D] / G5,G7 | Closed with a stated remainder (F24a): the charges as limits of surface integrals, `P⁰ = M` in physical units, and conservation. Lorentz covariance and the stationary mass and spin far field remain |
 | 106 | Corrections to many-body motion: justify an expansion with remainder | Smooth-source or explicit singular model, gauge and scale separation | [P,B: Asymptotics,D] / G5 | Closed with a stated remainder (F24c): test-body 1PN motion to `O(c⁻⁴)`; EIH and the justification by the Einstein equations not stated |
 | 107 | Weak waves: derive the linearized Einstein operator and polarizations | Actual metric family, harmonic gauge, nonzero null wave covector | [A*,B: Variation,C] / G7 | Proved (F18): the linearization as the derivative of an actual family, gauge invariance, `−½□h̄` in harmonic gauge, plane waves and the two polarizations of every nonzero null covector |
-| 108 | Waves on curved geometry: background linearization and short-wave transport | Background solution, controlled wavelength family and remainder | [C,P,B: Asymptotics] / G7 | Closed with a stated remainder (F24b): the Palatini first variation, gauge invariance, the short-wave eikonal and null-geodesic rays; the effective stress and the approximation of exact solutions not stated |
+| 108 | Waves on curved geometry: background linearization and short-wave transport | Background solution, controlled wavelength family and remainder | [C,P,B: Asymptotics] / G7 | Closed with a stated remainder (F24b): the Palatini first variation, gauge invariance, the short-wave eikonal and null-geodesic rays; covariant amplitude transport, effective stress and approximation by exact solutions remain |
 | 109 | Nonlinear wave geometries: verify exact examples | Smooth Lorentz domain and exact Ricci residual, not only first order | [A*,C] / G7 | Proved (F18): diagonal Rosen waves with the exact Ricci tensor, the vacuum equation `L'' + β'²L = 0`, a non-flat strong wave, and a residual of second order |
 | 110 | Gravitational emission: derive retarded multipoles and radiation flux | Conserved source, Green contract, far-zone and slow-source bounds | [P,B: Asymptotics,D] / G7 | Proved (F24b): the retarded perturbation, the far-zone quadrupole amplitude and the quadrupole formula (110.16) for the pseudotensor flux |
 | 111 | Spatial isotropy: build constant-curvature spatial models | Homogeneity/isotropy or explicit model, topology stated | [C] / G8 | Proved (F15a): explicit conformally flat models with their embeddings, `Ric = 2k h` and the volume of the closed space |
@@ -1205,8 +1351,10 @@ types and hypotheses support them.
 
 ## Milestones
 
-Each milestone is a separately reviewable body of proofs. Documentation
-completion closes the design task; these proof milestones remain future work.
+These milestones give the original development order. The ledger records
+the scope reached in each textbook section. The current dependencies and
+acceptance examples for the eight remainders appear in the
+[proof strategy](#proof-strategy-for-the-remaining-targets).
 
 | ID | Deliverable | Acceptance condition |
 | --- | --- | --- |
