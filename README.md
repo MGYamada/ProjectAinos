@@ -236,7 +236,9 @@ For a single real wave with a nonstationary spatial phase on the amplitude suppo
 energy tends to half the leading intensity of the quadrature pair.
 [Guide](docs/electrodynamics.md#geometrical-optics-5358)
 The straight-edge Fresnel intensity equals one quarter on the shadow boundary.
-Light diffracted by an aperture has the Fresnel and Fraunhofer forms with explicit remainders, a
+Light diffracted by an aperture is the unique radiating solution with the aperture data on the plane,
+with one polarization of the Maxwell field, and has the Fresnel and Fraunhofer forms with explicit
+remainders, a
 radiating charge feels a damping force, and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·

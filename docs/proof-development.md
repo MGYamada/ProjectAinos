@@ -970,6 +970,14 @@ integrals are exact outside the source, and it matches the Kerr exterior at lead
 ledger rows §§96 and 105 are *proved* (GR 35 of 39).
 [Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 
+Green's identity on a half-space shifted into the interior, with the Dirichlet Green function of
+the shifted plane, represents every radiating solution of the Helmholtz equation by its values on
+that plane, and the limit to the aperture plane shows that the Rayleigh–Sommerfeld field is the
+only radiating solution with the aperture data, for every real wave number. The curl of the
+scalar field along the normal is a time-harmonic Maxwell field whose tangential trace vanishes on
+the screen. The ledger row §59 is *proved* for the half-space Dirichlet model (ED 64 of 66).
+[Guide](electrodynamics.md#diffraction-5961)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

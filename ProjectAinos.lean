@@ -24,7 +24,11 @@ public import ProjectAinos.Electrodynamics.DarwinPointCharge
 public import ProjectAinos.Electrodynamics.Diffraction.Aperture
 public import ProjectAinos.Electrodynamics.Diffraction.Fraunhofer
 public import ProjectAinos.Electrodynamics.Diffraction.Fresnel
+public import ProjectAinos.Electrodynamics.Diffraction.GreenField
+public import ProjectAinos.Electrodynamics.Diffraction.MaxwellAperture
+public import ProjectAinos.Electrodynamics.Diffraction.Representation
 public import ProjectAinos.Electrodynamics.Diffraction.StraightEdge
+public import ProjectAinos.Electrodynamics.Diffraction.Uniqueness
 public import ProjectAinos.Electrodynamics.DivergenceExamples
 public import ProjectAinos.Electrodynamics.ElectrostaticEnergy
 public import ProjectAinos.Electrodynamics.Electrostatics
@@ -440,6 +444,7 @@ public import ProjectAinos.SmoothGeometry.DifferentialForm.OneForm
 public import ProjectAinos.SmoothGeometry.DifferentialForm.TwoForm
 public import ProjectAinos.SmoothGeometry.DifferentialForm.VolumeNormalization
 public import ProjectAinos.SmoothGeometry.DifferentialForm.WedgeAlgebra
+public import ProjectAinos.SmoothGeometry.Euclidean.HalfSpaceDivergence
 public import ProjectAinos.SmoothGeometry.Euclidean.PolarIntegral
 public import ProjectAinos.SmoothGeometry.Euclidean.PolarLIntegral
 public import ProjectAinos.SmoothGeometry.Euclidean.Similarity
