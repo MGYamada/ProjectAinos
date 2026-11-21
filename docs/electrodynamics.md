@@ -674,6 +674,9 @@ A smooth function of the squared radius gives Maxwell’s equations through the 
 end-plate conditions. At a zero of J₀(kR) the electric field and normal magnetic field vanish
 on the side wall. Every positive radius has unbounded such frequencies with nonzero axial field
 (`cylinderMode_maxwell`, `cylinderMode_side`, `cylinderMode_endPlates`, `exists_cylinderMode`).
+In a ball, the smooth dipole potential has spatial direction (−y,x,0). At the unbounded positive
+zeros of j₁(kR), the electric field and normal magnetic field vanish on the wall. The central
+magnetic field at time zero is positive (`sphereMode_maxwell`, `sphereMode_wall`, `exists_sphereMode`).
 
 **Scope.** The field of a line current,
 the solution as a Schwartz function, the classification of tempered solutions, the completeness of

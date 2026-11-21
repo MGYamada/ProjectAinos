@@ -103,7 +103,9 @@ Rayleigh’s expansion of a complex plane wave follows by interchanging its Tayl
 the finite Legendre expansions of the monomials. The regular and singular spherical Bessel
 modes have Wronskian 1/z². In ED §52, the squared-radius Bessel equation verifies the axial
 Maxwell mode in the entire cylinder, and the positive zeros give an unbounded family satisfying
-the conducting conditions at the side and ends. [Plane waves](../ProjectAinos/SpecialFunctions/SphericalBessel.lean) · [Cylinder](../ProjectAinos/Electrodynamics/CylindricalCavity.lean)
+the conducting conditions at the side and ends. The spherical Bessel ladder and Rolle’s theorem
+give unbounded positive zeros of each spherical order. The regular j₁ dipoles of a conducting
+ball satisfy both wall conditions and have nonzero central field. [Ball](../ProjectAinos/Electrodynamics/SphericalCavity.lean) [Plane waves](../ProjectAinos/SpecialFunctions/SphericalBessel.lean) · [Cylinder](../ProjectAinos/Electrodynamics/CylindricalCavity.lean)
 
 The Gaussian primitive on the ray (1 − i)R evaluates both Fresnel integrals at positive
 infinity. This gives the limit of the rectangular Fresnel fields at a straight edge in ED §60.

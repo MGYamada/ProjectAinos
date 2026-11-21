@@ -94,6 +94,7 @@ public import ProjectAinos.Electrodynamics.SourceCovariance
 public import ProjectAinos.Electrodynamics.SourcedAction
 public import ProjectAinos.Electrodynamics.SourcedActionExamples
 public import ProjectAinos.Electrodynamics.Spectral
+public import ProjectAinos.Electrodynamics.SphericalCavity
 public import ProjectAinos.Electrodynamics.SphericalMultipole
 public import ProjectAinos.Electrodynamics.StaticField
 public import ProjectAinos.Electrodynamics.StressTensor
@@ -503,6 +504,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.HodgeFlat
 public import ProjectAinos.SmoothGeometry.Lorentzian.HodgeSmooth
 public import ProjectAinos.SmoothGeometry.Lorentzian.HodgeSquare
 public import ProjectAinos.SmoothGeometry.Lorentzian.InertialDerivatives
+public import ProjectAinos.SmoothGeometry.Lorentzian.IsotropicRicci
 public import ProjectAinos.SmoothGeometry.Lorentzian.Killing
 public import ProjectAinos.SmoothGeometry.Lorentzian.LeviCivita
 public import ProjectAinos.SmoothGeometry.Lorentzian.Linearized
@@ -713,6 +715,7 @@ public import ProjectAinos.SpecialFunctions.SphericalBasis
 public import ProjectAinos.SpecialFunctions.SphericalBessel
 public import ProjectAinos.SpecialFunctions.SphericalBesselEquation
 public import ProjectAinos.SpecialFunctions.SphericalBesselRecurrence
+public import ProjectAinos.SpecialFunctions.SphericalBesselZeros
 public import ProjectAinos.SpecialFunctions.SphericalCompleteness
 public import ProjectAinos.SpecialFunctions.SphericalComplex
 public import ProjectAinos.SpecialFunctions.SphericalHarmonics

@@ -214,7 +214,8 @@ for the mutual energy converges when the enclosing charge balls are disjoint. A 
 current has a unique static magnetic field with a magnetic moment of `e/2m` times the angular
 momentum, the wave equation and the Coulomb field are resolved in Fourier components, and the field
 in a periodic box is a sum of modes. A perfectly conducting circular cylinder admits axial
-Maxwell modes at arbitrarily high zeros of J₀(kR).
+Maxwell modes at arbitrarily high zeros of J₀(kR). In a conducting ball the dipole modes
+satisfy both wall conditions at the positive zeros of j₁(kR).
 [Guide](docs/electrodynamics.md#multipoles-magnetostatics-and-the-fourier-resolution-4044-49-51-52)
 The retarded potentials of a conserved current are given by an explicit integral that solves
 Maxwell's equations with causal support, and their time transform solves the Helmholtz equation.
