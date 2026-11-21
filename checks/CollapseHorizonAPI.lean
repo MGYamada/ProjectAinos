@@ -210,7 +210,7 @@ example :
       (MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) →
         (MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) →
           MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceReverse
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceRev
 
 example :
     {d : ℕ} →
@@ -270,9 +270,9 @@ example :
 example :
     ∀ {d : ℕ} (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
       (x : MinkowskiModel d),
-      ∑ j : Fin (d + 1), ∑ l : Fin (d + 1), ricciOf C x j l * traceReverse C φ x j l =
+      ∑ j : Fin (d + 1), ∑ l : Fin (d + 1), ricciOf C x j l * traceRev C φ x j l =
         ∑ j : Fin (d + 1), ∑ l : Fin (d + 1), einsteinOf C x j l * φ x j l :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.sum_ricciOf_mul_traceReverse
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.sum_ricciOf_mul_traceRev
 
 example :
     ∀ {d : ℕ} (k : Fin (d + 1)) {C : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ},
@@ -343,8 +343,8 @@ example :
       {φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ},
       (∀ (j l : Fin (d + 1)), ContDiff ℝ ∞ fun (x : MinkowskiModel d) => φ x j l) →
         ∀ (j l : Fin (d + 1)),
-          ContDiffOn ℝ ∞ (fun (x : MinkowskiModel d) => traceReverse g.coefficient φ x j l) ↑U :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.contDiffOn_traceReverse
+          ContDiffOn ℝ ∞ (fun (x : MinkowskiModel d) => traceRev g.coefficient φ x j l) ↑U :=
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.contDiffOn_traceRev
 
 example :
     ∀ {d : ℕ} {σ : LorentzConvention} {U : Opens (MinkowskiModel d)}
@@ -368,25 +368,25 @@ example :
 
 example :
     ∀ {d : ℕ} {C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
-      {y : MinkowskiModel d}, φ y = 0 → traceReverse C φ y = 0 :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceReverse_eq_zero
+      {y : MinkowskiModel d}, φ y = 0 → traceRev C φ y = 0 :=
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceRev_eq_zero
 
 example :
     ∀ {d : ℕ} {C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
       {x : MinkowskiModel d},
       x ∉ tsupport φ →
         ∀ (j l : Fin (d + 1)),
-          (fun (y : MinkowskiModel d) => traceReverse C φ y j l) =ᶠ[𝓝 x]
+          (fun (y : MinkowskiModel d) => traceRev C φ y j l) =ᶠ[𝓝 x]
             fun (_ : MinkowskiModel d) => 0 :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceReverse_eventuallyEq_zero
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.traceRev_eventuallyEq_zero
 
 example :
     ∀ {d : ℕ} {C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
       {x : MinkowskiModel d},
       x ∉ tsupport φ →
         ∀ (j l : Fin (d + 1)),
-          fderiv ℝ (fun (y : MinkowskiModel d) => traceReverse C φ y j l) x = 0 :=
-  @ProjectAinos.SmoothGeometry.CoordinateMetric.fderiv_traceReverse_eq_zero
+          fderiv ℝ (fun (y : MinkowskiModel d) => traceRev C φ y j l) x = 0 :=
+  @ProjectAinos.SmoothGeometry.CoordinateMetric.fderiv_traceRev_eq_zero
 
 example :
     ∀ {d : ℕ} {C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}

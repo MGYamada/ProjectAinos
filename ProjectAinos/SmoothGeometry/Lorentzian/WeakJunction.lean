@@ -19,10 +19,10 @@ given by a coordinate metric `gm` on the side `x^k < 0` and `gp` on the side `x^
 The Einstein tensor of such a metric is a distribution, defined by one integration by parts.
 
 * `weakEinsteinDensity`, `weakEinstein`: for a tensor density `φ^{jl}` with the trace reversal
-  `Φ^{jl} = φ^{jl} − ½ g^{jl} g_{mn} φ^{mn}` (`traceReverse`), `⟨G, φ⟩ = ∫ (−Γ^i_{jl} ∂_iΦ^{jl} +
+  `Φ^{jl} = φ^{jl} − ½ g^{jl} g_{mn} φ^{mn}` (`traceRev`), `⟨G, φ⟩ = ∫ (−Γ^i_{jl} ∂_iΦ^{jl} +
   Γ^i_{il} ∂_jΦ^{jl} + (Γ^i_{ia}Γ^a_{jl} − Γ^i_{ja}Γ^a_{il}) Φ^{jl}) d^{d+1}x`, which needs only
   first derivatives of the metric; for a smooth metric it is `∫ G_{jl} φ^{jl}`
-  (`weakEinsteinDensity_eq_of_mem`, from `weak_algebra` and `sum_ricciOf_mul_traceReverse`).
+  (`weakEinsteinDensity_eq_of_mem`, from `weak_algebra` and `sum_ricciOf_mul_traceRev`).
   `IsTestDensity`, `IsWeakEinstein`: the weak Einstein equations `⟨G, φ⟩ = κ ∫ T_{jl} φ^{jl}` for
   all smooth compactly supported test tensor densities on a collar.
 * `integral_divergence_upper`, `integral_divergence_lower`: the divergence theorem on the two
@@ -357,7 +357,7 @@ def glue (k : Fin (d + 1)) (Cm Cp : MinkowskiModel d → Matrix (Fin (d + 1)) (F
 
 /-- The trace reversal `Φ^{jl} = φ^{jl} − ½ C^{jl} C_{mn} φ^{mn}` of a test density `φ` with the
 coefficients `C`; `G_{jl} φ^{jl} = R_{jl} Φ^{jl}`. -/
-def traceReverse (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
+def traceRev (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
     (x : MinkowskiModel d) : Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ :=
   φ x - ((∑ m, ∑ n, C x m n * φ x m n) / 2) • (C x)⁻¹
 
@@ -368,10 +368,10 @@ only the first derivatives of the coefficients. -/
 def weakEinsteinDensity (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
     (x : MinkowskiModel d) : ℝ :=
   (∑ i, ∑ j, ∑ l, (-(christoffelOf C x i j l *
-      fderiv ℝ (fun y => traceReverse C φ y j l) x (Pi.single i 1)) +
-    christoffelOf C x i i l * fderiv ℝ (fun y => traceReverse C φ y j l) x (Pi.single j 1))) +
+      fderiv ℝ (fun y => traceRev C φ y j l) x (Pi.single i 1)) +
+    christoffelOf C x i i l * fderiv ℝ (fun y => traceRev C φ y j l) x (Pi.single j 1))) +
   ∑ j, ∑ l, (∑ i, ∑ a, (christoffelOf C x i i a * christoffelOf C x a j l -
-    christoffelOf C x i j a * christoffelOf C x a i l)) * traceReverse C φ x j l
+    christoffelOf C x i j a * christoffelOf C x a i l)) * traceRev C φ x j l
 
 /-- **The distributional Einstein tensor** `⟨G, φ⟩ = ∫ weakEinsteinDensity C φ` of coefficients
 `C` with locally bounded first derivatives, on a tensor density `φ` (Lebesgue measure of the
@@ -395,8 +395,8 @@ def IsWeakEinstein (U : Set (MinkowskiModel d))
 from the Ricci tensor. -/
 def weakFlux (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ) (i : Fin (d + 1))
     (x : MinkowskiModel d) : ℝ :=
-  -(∑ j, ∑ l, christoffelOf C x i j l * traceReverse C φ x j l) +
-    ∑ m, ∑ l, christoffelOf C x m m l * traceReverse C φ x i l
+  -(∑ j, ∑ l, christoffelOf C x i j l * traceRev C φ x j l) +
+    ∑ m, ∑ l, christoffelOf C x m m l * traceRev C φ x i l
 
 /-- Reordering a triple sum. -/
 theorem sum_rotate {n : ℕ} (X : Fin n → Fin n → Fin n → ℝ) :
@@ -441,14 +441,14 @@ theorem weak_algebra {n : ℕ} (Γ : Fin n → Fin n → Fin n → ℝ)
 
 /-- `R_{jl} Φ^{jl} = G_{jl} φ^{jl}`: the trace reversal moves the trace term of the Einstein
 tensor onto the test density. -/
-theorem sum_ricciOf_mul_traceReverse (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
+theorem sum_ricciOf_mul_traceRev (C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ)
     (x : MinkowskiModel d) :
-    ∑ j, ∑ l, ricciOf C x j l * traceReverse C φ x j l =
+    ∑ j, ∑ l, ricciOf C x j l * traceRev C φ x j l =
       ∑ j, ∑ l, einsteinOf C x j l * φ x j l := by
   set t := ∑ m, ∑ n, C x m n * φ x m n with ht
-  have e1 (j l : Fin (d + 1)) : ricciOf C x j l * traceReverse C φ x j l =
+  have e1 (j l : Fin (d + 1)) : ricciOf C x j l * traceRev C φ x j l =
       ricciOf C x j l * φ x j l - t / 2 * (ricciOf C x j l * (C x)⁻¹ j l) := by
-    simp only [traceReverse, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, ← ht]
+    simp only [traceRev, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, ← ht]
     ring
   have e2 (j l : Fin (d + 1)) : einsteinOf C x j l * φ x j l =
       ricciOf C x j l * φ x j l - scalarOf C x / 2 * (C x j l * φ x j l) := by
@@ -626,9 +626,9 @@ section Side
 variable {σ : LorentzConvention} {U : Opens (MinkowskiModel d)} (g : CoordinateMetric σ d U)
   {φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
 
-theorem contDiffOn_traceReverse (hφ : ∀ j l, ContDiff ℝ ∞ fun x => φ x j l) (j l : Fin (d + 1)) :
-    ContDiffOn ℝ ∞ (fun x => traceReverse g.coefficient φ x j l) U := by
-  simp only [traceReverse, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul]
+theorem contDiffOn_traceRev (hφ : ∀ j l, ContDiff ℝ ∞ fun x => φ x j l) (j l : Fin (d + 1)) :
+    ContDiffOn ℝ ∞ (fun x => traceRev g.coefficient φ x j l) U := by
+  simp only [traceRev, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul]
   exact (hφ j l).contDiffOn.sub (((ContDiffOn.sum fun m _ => ContDiffOn.sum fun n _ =>
     (g.coefficient_contDiffOn m n).mul (hφ m n).contDiffOn).div_const 2).mul
       (g.contDiffOn_coefficient_inv j l))
@@ -636,8 +636,8 @@ theorem contDiffOn_traceReverse (hφ : ∀ j l, ContDiff ℝ ∞ fun x => φ x j
 theorem contDiffOn_weakFlux (hφ : ∀ j l, ContDiff ℝ ∞ fun x => φ x j l) (i : Fin (d + 1)) :
     ContDiffOn ℝ ∞ (weakFlux g.coefficient φ i) U :=
   (ContDiffOn.sum fun j _ => ContDiffOn.sum fun l _ => (g.contDiffOn_christoffelOf i j l).mul
-    (g.contDiffOn_traceReverse hφ j l)).neg.add (ContDiffOn.sum fun m _ => ContDiffOn.sum
-      fun l _ => (g.contDiffOn_christoffelOf m m l).mul (g.contDiffOn_traceReverse hφ i l))
+    (g.contDiffOn_traceRev hφ j l)).neg.add (ContDiffOn.sum fun m _ => ContDiffOn.sum
+      fun l _ => (g.contDiffOn_christoffelOf m m l).mul (g.contDiffOn_traceRev hφ i l))
 
 /-- **The weak form on a smooth side**: where the coefficients are smooth, the weak density is
 the divergence of the flux plus `G_{jl} φ^{jl}`. -/
@@ -650,24 +650,24 @@ theorem weakEinsteinDensity_eq_of_mem (hφ : ∀ j l, ContDiff ℝ ∞ fun x => 
   have hΓ (a b c : Fin (d + 1)) : HasFDerivAt (fun y => christoffelOf g.coefficient y a b c)
       (fderiv ℝ (fun y => christoffelOf g.coefficient y a b c) x) x :=
     (((g.contDiffOn_christoffelOf a b c).contDiffAt hU).differentiableAt (by simp)).hasFDerivAt
-  have hΦ (a b : Fin (d + 1)) : HasFDerivAt (fun y => traceReverse g.coefficient φ y a b)
-      (fderiv ℝ (fun y => traceReverse g.coefficient φ y a b) x) x :=
-    (((g.contDiffOn_traceReverse hφ a b).contDiffAt hU).differentiableAt (by simp)).hasFDerivAt
+  have hΦ (a b : Fin (d + 1)) : HasFDerivAt (fun y => traceRev g.coefficient φ y a b)
+      (fderiv ℝ (fun y => traceRev g.coefficient φ y a b) x) x :=
+    (((g.contDiffOn_traceRev hφ a b).contDiffAt hU).differentiableAt (by simp)).hasFDerivAt
   have hV (i : Fin (d + 1)) : fderiv ℝ (weakFlux g.coefficient φ i) x (Pi.single i 1) =
       -(∑ j, ∑ l, (fderiv ℝ (fun y => christoffelOf g.coefficient y i j l) x (Pi.single i 1) *
-          traceReverse g.coefficient φ x j l + christoffelOf g.coefficient x i j l *
-          fderiv ℝ (fun y => traceReverse g.coefficient φ y j l) x (Pi.single i 1))) +
+          traceRev g.coefficient φ x j l + christoffelOf g.coefficient x i j l *
+          fderiv ℝ (fun y => traceRev g.coefficient φ y j l) x (Pi.single i 1))) +
         ∑ m, ∑ l, (fderiv ℝ (fun y => christoffelOf g.coefficient y m m l) x (Pi.single i 1) *
-          traceReverse g.coefficient φ x i l + christoffelOf g.coefficient x m m l *
-          fderiv ℝ (fun y => traceReverse g.coefficient φ y i l) x (Pi.single i 1)) := by
+          traceRev g.coefficient φ x i l + christoffelOf g.coefficient x m m l *
+          fderiv ℝ (fun y => traceRev g.coefficient φ y i l) x (Pi.single i 1)) := by
     have h := ((HasFDerivAt.fun_sum (u := Finset.univ) fun j _ =>
       HasFDerivAt.fun_sum (u := Finset.univ) fun l _ =>
         (hΓ i j l).fun_mul (hΦ j l)).fun_neg).fun_add
         (HasFDerivAt.fun_sum (u := Finset.univ) fun m _ =>
           HasFDerivAt.fun_sum (u := Finset.univ) fun l _ => (hΓ m m l).fun_mul (hΦ i l))
     rw [show weakFlux g.coefficient φ i = fun y =>
-      -(∑ j, ∑ l, christoffelOf g.coefficient y i j l * traceReverse g.coefficient φ y j l) +
-        ∑ m, ∑ l, christoffelOf g.coefficient y m m l * traceReverse g.coefficient φ y i l
+      -(∑ j, ∑ l, christoffelOf g.coefficient y i j l * traceRev g.coefficient φ y j l) +
+        ∑ m, ∑ l, christoffelOf g.coefficient y m m l * traceRev g.coefficient φ y i l
       from rfl, h.fderiv]
     simp only [add_apply, neg_apply, FunLike.coe_sum, Finset.sum_apply, smul_apply,
       smul_eq_mul]
@@ -678,11 +678,11 @@ theorem weakEinsteinDensity_eq_of_mem (hφ : ∀ j l, ContDiff ℝ ∞ fun x => 
   rw [show weakEinsteinDensity g.coefficient φ x = _ from weak_algebra
     (fun i j l => christoffelOf g.coefficient x i j l)
     (fun i j l m => fderiv ℝ (fun y => christoffelOf g.coefficient y i j l) x (Pi.single m 1))
-    (fun j l => traceReverse g.coefficient φ x j l)
-    (fun j l m => fderiv ℝ (fun y => traceReverse g.coefficient φ y j l) x (Pi.single m 1))]
+    (fun j l => traceRev g.coefficient φ x j l)
+    (fun j l m => fderiv ℝ (fun y => traceRev g.coefficient φ y j l) x (Pi.single m 1))]
   congr 1
   · exact Finset.sum_congr rfl fun i _ => (hV i).symm
-  · exact sum_ricciOf_mul_traceReverse g.coefficient φ x
+  · exact sum_ricciOf_mul_traceRev g.coefficient φ x
 
 end Side
 
@@ -693,35 +693,35 @@ section Off
 variable {C φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
   {x : MinkowskiModel d}
 
-theorem traceReverse_eq_zero {y : MinkowskiModel d} (hy : φ y = 0) : traceReverse C φ y = 0 := by
-  simp [traceReverse, hy]
+theorem traceRev_eq_zero {y : MinkowskiModel d} (hy : φ y = 0) : traceRev C φ y = 0 := by
+  simp [traceRev, hy]
 
-theorem traceReverse_eventuallyEq_zero (hx : x ∉ tsupport φ) (j l : Fin (d + 1)) :
-    (fun y => traceReverse C φ y j l) =ᶠ[𝓝 x] fun _ => 0 := by
+theorem traceRev_eventuallyEq_zero (hx : x ∉ tsupport φ) (j l : Fin (d + 1)) :
+    (fun y => traceRev C φ y j l) =ᶠ[𝓝 x] fun _ => 0 := by
   filter_upwards [notMem_tsupport_iff_eventuallyEq.mp hx] with y hy
-  rw [traceReverse_eq_zero hy]
+  rw [traceRev_eq_zero hy]
   rfl
 
-theorem fderiv_traceReverse_eq_zero (hx : x ∉ tsupport φ) (j l : Fin (d + 1)) :
-    fderiv ℝ (fun y => traceReverse C φ y j l) x = 0 := by
-  rw [(traceReverse_eventuallyEq_zero hx j l).fderiv_eq]
+theorem fderiv_traceRev_eq_zero (hx : x ∉ tsupport φ) (j l : Fin (d + 1)) :
+    fderiv ℝ (fun y => traceRev C φ y j l) x = 0 := by
+  rw [(traceRev_eventuallyEq_zero hx j l).fderiv_eq]
   simp
 
 theorem fderiv_weakFlux_eq_zero (hx : x ∉ tsupport φ) (i : Fin (d + 1)) :
     fderiv ℝ (weakFlux C φ i) x = 0 := by
   have h : weakFlux C φ i =ᶠ[𝓝 x] fun _ => 0 := by
     filter_upwards [notMem_tsupport_iff_eventuallyEq.mp hx] with y hy
-    simp [weakFlux, traceReverse_eq_zero hy]
+    simp [weakFlux, traceRev_eq_zero hy]
   rw [h.fderiv_eq]
   simp
 
 theorem weakEinsteinDensity_eq_zero (hx : x ∉ tsupport φ) : weakEinsteinDensity C φ x = 0 := by
   have h0 : φ x = 0 := image_eq_zero_of_notMem_tsupport hx
-  simp [weakEinsteinDensity, fderiv_traceReverse_eq_zero hx, traceReverse_eq_zero h0]
+  simp [weakEinsteinDensity, fderiv_traceRev_eq_zero hx, traceRev_eq_zero h0]
 
 theorem weakFlux_eq_zero {y : MinkowskiModel d} (hy : φ y = 0) (i : Fin (d + 1)) :
     weakFlux C φ i y = 0 := by
-  simp [weakFlux, traceReverse_eq_zero hy]
+  simp [weakFlux, traceRev_eq_zero hy]
 
 end Off
 
@@ -858,25 +858,25 @@ theorem weakFlux_sub_weakFlux {W : Set (MinkowskiModel d)} (hW : IsOpen W)
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [← hjump l m j, ← hjump m j l, ← hjump j l m]
     ring
-  have hTR : traceReverse gm.coefficient φ z = traceReverse gp.coefficient φ z := by
-    simp only [traceReverse, hC0]
+  have hTR : traceRev gm.coefficient φ z = traceRev gp.coefficient φ z := by
+    simp only [traceRev, hC0]
   have hcomm (X : Fin (d + 1) → Fin (d + 1) → ℝ) (Y : Fin (d + 1) → ℝ) :
       ∑ l, (∑ m, X m l) * Y l = ∑ m, ∑ l, X m l * Y l := by
     simp only [Finset.sum_mul]
     exact Finset.sum_comm
   have key : weakFlux gm.coefficient φ k z - weakFlux gp.coefficient φ k z =
       ∑ j, ∑ l, (christoffelOf gp.coefficient z k j l - christoffelOf gm.coefficient z k j l) *
-          traceReverse gp.coefficient φ z j l -
+          traceRev gp.coefficient φ z j l -
         ∑ l, (∑ m, (christoffelOf gp.coefficient z m m l -
-          christoffelOf gm.coefficient z m m l)) * traceReverse gp.coefficient φ z k l := by
+          christoffelOf gm.coefficient z m m l)) * traceRev gp.coefficient φ z k l := by
     rw [hcomm]
     simp only [weakFlux, hTR, sub_mul, Finset.sum_sub_distrib]
     ring
   rw [key]
   simp only [hΓ]
-  have hTRz (j l : Fin (d + 1)) : traceReverse gp.coefficient φ z j l =
+  have hTRz (j l : Fin (d + 1)) : traceRev gp.coefficient φ z j l =
       φ z j l - (∑ m, ∑ n, gp.coefficient z m n * φ z m n) / 2 * (gp.coefficient z)⁻¹ j l := by
-    simp [traceReverse]
+    simp [traceRev]
   simp only [hTRz]
   rw [jump_algebra k hε hrow hcol hirow hicol hγ]
   -- the second fundamental forms and the induced metric
@@ -919,10 +919,10 @@ theorem integrableOn_of_continuousAt {n : ℕ} {f : (Fin n → ℝ) → ℝ} {S 
 theorem weakEinsteinDensity_congr {C C' φ : MinkowskiModel d → Matrix (Fin (d + 1)) (Fin (d + 1)) ℝ}
     {x : MinkowskiModel d} (hC : C =ᶠ[𝓝 x] C') :
     weakEinsteinDensity C φ x = weakEinsteinDensity C' φ x := by
-  have hT (j l : Fin (d + 1)) : (fun y => traceReverse C φ y j l) =ᶠ[𝓝 x]
-      fun y => traceReverse C' φ y j l := by
+  have hT (j l : Fin (d + 1)) : (fun y => traceRev C φ y j l) =ᶠ[𝓝 x]
+      fun y => traceRev C' φ y j l := by
     filter_upwards [hC] with y hy
-    simp only [traceReverse, hy]
+    simp only [traceRev, hy]
   have hd (j l : Fin (d + 1)) := (hT j l).fderiv_eq (𝕜 := ℝ)
   have hv (j l : Fin (d + 1)) := (hT j l).eq_of_nhds
   simp only [weakEinsteinDensity, christoffelOf_congr hC, hd, hv]
