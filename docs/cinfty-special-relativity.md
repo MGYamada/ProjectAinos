@@ -10,20 +10,17 @@ This is the first part of the relativity and fields trilogy requested in
 mathematical statements, prerequisite tiers, section correspondence and evidence
 ledger of [C∞ mechanics](cinfty-mechanics.md), using the constructed shared
 geometry rather than the mechanics manuscript's earlier proposed architecture.
-The proof-status baseline is `main` at
-[`8bb80ce`](https://github.com/MGYamada/ProjectAinos/commit/8bb80ce), reviewed
-on 17 November 2026. [After the mechanics programme](#after-the-mechanics-programme)
-records the completed mechanics prerequisites used by the proposed SR proofs.
+The original design used `8bb80ce` on 17 November 2026. At the review of
+`02045fb` on 22 November, all 14 [ledger](#ledger) rows were closed. The sole
+row with a remainder is §12, on the measure at fixed total momentum.
+[Proof strategy for the remaining target](#proof-strategy-for-the-remaining-target)
 
 ## Implementation plan and current progress
 
-The [research plan](../README.md) assigns Minkowski geometry and kinematics to
-§3.1 and relativistic particle dynamics to §3.2. The
-[SR implementation guide](special-relativity.md) records the former, while
-[`ParticleAction.lean`](../ProjectAinos/SpecialRelativity/ParticleAction.lean)
-already supplies part of the latter. Each implemented entry refers to the
-cited Lean definitions and theorems in their stated scope. Proposed names later
-in this document identify design targets.
+The research plan assigns Minkowski geometry and kinematics to §3.1 and
+relativistic particle dynamics to §3.2. The guide covers both, including
+mass-shell integration, collisions and the cotangent comparison.
+[Research plan](../README.md) · [SR implementation guide](special-relativity.md)
 
 | Programme component | Baseline status | Public implementation or remaining task |
 | --- | --- | --- |
@@ -41,9 +38,8 @@ in this document identify design targets.
 | Hamilton's equations along curves, the Legendre correspondence with an inverse morphism, cyclic co-ordinates | Implemented in `Mechanics` for free C∞-rings | `IsTrajectory`, `VelocitySpace.IsHyperregular`, `CyclicReduction`; the velocity ball of SR-D4 is not a free ring in the velocity |
 | Universal C∞ cotangent comparison and nonreduced families of solutions | Research targets | Not consequences of the present manifold-to-scheme functor |
 
-The existing `Electrodynamics.mass_shell` is a downstream verification of the
-normalization of `m • fourVelocity v`. It is not evidence that a complete
-SR momentum, collision or mass-shell measure API already exists.
+The component table describes the starting point. The ledger below records
+the subsequent SR proofs of shell geometry, shell measure, and collisions.
 
 ### Ledger
 
@@ -51,9 +47,9 @@ The ledger gives one status to each of §§1–14, with the vocabulary of the
 [mechanics ledger](cinfty-mechanics.md#ledger): *proved* (Lean, no `sorry`,
 axioms audited), *proved modulo interface*, *hypothesis*, *evidence* (computer
 algebra only), or *informal*. The status refers to the target of the row in the
-[dictionary](#landau-lifshitz-correspondence), whose last column records the
-baseline. A status is only promoted, and a row whose target is proved only in
-part stays at the lower status, with the proved part named. A row is closed
+[dictionary](#landau-lifshitz-correspondence), whose last column gives the
+history of implementation. A status is only promoted, and a row whose target
+is proved only in part stays at the lower status, with the proved part named. A row is closed
 when it is *proved*, or when its remark names the proved part and gives the
 reason why the rest is not proved; the rows closed in the second way are
 listed after the count. The wave names F1–F26 are those of
@@ -73,13 +69,69 @@ completion.
 | 9 | Energy and momentum | proved | `kineticMomentum`, `kineticMomentum_eq`, `sharp_kineticMomentum`, `metric_smul_fourVelocity`; the Hamiltonian on all momenta (SR-D7: `FreeParticle.hamiltonian`, `FreeParticle.isTrajectory_iff`, `FreeParticle.sum_sq_hamiltonianField_lt_one`, `FreeParticle.isIntegral_angularMomentum`, `FreeParticle.realCurve_eq_motion`, `FreeParticle.flowDomain_hamiltonianField`); the energy and the momentum measured by an observer (SR-D3: `observerEnergy_pos`, `observerEnergy_sq`, `restForm_observerVelocity_lt_one`, `observerEnergy_transform`, `observerEnergy_change`); the Legendre transformation (SR-D4: `FreeParticle.velocityOfMomentum_legendre`, `FreeParticle.legendre_velocityOfMomentum`, `FreeParticle.energy_eq_relEnergy`, `FreeParticle.stationary_iff_deriv_const`, `FreeParticle.isTrajectory_iff_legendre`, `FreeParticle.free_stationary_graph_iff`); the shell (SR-D5: `FutureShell.chart`, `FutureShell.contDiffOn_point`, `FutureShell.lorentz_mem_shell`, `FutureShell.contDiffOn_action`, `FutureShell.action_mul`, `FutureShell.scheme`, `FutureShell.lift_futureShellFunction_eq_zero_iff`); the expansion in `1/c` (SR-K5: `Newtonian.abs_energy_sub_le`, `Newtonian.abs_lagrangian_sub_le`, `Newtonian.abs_momentum_sub_le`, `Newtonian.abs_clockRate_sub_le`). Scope: `d` space dimensions, and three for the comparison with the action of space-time. The shell is a graph with one chart, in which the Lorentz group acts smoothly; the automorphisms of its C∞ scheme are not constructed, and the comparison with the ideal of the future sheet is for real points and `m > 0`. The expansion is for functions of the velocity, not for trajectories |
 | 10 | Transformation of distribution functions | proved | `FutureShell.measure`, `FutureShell.map_action_measure`, `FutureShell.integral_comp_action`, `FutureShell.numberCurrent_transform`, `FutureShell.numberDensity_transform`, `FutureShell.time_numberCurrent`, `FutureShell.numberFlux_transform`, `FutureShell.numberFlux_hyperplane`. Scope: `d` space dimensions and every mass, the mass zero included; the measure `dᵈπ/E` in the chart of the shell; the number of particles through a hypersurface that is given by a surface measure on the events and a field of normals. The two are constructed for the hyperplanes of the co-ordinates; for another hypersurface they are data, and no theorem derives them from the hypersurface. The equality of the numbers through different hypersurfaces needs a transport equation and is not treated |
 | 11 | Decay of particles | proved | `invariantMass_add_le`, `intervalQuadratic_add_eq_zero_iff`, `centreOfMomentum`, `eq_centreOfMomentum`, `not_exists_observer_of_null`, `TwoBodyDecay.energy_first`, `TwoBodyDecay.energy_second`, `TwoBodyDecay.momentum_add`, `TwoBodyDecay.momentum_sq_first`, `TwoBodyDecay.mass_add_le`, `TwoBodyDecay.eq_smul_of_threshold`, `exists_twoBodyDecay`. Scope: the decay into two particles, in `d` space dimensions; the energies in another frame are given by `observerEnergy_change`. The distribution of the directions and the decay into more than two particles are not treated |
-| 12 | Invariant cross-section | proved modulo interface | Proved: `fluxFactor_lorentz`, `fluxFactor_sq`, `fluxFactor_target_at_rest`, `measurePreserving_action_prod`, `crossSection_covariant`. Interface: a measure on the final states that the Lorentz group preserves, and a transition weight that is a Lorentz scalar. Not proved: the construction of this measure on the set where the total momentum is conserved. It needs a coarea formula or a construction with distributions, and the pinned Mathlib has no coarea formula. Special relativity does not determine the weight |
+| 12 | Invariant cross-section | proved modulo interface | Proved: `fluxFactor_lorentz`, `fluxFactor_sq`, `fluxFactor_target_at_rest`, `measurePreserving_action_prod`, `crossSection_covariant`. Interface: a measure on the final states that the Lorentz group preserves, and a transition weight that is a Lorentz scalar. Not proved: the construction of this measure on the set where the total momentum is conserved. The regular two-body construction requires a radial Jacobian and a proof of independence of the rest frame. The general regular fibre requires disintegration of the product measure. The scalar transition weight is physical input |
 | 13 | Elastic collisions of particles | proved | `mandelstam_sum`, `ElasticCollision.energy_eq`, `ElasticCollision.momentum_sq_eq`, `ElasticCollision.mandelstamT_eq`, `ElasticCollision.mandelstamT_nonpos`, `exists_elasticCollision`, `mandelstamS_target_at_rest`, `mandelstamT_elastic_target_at_rest`. Scope: the invariants `s`, `t`, `u` and the frame of the centre of momentum, in `d` space dimensions; for a target at rest, `s` and `t` in terms of the energies. The angles in the frame of the target are not computed |
 | 14 | Angular momentum | proved | `Poincare.canonical_lorentzCharge_p`, `Poincare.canonical_lorentzCharge_lorentzCharge`, `Poincare.canonical_boostCharge_p`, `Poincare.canonical_boostCharge_boostCharge`, `Poincare.inertia_zero`, `MassShell.initialData_lorentzCharge_zero_succ`, `MassShell.initialData_lorentzCharge_succ_succ`, `orbitalMoment_lorentz`, `flat_lorentzGenerator`, `kineticMomentum_lorentzGenerator`, `orbitalMoment_eq_of_stationary`, `totalMoment_freeMotion`, `sum_orbitalMoment_same_event`, `totalMoment_add_const`, `centreOfEnergy_sub`, `centreOfEnergy_freeMotion`. Scope: finitely many point particles in `d` space dimensions that move freely or collide in one event; the centre of energy for events that are simultaneous for an observer; the charges as Noether's charges for one free particle in three dimensions. The contribution of fields belongs to electrodynamics |
 
 Count: 13 proved, 1 proved modulo interface, 0 informal.
 
-Closed with a stated remainder: §12 (the measure of the final states on the set where the momentum is conserved, and the transition weight).
+Closed with a stated remainder: §12 (construction of the final-state measure at fixed total momentum, with a scalar transition weight supplied by the interaction).
+
+### Proof strategy for the remaining target
+
+Across the three volumes, 107 of the 119 sections are *proved* in their
+declared scopes. §12 is *proved modulo interface*. Three ED sections and
+eight GR sections are *informal* with a proved part and a stated remainder.
+[ED proof strategy](cinfty-electrodynamics.md#proof-strategy-for-the-remaining-targets) ·
+[GR proof strategy](cinfty-general-relativity.md#proof-strategy-for-the-remaining-targets)
+
+**§12. Two outgoing particles at fixed total momentum.** Start in three
+space dimensions with a future timelike total momentum `P`, rest mass `M`,
+and outgoing masses `m₃,m₄ ≥ 0` with `M > m₃ + m₄`. The existing
+`measurePreserving_action_prod` concerns independently varying momenta.
+The desired measure lives on pairs of future-shell momenta whose sum is
+`P`. A restriction of the product measure to this lower-dimensional set
+would give zero. [Shell and rate checks](../checks/RelativisticMeasureAPI.lean)
+
+1. In the rest frame of `P`, parametrize the pair by a unit direction
+   `n`, with spatial momenta `q n` and `−q n`, where
+   `q = √λ(M²,m₃²,m₄²)/(2M)`. Prove this gives a measurable equivalence
+   onto the fibre using the energy and momentum identities of §11.
+   [Two-body decay](../ProjectAinos/SpecialRelativity/Decay.lean)
+2. Derive the normalization from the library convention `d³p/E` on each
+   shell. After fixing the total spatial momentum to zero, use polar
+   coordinates and substitute `M = E₃(r) + E₄(r)` in the radial integral.
+   The derivative at `q` is `q M/(E₃ E₄)`, so the angular measure to push
+   forward is `(q/M) dΩ`. Test the identity on compactly supported
+   functions of mass and direction. The total fibre mass must be `4πq/M`.
+   [Shell measure](../ProjectAinos/SpecialRelativity/ShellMeasure.lean) ·
+   [Sphere measure](../ProjectAinos/SmoothGeometry/Euclidean/SphereIntegral.lean)
+3. Transport this measure by a boost to `P`. Two Lorentz maps sending the
+   rest momentum to `P` differ in the rest frame by a spatial isometry.
+   Use `Sphere.measurePreserving_sphereMap` to prove choice independence
+   and `L_*ν_P = ν_{LP}` for every orthochronous `L`.
+   Extend the change-of-variables proof of
+   `crossSection_covariant` to these two fibres. Check a nonzero boost,
+   positive incoming flux, and a constant weight. The scalar transition
+   weight remains an input from the interaction. [Cross-section](../ProjectAinos/SpecialRelativity/CrossSection.lean)
+
+To identify this family as the constrained product measure, prove the
+integration formula for nonnegative test functions supported on regular
+pairs. Here `d⁴P` is Lebesgue measure on total four-momentum.
+
+$$
+\int f(p_3,p_4)\,d\mu_3\,d\mu_4
+= \int \left(\int f(p_3,p_4)\,d\nu_P\right)d^4P.
+$$
+
+Use the spatial total momentum as an integration variable and compute the
+Jacobian in the boosted rest-frame coordinates. For more outgoing
+particles, integrate out an intermediate timelike total momentum. Prove
+measurability in that momentum and iterate the integral identity on
+each regular channel before identifying different groupings.
+The radial substitution requires `q > 0`. Treat threshold fibres and null
+intermediate totals separately wherever the proposed channel meets them.
+A two-body theorem discharges only the regular two-body part of §12.
 
 ### After the mechanics programme
 
@@ -109,9 +161,9 @@ and constrained mechanics is tracked in
 - *Measures.* `Scattering.crossSection_apply` supplies a worked
   change-of-variables proof for a measurable deflection branch, and
   `Mechanics.volume_image_hamiltonianFlow` supplies a phase-volume result on
-  the flow domain. For §§10 and 12, SR-I4 still requires the measure on the
-  massive and punctured massless shells, its Lorentz pushforward law, and
-  the measure and flux factors on the collision constraint locus.
+  the flow domain. §10 now supplies the Lorentz pushforward on the massive
+  and punctured massless shells. §12 supplies the incoming flux factor.
+  SR-I4 still needs the measure on the collision constraint locus.
 - *Asymptotic statements.* `Variational.exists_second_order_bound` gives a
   uniform second-order remainder for a smooth scalar family on a compact
   parameter set. For SR-K5 and §9, state the compact velocity range and the
@@ -715,9 +767,8 @@ energies; the angles in that frame are not computed.
 
 **Target SR-C4 [B,C,P].** Construct the regular part of constrained
 multi-particle phase space and its measure from product shell measures and
-the total-momentum constraint. Use a coarea or distributional construction
-with stated hypotheses; thresholds where the constraint map loses rank
-require a separate treatment.
+the total-momentum constraint. Start with the regular two-body radial
+substitution in the [§12 proof strategy](#proof-strategy-for-the-remaining-target).
 
 For two incoming particles define the invariant flux factor
 
@@ -813,7 +864,7 @@ supports the numbering. Page numbers vary between reprints.
 | 9 | Observer energy/momentum, mass shell, coordinate-time Hamiltonian and Newtonian expansion | Future massive momentum; fixed observer; `m>0`; compact velocity bound for limit | A, A*, B; SR-D3–D5, SR-D7, SR-K5 | Momentum covector implemented; complete energy/Hamiltonian/limit API targets; SR-D7 needs only the shared Poisson API |
 | 10 | Covariance of shell distributions and number flux | Nonnegative measurable distribution; spacelike slice; integrability | B, C; SR-M1–M2 | Target |
 | 11 | Two-body decay energies, thresholds and frame conversion | Parent `M>0`; daughter future shells; conservation; nonzero daughter energies | A*; SR-C1–C2 | Target |
-| 12 | Invariant phase-space rate and cross-section construction | Regular constraint locus; nonzero incoming flux; scalar transition weight | B, C, P; SR-M1, SR-C4 | Conditional target; no interaction weight is supplied by SR |
+| 12 | Invariant phase-space rate and cross-section construction | Regular constraint locus; nonzero incoming flux; scalar transition weight | B, C, P; SR-M1, SR-C4 | Flux and conditional cross-section covariance proved. Construction of the regular fibre measure remains |
 | 13 | Elastic two-body kinematics and invariant relations | Future mass shells; timelike total momentum; conservation | A*; SR-C1–C3 | Target |
 | 14 | Orbital Lorentz charges and center-of-energy motion | Finite isolated free system or explicit event-balance premises; positive total energy | A, A*, B; SR-C5–C6 | Target; the Poisson prerequisite of SR-C6 exists; field contributions belong to ED |
 
@@ -889,7 +940,7 @@ by [`checks/CoreImports.lean`](../checks/CoreImports.lean).
 | SR-I1: compact curve calculus | Local C¹/C² regularity, chain rule, interval substitution and integration by parts | Used by existing proper-time and free-action theorems; reuse their actual hypotheses |
 | SR-I2: localized variations | Small fixed-endpoint perturbations remain in an open timelike jet domain; actual action differentiation and fundamental lemma | Supplied by `Mechanics.OpenDomain` for the present flat model |
 | SR-I3: convexity and clock comparison | Reverse Cauchy–Schwarz, integral inequality and continuous equality case | New proof targets for inertial maximality |
-| SR-I4: shell change of variables | Jacobians, integration on smooth level sets and pushforward equality | `Scattering.crossSection_apply` is a proof model. Shell measures and collision-locus change of variables remain SR targets |
+| SR-I4: shell change of variables | Jacobians, integration on smooth level sets and pushforward equality | `FutureShell.map_action_measure` gives the shell law. The fixed-total-momentum fibre and its normalization remain (§12) |
 | SR-I5: asymptotic estimates | Uniform Taylor remainders on a compact velocity range, with explicit `c` domain | Instantiate `Variational.exists_second_order_bound` for the energy expansion. Trajectory estimates require a separate stability argument |
 | SR-I6: generalized coefficients | Cotangent comparison and extension of smooth families to nilpotent coefficient algebras | Research stage; no real-coefficient theorem is promoted without this bridge |
 
@@ -900,6 +951,9 @@ the ledger. It must not be introduced by `axiom`, nor hidden in a structure
 whose only role is to assert the desired conclusion.
 
 ## Milestones
+
+SR0–SR6 give the original development order. The next section-level proof
+is the fixed-momentum part of SR4 described [above](#proof-strategy-for-the-remaining-target).
 
 1. **SR0 — baseline and comparisons.** Preserve existing geometry, clock and
    action APIs. Add consumer examples connecting `kineticMomentum`, metric
