@@ -685,6 +685,10 @@ public import ProjectAinos.SpecialFunctions.Hankel
 public import ProjectAinos.SpecialFunctions.HankelUpper
 public import ProjectAinos.SpecialFunctions.HarmonicExtension
 public import ProjectAinos.SpecialFunctions.HarmonicPolynomial
+public import ProjectAinos.SpecialFunctions.HyperbolicCompleteness
+public import ProjectAinos.SpecialFunctions.HyperbolicHarmonics
+public import ProjectAinos.SpecialFunctions.HyperbolicSpectrum
+public import ProjectAinos.SpecialFunctions.HyperbolicSynthesis
 public import ProjectAinos.SpecialFunctions.HyperbolicTransform
 public import ProjectAinos.SpecialFunctions.JacobiCurves
 public import ProjectAinos.SpecialFunctions.JacobiElliptic
