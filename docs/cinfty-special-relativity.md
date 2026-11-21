@@ -53,8 +53,9 @@ is proved only in part stays at the lower status, with the proved part named. A 
 when it is *proved*, or when its remark names the proved part and gives the
 reason why the rest is not proved; the rows closed in the second way are
 listed after the count. The wave names F1–F26 are those of
-[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135), which tracks
-completion.
+[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135), and R0–R8 those of
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187), which tracks the proofs of the
+rows that were closed with a remainder.
 
 | § | Topic | Status | Lean declarations, or what is missing |
 |---:|:---|:---|:---|
@@ -79,9 +80,10 @@ Closed with a stated remainder: none.
 
 ### Proof strategy for the remaining target
 
-Across the three volumes, 107 of the 119 sections are *proved* in their
-declared scopes. §12 is *proved modulo interface*. Three ED sections and
-eight GR sections are *informal* with a proved part and a stated remainder.
+Across the three volumes, 113 of the 119 sections are *proved* in their
+declared scopes, §12 among them. Two ED sections (§§75, 76) and four GR sections
+(§§102, 106, 115, 119) are *informal* with a proved part and a stated remainder;
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks their proofs.
 [ED proof strategy](cinfty-electrodynamics.md#proof-strategy-for-the-remaining-targets) ·
 [GR proof strategy](cinfty-general-relativity.md#proof-strategy-for-the-remaining-targets)
 

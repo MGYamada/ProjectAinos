@@ -139,7 +139,9 @@ The plans carry forward [issue #8](https://github.com/MGYamada/ProjectAinos/issu
 and identify the next proofs for free relativistic particles, the Maxwell
 action with a prescribed current, and the differential Bianchi identity.
 Each plan has a ledger with one status for each section;
-[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135) tracks the proofs.
+[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135) tracked the proofs, and
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks the rows that were closed
+with a remainder.
 For the free relativistic particle the library proves the coordinate-time
 Hamiltonian `√(m² + Σ pᵢ²)` with its trajectories and its flow, the Poincaré
 algebra of the orbital charges with its contraction to the Galilei algebra,
