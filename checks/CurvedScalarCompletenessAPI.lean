@@ -90,6 +90,12 @@ example :
     ∀ (l m : ℕ) (s : ℝ), gegenbauerReal l m s = Polynomial.eval s (gegenbauerRealPoly l m) :=
   @ProjectAinos.SpecialFunctions.ClassicalPolynomial.gegenbauerReal_eq_eval
 
+example :
+    ∀ (l : ℕ) {f : ℝ → ℝ}, ContinuousOn f (Ioo 0 π) → ∀ {B : ℝ}, (∀ θ ∈ Ioo 0 π, |f θ| ≤ B) →
+      (∀ (m : ℕ), ∫ θ in Ioo 0 π, f θ * sin θ ^ (l + 2) * gegenbauerReal l m (cos θ) = 0) →
+        ∀ θ ∈ Ioo 0 π, f θ = 0 :=
+  @ProjectAinos.SpecialFunctions.ClassicalPolynomial.eq_zero_of_integral_gegenbauer
+
 /-! ProjectAinos.SpecialFunctions.SphericalPolarCompleteness -/
 
 example :
@@ -98,6 +104,12 @@ example :
         ∫ (x : EuclideanSpace ℝ (Fin 3)), F x =
           ∫ (r : ℝ) in Ioi 0, r ^ 2 * ∫ (u : ↑(UnitSphere 3)), F (r • ↑u) ∂surfaceMeasure 3 :=
   @ProjectAinos.SpecialFunctions.SphericalHarmonics.integral_eq_integral_Ioi_sphere
+
+example :
+    ∀ {f : ↑(UnitSphere 3) → ℝ}, Continuous f →
+      (∀ (l : ℕ) (p : ↥(harmonics 3 l)),
+        ∫ (u : ↑(UnitSphere 3)), f u * restrict 3 l p.val u ∂surfaceMeasure 3 = 0) → f = 0 :=
+  @ProjectAinos.SpecialFunctions.SphericalHarmonics.eq_zero_of_integral_mul_restrict
 
 example :
     ∀ (f g h : C(↑(UnitSphere 3), ℝ)),
@@ -251,6 +263,13 @@ example :
 example :
     ∀ (i : ClosedIndex), ∃ (C : ℝ), ∀ (x : MinkowskiModel 3), |closedONHarmonic i x| ≤ C :=
   @ProjectAinos.GeneralRelativity.CurvedPerturbation.exists_bound_closedONHarmonic
+
+example :
+    ∀ {g : MinkowskiModel 3 → ℝ} {t : ℝ}, (Continuous fun y => g (slicePoint t y)) →
+      ∀ {B : ℝ}, (∀ (y : EuclideanSpace ℝ (Fin 3)), |g (slicePoint t y)| ≤ B) →
+        (∀ (i : ClosedIndex), chartPair t g (closedONHarmonic i) = 0) →
+          ∀ (x : MinkowskiModel 3), x 0 = t → g x = 0 :=
+  @ProjectAinos.GeneralRelativity.CurvedPerturbation.eq_zero_of_chartPair
 
 example :
     ∀ (x : MinkowskiModel 3), slicePoint (x 0) (spatialPart x) = x :=
