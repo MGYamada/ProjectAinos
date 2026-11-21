@@ -677,6 +677,7 @@ public import ProjectAinos.SpecialFunctions.BesselSquare
 public import ProjectAinos.SpecialFunctions.BesselTurningIntegral
 public import ProjectAinos.SpecialFunctions.BesselTurningPoint
 public import ProjectAinos.SpecialFunctions.BesselZeros
+public import ProjectAinos.SpecialFunctions.ClassicalPolynomial
 public import ProjectAinos.SpecialFunctions.CompleteElliptic
 public import ProjectAinos.SpecialFunctions.CubicPhase
 public import ProjectAinos.SpecialFunctions.Fresnel
@@ -688,6 +689,7 @@ public import ProjectAinos.SpecialFunctions.HyperbolicTransform
 public import ProjectAinos.SpecialFunctions.JacobiCurves
 public import ProjectAinos.SpecialFunctions.JacobiElliptic
 public import ProjectAinos.SpecialFunctions.Kapteyn
+public import ProjectAinos.SpecialFunctions.Kummer
 public import ProjectAinos.SpecialFunctions.Legendre
 public import ProjectAinos.SpecialFunctions.LegendreAssociated
 public import ProjectAinos.SpecialFunctions.LegendreGenerating
