@@ -1563,7 +1563,19 @@ solutions, the collapse at a finite time and the matching of a smooth dust ball 
 **Post-Newtonian motion (§106).** For a 1PN metric family the geodesic acceleration equals the
 explicit 1PN acceleration up to `O(c⁻⁴)` (`PostNewtonian.acceleration_error`), and so does the
 acceleration of the Euler–Lagrange paths of the test-body Lagrangian
-(`eulerLagrange_acceleration_error`).
+(`eulerLagrange_acceleration_error`). For `N` bodies apart from each other, the
+Einstein–Infeld–Hoffmann Lagrangian (106.17) (`EinsteinInfeldHoffmann.eihLagrangian`), in the gauge
+of GR36, gives for each body exactly the Euler–Lagrange equations of a test body in the 1PN
+potentials of the others (`eulerLagrange_eihLagrangian_eq_test`), so the acceleration is the EIH
+acceleration up to `C/c⁴` (`eulerLagrange_acceleration_error`); it is symmetric under permutations,
+tends to Newton's Lagrangian and, per unit mass of a light body, to the test-body equations. For
+smooth dust with the continuity equation (`PostNewtonianDust.SmoothDust`), the potentials are
+Newton potentials and a superpotential `χ = G∫ρ|x − y|` with `Δχ = 2U`
+(`superPotential_coordLaplacian`); they satisfy the gauge condition `3∂ₜΦ + ∇·B = 0` exactly
+(`SmoothDust.gauge`), the Ricci tensor of the 1PN metric of any bounded potentials has an explicit
+expansion with a `C/c⁴` remainder (`abs_ricciOf_pnCoefficient_sub_le`), and together the metric solves
+`R = κ(T − ½ g tr T)` for the dust stress up to `C/c⁴` on bounded sets
+(`SmoothDust.abs_ricciOf_sub_dustSource_le`, with the static ball `exists_smoothDust`).
 
 **Perturbations of a flat universe (§115).** For single modes on the flat dust universe the
 linearized Einstein equations reduce to ordinary differential equations
@@ -1587,10 +1599,12 @@ epoch to the next with explicit rates (`TypeII.tendsto_exponents`, `TypeII.abs_e
 | Collapse of a spherical body | `CoordinateMetric.IsOrthogonalSlicing`, `secondFundamental`, `Collapse.radialInfall_properTime`, `tendsto_coordinateTime`, `tendsto_observedFrequency`, `radius_deriv_neg_of_causal`, `junction_oppenheimerSnyder`, `secondFundamental_closedInterior_ne_lemaitre` | [OrthogonalSlicing](../ProjectAinos/SmoothGeometry/Lorentzian/OrthogonalSlicing.lean), [Collapse](../ProjectAinos/GeneralRelativity/Collapse.lean) |
 | Dust collapse | `Tolman.metric`, `isEinstein_iff`, `Equations.density_nonneg_iff`, `solution_parabolic`, `solution_elliptic`, `solution_hyperbolic`, `tendsto_radius_zero`, `lemaitre_eq`, `matching_exterior` | [Tolman](../ProjectAinos/GeneralRelativity/Tolman.lean) |
 | Post-Newtonian motion | `PostNewtonian.PostNewtonianMetricFamily`, `postNewtonianAcceleration`, `acceleration_error`, `geodesic_acceleration_error`, `lagrangian`, `eulerLagrange_acceleration_error` | [PostNewtonian](../ProjectAinos/GeneralRelativity/PostNewtonian.lean) |
+| EIH Lagrangian and the dust field | `EinsteinInfeldHoffmann.eihLagrangian`, `eulerLagrange_eihLagrangian_eq_test`, `eulerLagrange_acceleration_error`, `eihLagrangian_perm`, `tendsto_eihLagrangian`, `eulerLagrange_testMass`, `PostNewtonianRicci.abs_ricciOf_pnCoefficient_sub_le`, `PostNewtonianSources.superPotential_coordLaplacian`, `hasDerivAt_newtonPotential_continuity`, `PostNewtonianDust.SmoothDust`, `SmoothDust.gauge`, `vector_eq`, `scalar_eq`, `SmoothDust.abs_ricciOf_sub_dustSource_le`, `exists_smoothDust` | [EinsteinInfeldHoffmann](../ProjectAinos/GeneralRelativity/EinsteinInfeldHoffmann.lean) · [PostNewtonianField](../ProjectAinos/GeneralRelativity/PostNewtonianField.lean) · [PostNewtonianRicci](../ProjectAinos/GeneralRelativity/PostNewtonianRicci.lean) · [PostNewtonianSources](../ProjectAinos/GeneralRelativity/PostNewtonianSources.lean) · [PostNewtonianDust](../ProjectAinos/GeneralRelativity/PostNewtonianDust.lean) |
 | Cosmological perturbations | `CosmologicalPerturbation.ricci_synchronous_deriv`, `scalarMode_iff`, `densityContrast_growing`, `densityContrast_decaying`, `gaugeMode`, `tensorMode_iff`, `vectorMode_decay` | [CosmologicalPerturbation](../ProjectAinos/GeneralRelativity/CosmologicalPerturbation.lean) |
 | The oscillating regime | `BKL.bounce_kasnerExponents`, `bklMap`, `TypeII.Data.isVacuum_iff`, `TypeII.solution`, `TypeII.tendsto_exponents`, `TypeII.abs_exponents_sub_le` | [BKL](../ProjectAinos/GeneralRelativity/BKL.lean) |
 
 The typed examples are in `checks/CollapseAPI.lean`, `checks/TolmanAPI.lean`,
-`checks/PostNewtonianAPI.lean`, `checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
+`checks/PostNewtonianAPI.lean`, `checks/EinsteinInfeldHoffmannAPI.lean`, `checks/PostNewtonianDustAPI.lean`,
+`checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
 The decisions are recorded in GR34–GR38 of the [notes](general-relativity-notes.md) and in G17 of
 the [smooth-geometry notes](smooth-geometry-notes.md).

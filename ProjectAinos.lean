@@ -162,6 +162,7 @@ public import ProjectAinos.GeneralRelativity.EddingtonFinkelstein
 public import ProjectAinos.GeneralRelativity.EffectiveStress
 public import ProjectAinos.GeneralRelativity.EinsteinEquations
 public import ProjectAinos.GeneralRelativity.EinsteinHilbertAction
+public import ProjectAinos.GeneralRelativity.EinsteinInfeldHoffmann
 public import ProjectAinos.GeneralRelativity.EnergyCondition
 public import ProjectAinos.GeneralRelativity.EquatorialComparison
 public import ProjectAinos.GeneralRelativity.ExactPlaneWave
@@ -196,6 +197,10 @@ public import ProjectAinos.GeneralRelativity.ParticleExamples
 public import ProjectAinos.GeneralRelativity.Perihelion
 public import ProjectAinos.GeneralRelativity.PerihelionIntegral
 public import ProjectAinos.GeneralRelativity.PostNewtonian
+public import ProjectAinos.GeneralRelativity.PostNewtonianDust
+public import ProjectAinos.GeneralRelativity.PostNewtonianField
+public import ProjectAinos.GeneralRelativity.PostNewtonianRicci
+public import ProjectAinos.GeneralRelativity.PostNewtonianSources
 public import ProjectAinos.GeneralRelativity.ProperTime
 public import ProjectAinos.GeneralRelativity.ProperTimeParameter
 public import ProjectAinos.GeneralRelativity.QuadraticGeodesic

@@ -328,7 +328,9 @@ curved background with their amplitude transported and carry the averaged effect
 Isaacson, and the time lines of a synchronous system focus under the energy condition.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, test bodies follow the
-post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,
+post-Newtonian equations of motion, `N` bodies follow the Einstein–Infeld–Hoffmann Lagrangian, the
+post-Newtonian field of smooth dust solves the Einstein equations to `O(c⁻⁴)`, density
+perturbations of a flat universe grow like `t^{2/3}`,
 and the approach to a cosmological singularity passes between Kasner epochs. On closed and open
 dust backgrounds, discrete S³ harmonics and continuous H³ harmonics give scalar density and
 velocity perturbations with two independent time solutions.

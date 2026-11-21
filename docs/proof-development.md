@@ -978,6 +978,16 @@ scalar field along the normal is a time-harmonic Maxwell field whose tangential 
 the screen. The ledger row §59 is *proved* for the half-space Dirichlet model (ED 64 of 66).
 [Guide](electrodynamics.md#diffraction-5961)
 
+For `N` bodies apart from each other, the Einstein–Infeld–Hoffmann Lagrangian gives each body
+exactly the equations of a test body in the post-Newtonian potentials of the others, so the
+acceleration is explicit up to `O(c⁻⁴)`. For smooth dust that satisfies the continuity equation,
+Newton potentials and the superpotential `G∫ρ|x − y|` give potentials in the gauge of GR36, and an
+explicit expansion of the Ricci tensor of the post-Newtonian metric shows that it solves the
+Einstein equations for dust in the trace-reversed form up to `O(c⁻⁴)`. The ledger row §106 is
+*proved*; the approach of Einstein–Euler solutions to this motion needs well-posedness and is
+outside its scope (GR 36 of 39).
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians
