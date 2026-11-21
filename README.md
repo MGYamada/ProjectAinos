@@ -164,7 +164,9 @@ massive and the massless particle together.
 The measure `dᵈπ/E` of the shell is invariant under the Lorentz group, the
 number of particles through a hypersurface is invariant, and for a system of
 particles the orbital moment is conserved and the centre of energy moves
-uniformly.
+uniformly. The final states of two or more outgoing particles at a fixed total momentum carry a
+covariant measure into which the product of the shell measures disintegrates, so the
+cross-section is a Lorentz scalar for a scalar transition weight.
 [Guide](docs/special-relativity.md#measures-and-charges)
 The universal C∞ cotangent module, with the full chain rule and its universal property, matches
 the covectors of space-time, which completes the special-relativity ledger.

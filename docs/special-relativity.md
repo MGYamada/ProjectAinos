@@ -56,6 +56,7 @@ Paths in this table are relative to `ProjectAinos/`.
 | 9 | `SpecialRelativity/{Causality,Factorization,InvariantMass,Decay,ElasticScattering}` | Signals with a finite speed, the factorization of a Lorentz transformation into a boost and a rotation, the invariant mass and the frame of the centre of momentum, the decay into two particles, the invariants of an elastic collision |
 | 10 | `SpecialRelativity/{FutureShell,Einbein}` | The future mass shell as a graph over the space momenta with the action of the Lorentz group, and the action with an auxiliary field for every mass, the mass zero included |
 | 11 | `SpecialRelativity/{ShellMeasure,NumberFlux,OrbitalCharges,CrossSection}` | The invariant measure of the mass shell, the number current and the number of particles through a hypersurface, the momentum, the orbital moment and the centre of energy of a system, the invariant flux factor and the covariance of a cross-section |
+| 12 | `SmoothGeometry/Euclidean/PolarLIntegral`, `SpecialRelativity/{TwoBodyFibre,TwoBodyMeasure,TwoBodyCoarea,MassFoliation,ManyBodyMeasure}` | The fibre of final states at fixed total momentum, its covariant measure for two and for `n` outgoing particles, the disintegration of the product of shell measures, and the covariant cross-section |
 | Examples | `SpecialRelativity/{Examples,FormExamples}` | Nonzero boost and inverse, subluminality, clock rate, nonzero exact field and gauge identity |
 
 All shared modules are independent of `SpecialRelativity`. Every library
@@ -489,9 +490,30 @@ is `λ(s, m₁², m₂²)/4`, and it is `m₂ |𝐩₁|` when the second particl
 product of two shell measures is invariant (`measurePreserving_action_prod`).
 `crossSection ν W F S = (1/4F) ∫_S W dν` is unchanged by a transformation that
 preserves the measure `ν` of the final states and the weight `W`
-(`crossSection_covariant`). The measure on the final states with a conserved
-momentum is not constructed. The [notes](special-relativity-notes.md)
-SR15–SR17 record the decisions.
+(`crossSection_covariant`).
+
+**The final states at fixed total momentum (§12).** In three space dimensions, for a future
+timelike `P` with `M > m₃ + m₄`, the pairs of shell momenta with total `P` form a sphere of
+directions (`TwoBodyFibre.fibreEquiv`, with rest momenta `±q n`,
+`q = √λ(M², m₃², m₄²)/(2M)`). `fibreMeasure m₃ m₄ P` is `(q/M) dΩ` transported by a boost; it
+has total mass `4πq/M`, is carried by the fibre, does not depend on the boost
+(`fibreMeasure_eq_of_apply`) and is covariant, `L_*ν_P = ν_{LP}` (`map_fibreMeasure`). The product
+of the two shell measures disintegrates over the region above threshold,
+`∫ f dμ₃ dμ₄ = ∫ (∫ f dν_P) d⁴P` (`lintegral_regular_eq`), and the pairs below it are a null set
+(`prod_regular_compl`), so `μ₃ ⊗ μ₄` is the bind of `ν_P` against `d⁴P` (`prod_eq_bind`). The proof
+uses the shear to the total space momentum, the change of variables `π₃ = labFirst K k`, whose
+derivative is the identity plus a map of rank one (`det_labDeriv`), polar co-ordinates
+(`Sphere.lintegral_eq_lintegral_sphere_Ioi`) and one radial substitution; no coarea formula. For
+`n ≥ 2` outgoing particles, `d⁴Q = M dM d³K/E_M(K)` (`ManyBody.lintegral_massRegion_shell`) and
+induction give `manyMeasure m k P`, built by integrating out the total momentum of all but the last
+particle: it is measurable in `P`, carried by the total momentum `P`
+(`manyMeasure_totalMomentum_ne`), finite (`manyMeasure_univ_le`), covariant (`map_manyMeasure`) and
+the two-body measure for two particles (`manyMeasure_zero`), and the product of the shell measures
+disintegrates into it (`lintegral_shellProd`, `shellProd_eq_bind`). With these measures the
+cross-section is covariant for a Lorentz-scalar weight (`twoBodyCrossSection_covariant`,
+`manyCrossSection_covariant`), with positive instances for two and three outgoing particles. One
+grouping of the particles is used; the transition weight is an input of the interaction. The
+[notes](special-relativity-notes.md) SR15–SR17 and SR19 record the decisions.
 
 ## Four-vectors and the universal cotangent module (§6)
 
@@ -530,10 +552,12 @@ lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=f
 lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticCollisionsAPI.lean
 lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticShellAPI.lean
 lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticMeasureAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/TwoBodyMeasureAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ManyBodyMeasureAPI.lean
 lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 ```
 
-The public API checks use default elaborator options. Exact examples distinguish
+The public API checks use the library's elaborator options. Exact examples distinguish
 timelike, spacelike, lightlike and zero vectors; use velocity 3/5, factor 5/4
 and clock rate 4/5; and check the nonzero field and Hodge signs. The axiom
 allowlist is `propext`, `Classical.choice`, `Quot.sound`. No additional axioms

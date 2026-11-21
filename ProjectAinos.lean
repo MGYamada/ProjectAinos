@@ -757,6 +757,8 @@ public import ProjectAinos.SpecialRelativity.FreeMotion
 public import ProjectAinos.SpecialRelativity.FutureShell
 public import ProjectAinos.SpecialRelativity.Hamiltonian
 public import ProjectAinos.SpecialRelativity.InvariantMass
+public import ProjectAinos.SpecialRelativity.ManyBodyMeasure
+public import ProjectAinos.SpecialRelativity.MassFoliation
 public import ProjectAinos.SpecialRelativity.MassShellReduction
 public import ProjectAinos.SpecialRelativity.MaximalProperTime
 public import ProjectAinos.SpecialRelativity.NewtonianExpansion

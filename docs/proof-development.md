@@ -930,6 +930,16 @@ twelve rows that were closed with a remainder or proved modulo an interface, fol
 proof plans of the three ledgers, and the corrections that the review issues #172–#180 ask for
 in proved rows.
 
+The final states of two outgoing particles at a fixed total momentum form a sphere of
+directions with the covariant measure `(q/M) dΩ`, and the product of the two shell measures
+disintegrates into these measures over the total four-momentum: a shear, a change of variables
+with a derivative of rank one plus the identity, polar co-ordinates and one radial substitution
+replace the coarea formula that had been expected. The mass foliation of momentum space extends
+this by induction to any number of outgoing particles, with the support on the total momentum,
+covariance and a covariant cross-section. The ledger row §12 is *proved*, which completes the
+special-relativity ledger (14 of 14).
+[Guide](special-relativity.md#measures-and-charges)
+
 Mathlib's covariant derivative constrains only sections that are differentiable at the point,
 so the Leibniz correction `(∇_u L)(w) = ∇_u(L w) − L(∇_u w)` defines a connection on the hom
 bundle of two bundles with connections, and recursion over the tensor shapes gives every
