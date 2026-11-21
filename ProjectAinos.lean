@@ -436,6 +436,7 @@ public import ProjectAinos.SmoothGeometry.DifferentialForm.TwoForm
 public import ProjectAinos.SmoothGeometry.DifferentialForm.VolumeNormalization
 public import ProjectAinos.SmoothGeometry.DifferentialForm.WedgeAlgebra
 public import ProjectAinos.SmoothGeometry.Euclidean.PolarIntegral
+public import ProjectAinos.SmoothGeometry.Euclidean.PolarLIntegral
 public import ProjectAinos.SmoothGeometry.Euclidean.Similarity
 public import ProjectAinos.SmoothGeometry.Euclidean.SphereIntegral
 public import ProjectAinos.SmoothGeometry.Examples
@@ -765,6 +766,9 @@ public import ProjectAinos.SpecialRelativity.Rapidity
 public import ProjectAinos.SpecialRelativity.ShellMeasure
 public import ProjectAinos.SpecialRelativity.Spacetime
 public import ProjectAinos.SpecialRelativity.SpatialLegendre
+public import ProjectAinos.SpecialRelativity.TwoBodyCoarea
+public import ProjectAinos.SpecialRelativity.TwoBodyFibre
+public import ProjectAinos.SpecialRelativity.TwoBodyMeasure
 public import ProjectAinos.SpecialRelativity.Velocity
 public import ProjectAinos.Thermodynamics.AdiabatUniqueness
 public import ProjectAinos.Thermodynamics.AtomicObstruction
