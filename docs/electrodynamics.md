@@ -719,10 +719,13 @@ it covers sources that vanish in the past. The point charge is treated in the ne
 leading coefficient vanishes iff `⟨dψ, dψ⟩ = 0` (`Eikonal.leading_eq_zero_iff`), the Lorenz
 condition at leading order is transversality, the rays are straight null lines
 (`lightlike_of_isRay`), and the vacuum equations hold at the two leading orders iff the eikonal and
-transport equations hold (`maxwell_highFrequencyPotential_iff_of_eikonal`). In a medium the rays of
-`(|p|² − n²)/2` come from a complete integral (`RayOptics.isRay_of_isHamiltonJacobi`, with the
-linear-gradient index), and Fermat's principle is the ray equation `γ″ = ∇(n²/2)`
-(`RayOptics.fermat`).
+transport equations hold (`maxwell_highFrequencyPotential_iff_of_eikonal`). In a medium the
+trajectories of `(|p|² − n²)/2` come from a complete integral at every energy
+(`RayOptics.isRay_of_isHamiltonJacobi`, with the linear-gradient index); the rays of light are
+those on `H = 0`, where `|q′|² = n²(q)` (`RayOptics.IsPhysicalRay`). The energy condition at one
+parameter value propagates (`isPhysicalRay_of_isHamiltonJacobi`), and the parabolic rays of the
+linear gradient are physical exactly when `|α|² = n₀² + 2gβ₃` (`isPhysicalRay_linearIndexRay_iff`).
+Fermat's principle is the ray equation `γ″ = ∇(n²/2)` (`RayOptics.fermat`).
 
 **Intensity (§54).** The `ε⁻¹` coefficient vanishes iff the amplitudes are transported
 (`subleading_eq_zero_iff_transport`), transport conserves the intensity current
@@ -796,7 +799,17 @@ for both interaction signs. At zero frequency the longitudinal impulse is 2ev∞
 the Rayleigh–Sommerfeld field `∫ u₀(y)(−2∂_z G_k)(x − y, z) dy` (`Diffraction.apertureField`) is
 smooth on `z > 0` (`contDiffOn_apertureField`), solves the Helmholtz equation
 (`helmholtz_apertureField`), takes the boundary values `u₀` (`tendsto_apertureField_boundary`) and
-satisfies the Sommerfeld condition with explicit rates (`apertureField_isRadiating`).
+satisfies the Sommerfeld condition with explicit rates (`apertureField_isRadiating`). Extended by
+`u₀` it is continuous on the closed half-space (`continuousOn_apertureFieldExt`). It is the only
+radiating solution with these boundary values: for every real `k`, a `C²` solution of the Helmholtz
+equation on `z > 0` with continuous limits `u₀` at the plane and the radiation condition equals the
+aperture field (`eq_apertureField`, `IsRadiatingDirichletSolution.eqOn_apertureField`). The proof
+applies Green's identity on `z ≥ ε` (`integral_divergence_halfSpace`, `fluxC_sub_fluxC`) to the
+Dirichlet Green function `G_k(p − y) − G_k(p − y′)` of the plane `z = ε`, which vanishes there, with
+smooth cut-offs at the pole and at infinity (`fluxC_greenField_eq`, `eq_integral_spacePoint`), and
+lets `ε → 0`. For `C¹` data, `E = curl(0, 0, u)` and `B = curl E/(ik)` solve the time-harmonic
+Maxwell equations (`maxwell_aperture`), `E` radiates (`isRadiating_apertureE`), its tangential trace
+is the rotated gradient of `u₀` and it vanishes on the screen (`tendsto_apertureE_screen`).
 
 **Fresnel and Fraunhofer (§§60, 61).** The Fresnel field approximates the aperture field with the
 remainder `(k/2πz)(kρ⁴/8z³ + ρ²/z² + 1/(kz))‖u₀‖₁` (`norm_apertureField_sub_fresnelField_le`). In
@@ -807,8 +820,9 @@ For a straight edge, uniformly illuminated rectangular apertures tend to the hal
 field. Its intensity in Fresnel units is [(½ + C(u))² + (½ + S(u))²]/2, including ¼ on the
 shadow boundary. [Straight-edge limit](../ProjectAinos/Electrodynamics/Diffraction/StraightEdge.lean)
 
-**Scope.** The scalar aperture model; the relation to the Maxwell screen problem and the uniqueness
-of the half-space problem are the remainder of §59.
+**Scope.** The half-space Dirichlet model with one Maxwell polarization; the screen scattering
+problem, which determines the aperture trace from an incident field and needs `H(curl)` traces and
+edge conditions, and the error of Kirchhoff's approximation are outside the scope of §59.
 
 ## Radiation damping and scattering (§§75, 76, 78–80)
 
@@ -822,7 +836,10 @@ oscillator is damped (`reducedOscillator`). The Lorentz–Dirac force is orthogo
 (`lorentzDirac_eq_landauLifshitz`), and balances the radiated four-momentum with the Schott term
 (`integral_lorentzDirac_eq`).
 
-**Scattering (§§78–80).** A charge in a wave moves for all times (`Thomson.exists_trajectory`), with
+**Scattering (§§78–80).** A charge in a wave moves for all times (`Thomson.exists_trajectory`);
+relativistically, in a field skew-adjoint for the Minkowski metric, its four-velocity stays on the
+future unit mass shell for all proper times (`Thomson.exists_physicalProperTimeTrajectory`,
+`exists_physicalProperTimeTrajectory_incidentPotential`). It has
 a first-order response up to `O(a²)` (`norm_trajectory_sub_firstOrder_le`), and Thomson's cross
 section is `(8π/3)(e²/4πm)²` (`crossSection_eq`). The bound charge gives
 `σ_T ω⁴/((ω₀² − ω²)² + 4γ²ω²)` (`LowFrequency.crossSection_oscillator`), Rayleigh's law
@@ -915,9 +932,10 @@ All names below are under `ProjectAinos`, except imported `YM` names.
 | The spectral resolution of the retarded potentials | `fourier_retardedPotential`, `helmholtz_fourier_retardedPotential` | [RetardedSpectrum](../ProjectAinos/Electrodynamics/RetardedSpectrum.lean) |
 | Radiation in collisions | `Collision.integrable_dipoleAcceleration_coulomb`, `integral_dipolePower_eq`, `spectral_eq_coulomb`, `CoulombRadiation.effectiveRadiation_repulsive`, `average_dipolePower_kepler`, `totalEnergy_hyperbolic`, `harmonic_decomposition`, `spectrum_hyperbolic`, `CollisionSpectrum.fourier_radiationAmplitude`, `tendsto_dipoleSpectrum`, `tendsto_relativisticSpectrum` | [Collision](../ProjectAinos/Electrodynamics/Radiation/Collision.lean), [CoulombRadiation](../ProjectAinos/Electrodynamics/Radiation/CoulombRadiation.lean), [CollisionSpectrum](../ProjectAinos/Electrodynamics/Radiation/CollisionSpectrum.lean) |
 | Diffraction | `Diffraction.apertureField`, `contDiffOn_apertureField`, `helmholtz_apertureField`, `tendsto_apertureField_boundary`, `apertureField_isRadiating`, `norm_apertureField_sub_fresnelField_le`, `tendsto_fraunhofer`, `norm_fraunhofer_sub_le`, `babinet` | [Aperture](../ProjectAinos/Electrodynamics/Diffraction/Aperture.lean), [Fresnel](../ProjectAinos/Electrodynamics/Diffraction/Fresnel.lean), [Fraunhofer](../ProjectAinos/Electrodynamics/Diffraction/Fraunhofer.lean) |
+| Diffraction: uniqueness and Maxwell | `Diffraction.continuousOn_apertureFieldExt`, `greenField`, `fluxC_greenField_eq`, `eq_integral_spacePoint`, `eq_apertureField`, `IsRadiatingDirichletSolution`, `IsRadiatingDirichletSolution.eqOn_apertureField`, `apertureField_unique`, `eq_zero_of_isRadiating`, `fderiv_apertureField_planePoint`, `IsTimeHarmonicMaxwell`, `apertureE`, `maxwell_aperture`, `isRadiating_apertureE`, `tendsto_apertureE_screen`, `exists_tendsto_apertureE_apertureBump_ne_zero` | [HalfSpaceDivergence](../ProjectAinos/SmoothGeometry/Euclidean/HalfSpaceDivergence.lean) · [GreenField](../ProjectAinos/Electrodynamics/Diffraction/GreenField.lean) · [Representation](../ProjectAinos/Electrodynamics/Diffraction/Representation.lean) · [Uniqueness](../ProjectAinos/Electrodynamics/Diffraction/Uniqueness.lean) · [MaxwellAperture](../ProjectAinos/Electrodynamics/Diffraction/MaxwellAperture.lean) |
 | Radiation damping | `RadiationReaction.dampingField_expansion`, `selfForce_expansion`, `trace_selfMass`, `work_dampingForce_eq`, `runaway`, `reducedOscillator`, `lorentzDirac_orthogonal`, `lorentzDirac_eq_landauLifshitz`, `integral_lorentzDirac_eq` | [RadiationReaction](../ProjectAinos/Electrodynamics/RadiationReaction.lean) |
-| Scattering | `Scattering.Thomson.exists_trajectory`, `norm_trajectory_sub_firstOrder_le`, `crossSection_eq`, `differentialCrossSection_eq`, `LowFrequency.crossSection_oscillator`, `abs_crossSection_sub_le`, `orientationAverage`, `HighFrequency.crossSection_tendsto_thomson`, `tendsto_coherentFactor` | [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean), [LowFrequency](../ProjectAinos/Electrodynamics/Scattering/LowFrequency.lean), [HighFrequency](../ProjectAinos/Electrodynamics/Scattering/HighFrequency.lean) |
-| Geometrical optics | `Wave.waveOperator_highFrequencyWave`, `Optics.Eikonal.box_highFrequencyPotential`, `leading_eq_zero_iff`, `lightlike_of_isRay`, `maxwell_highFrequencyPotential_iff_of_eikonal`, `RayOptics.isRay_of_isHamiltonJacobi`, `RayOptics.fermat` | [HighFrequency](../ProjectAinos/SmoothGeometry/Wave/HighFrequency.lean), [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean), [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) |
+| Scattering | `Scattering.Thomson.exists_trajectory`, `exists_physicalProperTimeTrajectory`, `mem_futureUnitShell_of_isProperTimeTrajectory`, `IsPhysicalProperTimeTrajectory`, `isMinkowskiSkew_forceMap`, `norm_trajectory_sub_firstOrder_le`, `crossSection_eq`, `differentialCrossSection_eq`, `LowFrequency.crossSection_oscillator`, `abs_crossSection_sub_le`, `orientationAverage`, `HighFrequency.crossSection_tendsto_thomson`, `tendsto_coherentFactor` | [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean), [LowFrequency](../ProjectAinos/Electrodynamics/Scattering/LowFrequency.lean), [HighFrequency](../ProjectAinos/Electrodynamics/Scattering/HighFrequency.lean) |
+| Geometrical optics | `Wave.waveOperator_highFrequencyWave`, `Optics.Eikonal.box_highFrequencyPotential`, `leading_eq_zero_iff`, `lightlike_of_isRay`, `maxwell_highFrequencyPotential_iff_of_eikonal`, `RayOptics.isRay_of_isHamiltonJacobi`, `RayOptics.IsPhysicalRay`, `isPhysicalRay_of_isHamiltonJacobi`, `isPhysicalRay_linearIndexRay_iff`, `RayOptics.fermat` | [HighFrequency](../ProjectAinos/SmoothGeometry/Wave/HighFrequency.lean), [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean), [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) |
 | Intensity | `Eikonal.subleading_eq_zero_iff_transport`, `divergence_intensityCurrent_eq_zero`, `intensity_mul_det_eq` | [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean) |
 | The angular eikonal | `AngularEikonal.exists_angularEikonal`, `fderiv_angularEikonal`, `rayMap_symplectic`, `exists_rayMap_symplectic`, `Free.rayMap_isPoissonHom` | [AngularEikonal](../ProjectAinos/Electrodynamics/Optics/AngularEikonal.lean) |
 | Narrow bundles of rays | `Riccati.matrix_eq_of_hasDerivAt`, `NarrowBundle.hessian_ray`, `principalRadius_add`, `focal_iff`, `amplitude_tendsto_focal`, `norm_beam_sub_linear_le` | [Riccati](../ProjectAinos/SmoothGeometry/ODE/Riccati.lean), [NarrowBundle](../ProjectAinos/Electrodynamics/Optics/NarrowBundle.lean) |
@@ -979,13 +997,13 @@ All names below are under `ProjectAinos`, except imported `YM` names.
 ```sh
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/ElectrodynamicsAPI.lean
-lake env lean -DwarningAsError=true checks/ElectrodynamicsCoreAPI.lean
-lake env lean -DwarningAsError=true checks/ChargedParticleAPI.lean
-lake env lean -DwarningAsError=true checks/FieldClassificationAPI.lean
-lake env lean -DwarningAsError=true checks/SourcedFieldAPI.lean
-lake env lean -DwarningAsError=true checks/FieldStressAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ElectrodynamicsAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ElectrodynamicsCoreAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ChargedParticleAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/FieldClassificationAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SourcedFieldAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/FieldStressAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 experiments/.venv/bin/python -m ainos_experiments.verify_electrodynamics
 ```
 

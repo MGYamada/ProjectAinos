@@ -416,3 +416,27 @@ therefore supplies the positive imaginary axis and its argument derivative.
 
 **Proof status.** The two acceleration transforms give the Hankel spectral density for
 positive frequency and the net longitudinal impulse at zero. [Contour continuation](../ProjectAinos/SpecialFunctions/HankelUpper.lean) · [Scattering transform](../ProjectAinos/SpecialFunctions/HyperbolicTransform.lean) · [ED §70](../ProjectAinos/Electrodynamics/Radiation/HyperbolicSpectrum.lean)
+
+## ED51. The proper-time equations need the mass shell and a skew-adjoint field
+
+**Observation.** The equations `dx/dτ = u`, `du/dτ = k F(x) u` admit the constant curve with `u = 0` in every field, and for `F = id` a unit initial velocity becomes `e^{kτ} u₀` (#172). The parameter is the proper time only on the shell `η(u, u) = −1`. If `F(x)` is skew-adjoint for the Minkowski metric, `η(u, u)` is constant along every solution, with no smoothness of `F`; `u⁰` cannot vanish on the shell, so by the intermediate value theorem it keeps its sign, and a future unit velocity stays future and unit.
+
+**Interface decision.** `IsProperTimeTrajectory` stays the system of ordinary differential equations; `IsPhysicalProperTimeTrajectory` adds `u τ ∈ futureUnitShell` for all `τ`, and the field condition is `IsMinkowskiSkew`, which the Lorentz force `ConstantField.forceMap e (F x)` of every field of two-forms satisfies (`isMinkowskiSkew_forceMap`).
+
+**Proof status.** Proved: conservation of the shell for any trajectory in a skew field, global existence for smooth bounded skew fields, and the instances `cos(ℓx) F₀♯`, the field of the potential `sin(ℓx) a` and the incident wave of §78. The pins check that the constant curve is excluded and that `F = id` is not skew. [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean) · [Checks](../checks/ChargeScatteringAPI.lean)
+
+## ED52. Rays of light are the trajectories on `H = 0`
+
+**Observation.** Jacobi's theorem gives Hamilton's equations of `H = (|p|² − n²)/2` at every energy: for `n = 1` and `α = 0` the complete integral gives a constant trajectory (#173). Rays of light are the trajectories on `H = 0`, where `|q′|² = n²(q)`; along a complete integral `H = −∂S/∂σ`, and `H` is conserved, so the condition at one parameter value suffices.
+
+**Interface decision.** `IsPhysicalRay` is a trajectory with `H(c) = 0`. The linear-gradient example has the conserved value `H = (|α|² − n₀² − 2gβ₃)/2` and the homogeneous one `(|α|² − n²)/2`.
+
+**Proof status.** Proved, with the parameter conditions of both examples; the pins check that `n = 1`, `α = 0` gives a trajectory that is not a ray. [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) · [Checks](../checks/OpticsAPI.lean)
+
+## ED53. The radiating half-space problem is unique by a Green function of a shifted plane
+
+**Observation.** The plan proposed odd reflection across the plane, Green's identity on the reflected space and Rellich's lemma, and ED42 recorded uniqueness as needing them. Neither is needed. Green's identity on `z ≥ ε` with the Dirichlet Green function `G_k(p − y) − G_k(p − y′)` of the plane `z = ε` (image point `(y₁, y₂, 2ε − y₃)`) has no `∂_z u` in its boundary term, because the Green function vanishes there, and the plane `z = ε` lies where `u` is classical; so `u(y) = ∫ u(x, ε) K_k(y − (x, ε)) dx`, and `ε → 0` needs only continuity up to the plane and the radiation bound (dominated convergence with the majorant `(1 + |x|)⁻³`). The radiation condition is centred at the origin and the sphere divergence theorem works on concentric shells, so the pole and the far boundary are separated by two smooth radial cut-offs: the pole cut-off gives `−u(y)` through the flux on a ball about the pole, and the far cut-off contributes `O(R⁻²)(O(R⁻²) + o(R⁻¹))O(R³) → 0` on `R ≤ |p| ≤ 2R`. The representation and uniqueness hold for every real `k`, `k = 0` included, and for continuous boundary data without compact support. The tangential trace of `E = curl(0, 0, u)` is the rotated gradient of `u₀`, by moving the tangential derivatives onto the data.
+
+**Interface decision.** A half-space divergence theorem (Mathlib's box theorem moved to `EuclideanSpace`) and a complex flux on shells about any centre, derived from `Sphere.flux_sub_flux` through the real and imaginary parts, are shared in `SmoothGeometry/Euclidean/HalfSpaceDivergence.lean`. `IsRadiatingDirichletSolution` packages the hypotheses of uniqueness.
+
+**Proof status.** Proved and built; the ledger row §59 is *proved* for the half-space Dirichlet model with one Maxwell polarization (R6 on [#187](https://github.com/MGYamada/ProjectAinos/issues/187)). The screen scattering problem and the error of Kirchhoff's approximation are outside the scope. [HalfSpaceDivergence](../ProjectAinos/SmoothGeometry/Euclidean/HalfSpaceDivergence.lean) · [GreenField](../ProjectAinos/Electrodynamics/Diffraction/GreenField.lean) · [Representation](../ProjectAinos/Electrodynamics/Diffraction/Representation.lean) · [Uniqueness](../ProjectAinos/Electrodynamics/Diffraction/Uniqueness.lean) · [MaxwellAperture](../ProjectAinos/Electrodynamics/Diffraction/MaxwellAperture.lean)

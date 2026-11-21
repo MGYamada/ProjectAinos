@@ -876,7 +876,7 @@ closed, open and flat dust and radiation models are exact solutions, and along a
 `1 + z = a_obs/a_em`. The ledger rows of §§104 and 111–114 are *proved* in their scopes
 (23 of 39).
 [Guide](general-relativity.md#the-rotating-field-104) ·
-[Guide](general-relativity.md#isotropic-cosmology-111-114)
+[Guide](general-relativity.md#isotropic-cosmology-111114)
 
 ## Homogeneous models and the Kasner solution
 
@@ -922,6 +922,61 @@ time. The general time-dependent scalar–vector–tensor decomposition remains 
 stated remainders (GR 31 of 39). Every row of the three ledgers is now *proved* or closed with a
 stated remainder.
 [Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
+## The remaining rows of the field ledgers
+
+[Issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks the proofs of the
+twelve rows that were closed with a remainder or proved modulo an interface, following the
+proof plans of the three ledgers, and the corrections that the review issues #172–#180 ask for
+in proved rows.
+
+The final states of two outgoing particles at a fixed total momentum form a sphere of
+directions with the covariant measure `(q/M) dΩ`, and the product of the two shell measures
+disintegrates into these measures over the total four-momentum: a shear, a change of variables
+with a derivative of rank one plus the identity, polar co-ordinates and one radial substitution
+replace the coarea formula that had been expected. The mass foliation of momentum space extends
+this by induction to any number of outgoing particles, with the support on the total momentum,
+covariance and a covariant cross-section. The ledger row §12 is *proved*, which completes the
+special-relativity ledger (14 of 14).
+[Guide](special-relativity.md#measures-and-charges)
+
+Mathlib's covariant derivative constrains only sections that are differentiable at the point,
+so the Leibniz correction `(∇_u L)(w) = ∇_u(L w) − L(∇_u w)` defines a connection on the hom
+bundle of two bundles with connections, and recursion over the tensor shapes gives every
+shape: covectors, contravariant, mixed and general tensors. A germ condition of regularity
+passes through hom bundles, so the derivative of a smooth tensor is smooth and can be
+iterated. The connection recovers the bilinear and trilinear derivatives; for Levi-Civita
+the chart formulas hold, `∇g = 0`, and on `e^{2z}η` the covector `dz` has a nonzero
+derivative. The ledger row §85 is *proved* (GR 32 of 39).
+[Guide](general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92)
+
+The `ε⁻¹` coefficient of a short wave needs no field equation for the background: it is the
+transport operator plus a longitudinal term in the divergence of the amplitude, so the transport
+equation `2∇_k a + (∇·k)a = 0` follows on the transverse polarizations, and for the full amplitude
+under the next-order harmonic gauge. The perturbed Christoffel symbols are exact rational
+functions of the parameter, which gives the second variation of the Ricci tensor along an actual
+family; its phase average for the short wave is the effective stress of Isaacson, conserved given
+transport, with the flux of §110. The ledger row §108 is *proved*; the approximation of exact
+solutions needs local well-posedness and is outside its scope (GR 33 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
+Under a constant change of co-ordinates the superpotential and the total density are tensor
+densities, and tilting a family of hyperplanes turns the difference of two slices into a sphere
+flux that vanishes at infinity for `O(r⁻⁴)` decay on the wedge between them. So the charges of an
+asymptotically Galilean metric transform as `P′ = L⁻¹P` under orthochronous Lorentz maps; the
+boosted isotropic metric is the nonzero test. For a stationary conserved source the linearized
+field in harmonic gauge has the far form of its mass and angular momentum, whose surface
+integrals are exact outside the source, and it matches the Kerr exterior at leading order. The
+ledger rows §§96 and 105 are *proved* (GR 35 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
+Green's identity on a half-space shifted into the interior, with the Dirichlet Green function of
+the shifted plane, represents every radiating solution of the Helmholtz equation by its values on
+that plane, and the limit to the aperture plane shows that the Rayleigh–Sommerfeld field is the
+only radiating solution with the aperture data, for every real wave number. The curl of the
+scalar field along the normal is a time-harmonic Maxwell field whose tangential trace vanishes on
+the screen. The ledger row §59 is *proved* for the half-space Dirichlet model (ED 64 of 66).
+[Guide](electrodynamics.md#diffraction-5961)
 
 ## Shared Variational Foundation
 

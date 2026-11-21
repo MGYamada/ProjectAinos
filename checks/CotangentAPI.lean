@@ -14,6 +14,8 @@ derivative; and the comparison with covectors of space-time through `flat` and `
 Lorentz covariance. Default elaborator options are intentional: these checks must not rely on the
 implementation's transparency settings. Every statement is pinned with its type. -/
 
+universe u
+
 noncomputable section
 
 section CotangentModule

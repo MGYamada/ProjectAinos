@@ -1791,6 +1791,13 @@ the contracted identity `∇^a Ric_{ab} = ½ ∂_b R`, and defines the Einstein 
 with its vanishing divergence. `Lorentzian/CoordinateConnection.lean` reads the
 connection of a coordinate metric off the Koszul formula, and
 `Lorentzian/ExponentialConformalExample.lean` is the four-dimensional regression.
+`Tensor/ShapeDerivative.lean` induces a connection of Mathlib on the hom bundle of two
+bundles with connections, by the Leibniz correction `(∇_u L)(w) = ∇_u(L w) − L(∇_u w)`, and
+by recursion over `Tensor.Shape` a connection on every tensor shape, with a germ condition
+of regularity that passes through hom bundles; `Tensor/ShapeDerivativeEvaluation.lean`
+recovers the bilinear and trilinear derivatives, and `Lorentzian/ShapeDerivative.lean` and
+`Lorentzian/ShapeDerivativeExamples.lean` give the chart formulas of Levi-Civita on
+covectors, endomorphisms and contravariant two-tensors, `∇g = 0`, and the curved regression.
 The statements are in the [general relativity guide](general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92).
 
 ## Varying a coordinate metric
@@ -1897,9 +1904,19 @@ Fourier solution of the wave equation. Their physics is in the
 [electrodynamics guide](electrodynamics.md#static-fields-the-moving-charge-and-waves-3638-4648-50).
 The physics of the Lorentzian layer is in the
 [general relativity guide](general-relativity.md#the-centrally-symmetric-field-100-101) and its
-sections on [isotropic cosmology](general-relativity.md#isotropic-cosmology-111-114) and
+sections on [isotropic cosmology](general-relativity.md#isotropic-cosmology-111114) and
 [homogeneous models](general-relativity.md#homogeneous-cosmological-models-116-117) and
 [the Newtonian limit and gravitational waves](general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109).
+
+## Covariant Leibniz rules and the second variation
+
+`Lorentzian/CovariantLeibniz.lean` gives the coordinate covariant derivatives of covectors and of
+three-index arrays, the derivative of raised indices `∂(g^{il}q_l) = −Γ g q + g ∇q`, the pairing
+`g^{ce}g^{df}A_{cd}B_{ef}` with its Leibniz rule, and `∂_m g(dψ, dψ) = 2k^a∇_m∂_aψ`.
+`Lorentzian/SecondVariation.lean` writes the Christoffel symbols of `g + sh` exactly as
+`Γ + s(g + sh)⁻¹X`, the Ricci tensor of a perturbed connection as `Ric + palatini D + D·D`, and the
+second derivative of the Ricci tensor along `g + sh`. Their physics is in the
+[general relativity guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119).
 
 ## Scope and next stages
 

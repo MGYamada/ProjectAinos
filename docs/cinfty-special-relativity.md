@@ -53,8 +53,9 @@ is proved only in part stays at the lower status, with the proved part named. A 
 when it is *proved*, or when its remark names the proved part and gives the
 reason why the rest is not proved; the rows closed in the second way are
 listed after the count. The wave names F1–F26 are those of
-[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135), which tracks
-completion.
+[issue #135](https://github.com/MGYamada/ProjectAinos/issues/135), and R0–R8 those of
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187), which tracks the proofs of the
+rows that were closed with a remainder.
 
 | § | Topic | Status | Lean declarations, or what is missing |
 |---:|:---|:---|:---|
@@ -69,75 +70,31 @@ completion.
 | 9 | Energy and momentum | proved | `kineticMomentum`, `kineticMomentum_eq`, `sharp_kineticMomentum`, `metric_smul_fourVelocity`; the Hamiltonian on all momenta (SR-D7: `FreeParticle.hamiltonian`, `FreeParticle.isTrajectory_iff`, `FreeParticle.sum_sq_hamiltonianField_lt_one`, `FreeParticle.isIntegral_angularMomentum`, `FreeParticle.realCurve_eq_motion`, `FreeParticle.flowDomain_hamiltonianField`); the energy and the momentum measured by an observer (SR-D3: `observerEnergy_pos`, `observerEnergy_sq`, `restForm_observerVelocity_lt_one`, `observerEnergy_transform`, `observerEnergy_change`); the Legendre transformation (SR-D4: `FreeParticle.velocityOfMomentum_legendre`, `FreeParticle.legendre_velocityOfMomentum`, `FreeParticle.energy_eq_relEnergy`, `FreeParticle.stationary_iff_deriv_const`, `FreeParticle.isTrajectory_iff_legendre`, `FreeParticle.free_stationary_graph_iff`); the shell (SR-D5: `FutureShell.chart`, `FutureShell.contDiffOn_point`, `FutureShell.lorentz_mem_shell`, `FutureShell.contDiffOn_action`, `FutureShell.action_mul`, `FutureShell.scheme`, `FutureShell.lift_futureShellFunction_eq_zero_iff`); the expansion in `1/c` (SR-K5: `Newtonian.abs_energy_sub_le`, `Newtonian.abs_lagrangian_sub_le`, `Newtonian.abs_momentum_sub_le`, `Newtonian.abs_clockRate_sub_le`). Scope: `d` space dimensions, and three for the comparison with the action of space-time. The shell is a graph with one chart, in which the Lorentz group acts smoothly; the automorphisms of its C∞ scheme are not constructed, and the comparison with the ideal of the future sheet is for real points and `m > 0`. The expansion is for functions of the velocity, not for trajectories |
 | 10 | Transformation of distribution functions | proved | `FutureShell.measure`, `FutureShell.map_action_measure`, `FutureShell.integral_comp_action`, `FutureShell.numberCurrent_transform`, `FutureShell.numberDensity_transform`, `FutureShell.time_numberCurrent`, `FutureShell.numberFlux_transform`, `FutureShell.numberFlux_hyperplane`. Scope: `d` space dimensions and every mass, the mass zero included; the measure `dᵈπ/E` in the chart of the shell; the number of particles through a hypersurface that is given by a surface measure on the events and a field of normals. The two are constructed for the hyperplanes of the co-ordinates; for another hypersurface they are data, and no theorem derives them from the hypersurface. The equality of the numbers through different hypersurfaces needs a transport equation and is not treated |
 | 11 | Decay of particles | proved | `invariantMass_add_le`, `intervalQuadratic_add_eq_zero_iff`, `centreOfMomentum`, `eq_centreOfMomentum`, `not_exists_observer_of_null`, `TwoBodyDecay.energy_first`, `TwoBodyDecay.energy_second`, `TwoBodyDecay.momentum_add`, `TwoBodyDecay.momentum_sq_first`, `TwoBodyDecay.mass_add_le`, `TwoBodyDecay.eq_smul_of_threshold`, `exists_twoBodyDecay`. Scope: the decay into two particles, in `d` space dimensions; the energies in another frame are given by `observerEnergy_change`. The distribution of the directions and the decay into more than two particles are not treated |
-| 12 | Invariant cross-section | proved modulo interface | Proved: `fluxFactor_lorentz`, `fluxFactor_sq`, `fluxFactor_target_at_rest`, `measurePreserving_action_prod`, `crossSection_covariant`. Interface: a measure on the final states that the Lorentz group preserves, and a transition weight that is a Lorentz scalar. Not proved: the construction of this measure on the set where the total momentum is conserved. It needs a coarea formula or a construction with distributions, and the pinned Mathlib has no coarea formula. Special relativity does not determine the weight |
+| 12 | Invariant cross-section | proved | `fluxFactor_lorentz`, `fluxFactor_sq`, `fluxFactor_target_at_rest`, `measurePreserving_action_prod`, `crossSection_covariant`; `TwoBodyFibre.fibreEquiv`, `fibreMeasure`, `fibreMeasure_univ`, `fibreMeasure_compl_fibre`, `fibreMeasure_eq_of_apply`, `map_fibreMeasure`, `twoBodyCrossSection_covariant`, `exists_twoBodyCrossSection_covariant`, `lintegral_regular_eq`, `prod_regular_compl`, `lintegral_prod_eq`, `prod_eq_bind`, `Sphere.lintegral_eq_lintegral_sphere_Ioi`; `ManyBody.lintegral_massRegion_shell`, `manyMeasure`, `lintegral_manyMeasure_succ`, `measurable_manyMeasure`, `lintegral_shellProd`, `shellProd_eq_bind`, `map_manyMeasure`, `manyMeasure_zero`, `manyMeasure_totalMomentum_ne`, `manyMeasure_univ_le`, `manyCrossSection_covariant`, `exists_manyCrossSection_pos`. Scope: three space dimensions, outgoing masses `≥ 0` and the shell measures `d³π/E`. For two outgoing particles and a future timelike total momentum `P` above threshold, the pairs with total `P` form a sphere of directions (a measurable equivalence), the measure `(q/M) dΩ` transported by a boost does not depend on the boost, has total mass `4πq/M` and is carried by the fibre, and `L_*ν_P = ν_{LP}` for every orthochronous `L`; the product of the two shell measures disintegrates as `∫ f dμ₃ dμ₄ = ∫ (∫ f dν_P) d⁴P` over the region above threshold, and the pairs below it form a null set. For `n ≥ 2` outgoing particles the measure `ν_P^{(n)}` is built by integrating out the total momentum of the first `n − 1` particles with `d⁴Q = M dM d³K/E_M(K)`; it is measurable in `P`, carried by the set of total momentum `P`, finite, Lorentz covariant and the two-body measure for `n = 2`, and the product of the `n` shell measures disintegrates over `d⁴P` into it. The cross-section `(1/4F) ∫_S W dν` with these measures is covariant for a Lorentz-scalar weight, with positive instances for two and three outgoing particles. One grouping is used (the last particle split off at each step); the equality of the measures of different groupings is not stated. Special relativity does not determine the transition weight, which is an input of the interaction (SR19) |
 | 13 | Elastic collisions of particles | proved | `mandelstam_sum`, `ElasticCollision.energy_eq`, `ElasticCollision.momentum_sq_eq`, `ElasticCollision.mandelstamT_eq`, `ElasticCollision.mandelstamT_nonpos`, `exists_elasticCollision`, `mandelstamS_target_at_rest`, `mandelstamT_elastic_target_at_rest`. Scope: the invariants `s`, `t`, `u` and the frame of the centre of momentum, in `d` space dimensions; for a target at rest, `s` and `t` in terms of the energies. The angles in the frame of the target are not computed |
 | 14 | Angular momentum | proved | `Poincare.canonical_lorentzCharge_p`, `Poincare.canonical_lorentzCharge_lorentzCharge`, `Poincare.canonical_boostCharge_p`, `Poincare.canonical_boostCharge_boostCharge`, `Poincare.inertia_zero`, `MassShell.initialData_lorentzCharge_zero_succ`, `MassShell.initialData_lorentzCharge_succ_succ`, `orbitalMoment_lorentz`, `flat_lorentzGenerator`, `kineticMomentum_lorentzGenerator`, `orbitalMoment_eq_of_stationary`, `totalMoment_freeMotion`, `sum_orbitalMoment_same_event`, `totalMoment_add_const`, `centreOfEnergy_sub`, `centreOfEnergy_freeMotion`. Scope: finitely many point particles in `d` space dimensions that move freely or collide in one event; the centre of energy for events that are simultaneous for an observer; the charges as Noether's charges for one free particle in three dimensions. The contribution of fields belongs to electrodynamics |
 
-Count: 13 proved, 1 proved modulo interface, 0 informal.
+Count: 14 proved, 0 proved modulo interface, 0 informal.
 
-Closed with a stated remainder: §12 (the measure of the final states on the set where the momentum is conserved, and the transition weight).
+Closed with a stated remainder: none.
 
 ### Proof strategy for the remaining target
 
-Across the three volumes, 107 of the 119 sections are *proved* in their
-declared scopes. §12 is *proved modulo interface*. Three ED sections and
-eight GR sections are *informal* with a proved part and a stated remainder.
+Across the three volumes, 113 of the 119 sections are *proved* in their
+declared scopes, §12 among them. Two ED sections (§§75, 76) and four GR sections
+(§§102, 106, 115, 119) are *informal* with a proved part and a stated remainder;
+[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks their proofs.
 [ED proof strategy](cinfty-electrodynamics.md#proof-strategy-for-the-remaining-targets) ·
 [GR proof strategy](cinfty-general-relativity.md#proof-strategy-for-the-remaining-targets)
 
-**§12. Two outgoing particles at fixed total momentum.** Start in three
-space dimensions with a future timelike total momentum `P`, rest mass `M`,
-and outgoing masses `m₃,m₄ ≥ 0` with `M > m₃ + m₄`. The existing
-`measurePreserving_action_prod` concerns independently varying momenta.
-The desired measure lives on pairs of future-shell momenta whose sum is
-`P`. A restriction of the product measure to this lower-dimensional set
-would give zero. [Shell and rate checks](../checks/RelativisticMeasureAPI.lean)
-
-SR17 identifies the coarea formula needed to recover the product of shell
-measures by integrating over the fibres of total momentum. For two outgoing
-particles above threshold, the following steps propose a proof of that
-formula in radial coordinates. The Jacobian and the final integration
-identity are both proof obligations. [SR17](special-relativity-notes.md#sr17-the-orbital-moment-is-a-function-of-two-covectors-and-the-cross-section-has-two-hypotheses)
-
-1. In the rest frame of `P`, parametrize the pair by a unit direction
-   `n`, with spatial momenta `q n` and `−q n`, where
-   `q = √λ(M²,m₃²,m₄²)/(2M)`. Prove this gives a measurable equivalence
-   onto the fibre using the energy and momentum identities of §11.
-   [Two-body decay](../ProjectAinos/SpecialRelativity/Decay.lean)
-2. Derive the normalization from the library convention `d³p/E` on each
-   shell. After fixing the total spatial momentum to zero, use polar
-   coordinates and substitute `M = E₃(r) + E₄(r)` in the radial integral.
-   The derivative at `q` is `q M/(E₃ E₄)`, so the angular measure to push
-   forward is `(q/M) dΩ`. Test the identity on compactly supported
-   functions of mass and direction. The total fibre mass must be `4πq/M`.
-   [Shell measure](../ProjectAinos/SpecialRelativity/ShellMeasure.lean) ·
-   [Sphere measure](../ProjectAinos/SmoothGeometry/Euclidean/SphereIntegral.lean)
-3. Transport this measure by a boost to `P`. Two Lorentz maps sending the
-   rest momentum to `P` differ in the rest frame by a spatial isometry.
-   Use `Sphere.measurePreserving_sphereMap` to prove choice independence
-   and `L_*ν_P = ν_{LP}` for every orthochronous `L`.
-   Extend the change-of-variables proof of
-   `crossSection_covariant` to these two fibres. Check a nonzero boost,
-   positive incoming flux, and a constant weight. The scalar transition
-   weight remains an input from the interaction. [Cross-section](../ProjectAinos/SpecialRelativity/CrossSection.lean)
-
-To identify this family as the constrained product measure, prove the
-integration formula for nonnegative test functions supported on regular
-pairs. Here `d⁴P` is Lebesgue measure on total four-momentum.
-
-$$
-\int f(p_3,p_4)\,d\mu_3\,d\mu_4
-= \int \left(\int f(p_3,p_4)\,d\nu_P\right)d^4P.
-$$
-
-Use the spatial total momentum as an integration variable and compute the
-Jacobian in the boosted rest-frame coordinates. For more outgoing
-particles, integrate out an intermediate timelike total momentum. Prove
-measurability in that momentum and iterate the integral identity on
-each regular channel before identifying different groupings.
-The radial substitution requires `q > 0`. Treat threshold fibres and null
-intermediate totals separately wherever the proposed channel meets them.
-A two-body theorem discharges only the regular two-body part of §12.
+**§12.** Proved (R2 on [#187](https://github.com/MGYamada/ProjectAinos/issues/187)). The
+plan above was carried out with one change: no general coarea formula is needed (SR19). For two
+outgoing particles a shear to the total space momentum, a change of variables whose derivative is
+the identity plus a map of rank one, polar co-ordinates and one radial substitution
+`P⁰(r) = √(M(r)² + |K|²)` give the disintegration; more particles follow by the mass foliation
+`d⁴Q = M dM d³K/E_M(K)` and induction.
+[Two-body checks](../checks/TwoBodyMeasureAPI.lean) ·
+[Many-body checks](../checks/ManyBodyMeasureAPI.lean)
 
 ### After the mechanics programme
 
@@ -870,7 +827,7 @@ supports the numbering. Page numbers vary between reprints.
 | 9 | Observer energy/momentum, mass shell, coordinate-time Hamiltonian and Newtonian expansion | Future massive momentum; fixed observer; `m>0`; compact velocity bound for limit | A, A*, B; SR-D3–D5, SR-D7, SR-K5 | Momentum covector implemented; complete energy/Hamiltonian/limit API targets; SR-D7 needs only the shared Poisson API |
 | 10 | Covariance of shell distributions and number flux | Nonnegative measurable distribution; spacelike slice; integrability | B, C; SR-M1–M2 | Target |
 | 11 | Two-body decay energies, thresholds and frame conversion | Parent `M>0`; daughter future shells; conservation; nonzero daughter energies | A*; SR-C1–C2 | Target |
-| 12 | Invariant phase-space rate and cross-section construction | Regular constraint locus; nonzero incoming flux; scalar transition weight | B, C, P; SR-M1, SR-C4 | Flux and conditional cross-section covariance proved. Construction of the regular fibre measure remains |
+| 12 | Invariant phase-space rate and cross-section construction | Regular constraint locus; nonzero incoming flux; scalar transition weight | B, C, P; SR-M1, SR-C4 | Proved (F4; R2 on #187): the flux, the fibre measures of two and of `n` outgoing particles with their disintegration of the shell measures, and the covariant cross-section |
 | 13 | Elastic two-body kinematics and invariant relations | Future mass shells; timelike total momentum; conservation | A*; SR-C1–C3 | Target |
 | 14 | Orbital Lorentz charges and center-of-energy motion | Finite isolated free system or explicit event-balance premises; positive total energy | A, A*, B; SR-C5–C6 | Target; the Poisson prerequisite of SR-C6 exists; field contributions belong to ED |
 
@@ -1044,8 +1001,8 @@ check, relevant default-option consumer checks and transitive axiom audit:
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
 lake env lean -DwarningAsError=true --run checks/CoreImports.lean
-lake env lean -DwarningAsError=true checks/SpecialRelativityAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SpecialRelativityAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 ```
 
 The axiom allowlist is `propext`, `Classical.choice`, `Quot.sound`. Physical

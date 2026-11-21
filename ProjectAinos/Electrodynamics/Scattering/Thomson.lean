@@ -6,6 +6,7 @@ module
 
 public import ProjectAinos.Electrodynamics.Radiation.Relativistic
 public import ProjectAinos.Electrodynamics.PlaneWave
+public import ProjectAinos.Electrodynamics.ConstantField
 public import ProjectAinos.SmoothGeometry.ODE.FlowComplete
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
@@ -25,9 +26,22 @@ that the potentials carry `1/4π` and the cross section of Thomson is `σ_T = (8
   field `(t, x, v) ↦ (1, v, k (E + v × B))` (`motionField`) is smooth and of linear growth
   (`flowDomain_eq_univ_of_norm_le`); `exists_trajectory_wave` for the plane wave
   `E = E₀ cos(ω (t − ⟨n, x⟩))`, `B = n × E` (`waveElectric`, `waveMagnetic`). The relativistic
-  motion in proper time, `du/dτ = k F(x) u` (`IsProperTimeTrajectory`), likewise exists for all
-  proper times in a smooth bounded field (`exists_properTimeTrajectory`,
-  `exists_properTimeTrajectory_planeWave`).
+  motion in proper time, `dx/dτ = u`, `du/dτ = k F(x) u` (`IsProperTimeTrajectory`), likewise
+  exists for all proper times in a smooth bounded field (`exists_properTimeTrajectory`,
+  `exists_properTimeTrajectory_planeWave`). These two equations alone admit the constant curve
+  with `u = 0`, and a unit initial velocity can leave the mass shell when `F(x)` is not
+  skew-adjoint for the Minkowski metric `η` (for `F(x) = id`, `u(τ) = e^{kτ} u₀`).
+* `exists_physicalProperTimeTrajectory`: **the physical motion**. In a smooth bounded field with
+  `η(F(x) v, w) = −η(v, F(x) w)` (`IsMinkowskiSkew`; the Lorentz force `F♯` of a field of
+  two-forms is such a field, `isMinkowskiSkew_forceMap`), a world line with a future unit initial
+  four-velocity exists for all proper times and stays on the future unit mass shell
+  `η(u, u) = −1`, `u⁰ > 0` (`futureUnitShell`, `IsPhysicalProperTimeTrajectory`), because
+  `d/dτ η(u, u) = 2k η(F(x) u, u) = 0` and `u⁰` cannot change sign on the shell
+  (`mem_futureUnitShell_of_isProperTimeTrajectory`). The instances are the plane wave
+  `cos(ℓ(x)) F₀♯` of a constant two-form (`exists_physicalProperTimeTrajectory_planeWave`), the
+  field of the plane-wave potential `A = sin(ℓ(x)) a`
+  (`exists_physicalProperTimeTrajectory_planeWavePotential`) and of the incident wave below
+  (`exists_physicalProperTimeTrajectory_incidentPotential`).
 * `norm_trajectory_sub_firstOrder_le`: **the weak-wave expansion**. In the fields `a E`, `a B` of
   the amplitude `a`, with `E` Lipschitz in the position, a charge at rest at `x₀` moves as
   `x₀ + a ξ + O(a²)` on `[0, T]`, uniformly in `|a| ≤ 1`, where `ξ̈ = k E(t, x₀)`,
@@ -208,7 +222,9 @@ theorem exists_trajectory (k : ℝ) {E B : ℝ → E3 → E3}
 
 /-- `(x, u)` is a world line of a charge with the ratio `k = e/m` of charge to mass, parametrized
 by the proper time, in the field whose mixed tensor `F^μ_ν(x)` is the linear map `F x`:
-`dx/dτ = u` and `du/dτ = k F(x) u` (Landau–Lifshitz §23). -/
+`dx/dτ = u` and `du/dτ = k F(x) u` (Landau–Lifshitz §23). The two equations alone do not make `τ`
+the proper time: the constant curve with `u = 0` solves them in every field. The physical world
+lines, with `u` on the future unit mass shell, are `IsPhysicalProperTimeTrajectory`. -/
 def IsProperTimeTrajectory (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spacetime)
     (x u : ℝ → Spacetime) : Prop :=
   ∀ τ, HasDerivAt x (u τ) τ ∧ HasDerivAt u (k • F (x τ) (u τ)) τ
@@ -216,7 +232,8 @@ def IsProperTimeTrajectory (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spac
 open scoped ContDiff in
 /-- **The relativistic motion exists for all proper times**: in a smooth bounded field `F(x)` the
 field `(x, u) ↦ (u, k F(x) u)` on `ℝ⁴ × ℝ⁴` is smooth and of linear growth, so the world line
-through any event and four-velocity is defined for all proper times. -/
+through any event and four-velocity is defined for all proper times. For a skew-adjoint field and
+a future unit four-velocity it is physical (`exists_physicalProperTimeTrajectory`). -/
 theorem exists_properTimeTrajectory (k : ℝ) {F : Spacetime → Spacetime →L[ℝ] Spacetime}
     (hF : ContDiff ℝ ∞ F) {M : ℝ} (hM : ∀ x, ‖F x‖ ≤ M) (x₀ u₀ : Spacetime) :
     ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧ IsProperTimeTrajectory k F x u := by
@@ -267,6 +284,168 @@ theorem exists_properTimeTrajectory_planeWave (k : ℝ) (ℓ : FourCovector)
     (M := ‖F₀‖) (fun y => by
       rw [norm_smul, Real.norm_eq_abs]
       exact mul_le_of_le_one_left (norm_nonneg _) (Real.abs_cos_le_one _)) x₀ u₀
+
+/-! ### The motion on the mass shell -/
+
+/-- The future unit mass shell `η(u, u) = −1`, `u⁰ > 0` of the four-velocities, with
+`η = diag(−1, 1, 1, 1)` (`mass_shell`). -/
+def futureUnitShell : Set Spacetime :=
+  {u | minkowskiForm .timeNegative 3 u u = -1 ∧ 0 < time u}
+
+/-- The four-velocity `(1, 0, 0, 0)` of a charge at rest is on the future unit mass shell. -/
+theorem single_zero_mem_futureUnitShell : (Pi.single 0 1 : Spacetime) ∈ futureUnitShell := by
+  refine ⟨?_, by simp⟩
+  simp [minkowskiForm_apply, lorentzSign, LorentzConvention.timeSign, Pi.single_apply]
+
+/-- The four-velocity of a future timelike vector is on the future unit mass shell. -/
+theorem fourVelocity_mem_futureUnitShell {v : Spacetime} (hv : FutureTimelike v) :
+    fourVelocity v ∈ futureUnitShell := by
+  have hv' := (futureTimelike_iff v).mp hv
+  refine ⟨fourVelocity_metric hv'.1, ?_⟩
+  simp only [fourVelocity, map_smul, smul_eq_mul]
+  exact mul_pos (inv_pos.mpr (Real.sqrt_pos.mpr hv'.1)) hv'.2
+
+/-- The field map `F(x)` is skew-adjoint for the Minkowski metric at every event,
+`η(F(x) v, w) = −η(v, F(x) w)`: it is the mixed tensor `F^μ_ν` of a two-form
+(`isMinkowskiSkew_forceMap`). -/
+def IsMinkowskiSkew (F : Spacetime → Spacetime →L[ℝ] Spacetime) : Prop :=
+  ∀ x v w, minkowskiForm .timeNegative 3 (F x v) w = -minkowskiForm .timeNegative 3 v (F x w)
+
+/-- A skew-adjoint field is orthogonal to the velocity, `η(F(x) v, v) = 0`. -/
+theorem IsMinkowskiSkew.orthogonal {F : Spacetime → Spacetime →L[ℝ] Spacetime}
+    (hF : IsMinkowskiSkew F) (x v : Spacetime) : minkowskiForm .timeNegative 3 (F x v) v = 0 := by
+  have h := hF x v v
+  rw [minkowskiForm_symmetric .timeNegative v (F x v)] at h
+  linarith
+
+/-- A skew-adjoint field times a scalar function is skew-adjoint. -/
+theorem IsMinkowskiSkew.smul {F : Spacetime → Spacetime →L[ℝ] Spacetime}
+    (hF : IsMinkowskiSkew F) (c : Spacetime → ℝ) : IsMinkowskiSkew fun x => c x • F x := by
+  intro x v w
+  simp only [smul_apply, map_smul, smul_eq_mul, hF x v w]
+  ring
+
+/-- **The mixed tensor of a field of two-forms is skew-adjoint**: the Lorentz force
+`e F♯(x) v` (`ConstantField.forceMap`) satisfies `η(e F♯ v, w) = −e F(v, w)`
+(`lorentzForce_lowered`), which is antisymmetric in `v` and `w`. -/
+theorem isMinkowskiSkew_forceMap (e : ℝ) (F : Spacetime → TwoForm) :
+    IsMinkowskiSkew fun x => ConstantField.forceMap e (F x) := by
+  intro x v w
+  simp only [ConstantField.forceMap_apply]
+  rw [lorentzForce_lowered, minkowskiForm_symmetric, lorentzForce_lowered, twoForm_swap (F x) w v]
+  ring
+
+/-- A world line of a charge in proper time whose four-velocity is on the future unit mass shell
+at every proper time, so that `τ` is its proper time. The constant curve with `u = 0` solves the
+equations of `IsProperTimeTrajectory` in every field and is not of this kind. -/
+def IsPhysicalProperTimeTrajectory (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spacetime)
+    (x u : ℝ → Spacetime) : Prop :=
+  IsProperTimeTrajectory k F x u ∧ ∀ τ, u τ ∈ futureUnitShell
+
+/-- **The four-velocity stays on the future unit mass shell**: along a world line in a field
+that is skew-adjoint for the Minkowski metric, `d/dτ η(u, u) = 2k η(F(x) u, u) = 0`, so a unit
+initial four-velocity stays a unit vector. On the mass shell `(u⁰)² = 1 + |u|² ≥ 1`, so `u⁰`
+does not vanish and keeps its sign by the intermediate value theorem. -/
+theorem mem_futureUnitShell_of_isProperTimeTrajectory {k : ℝ}
+    {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F) {x u : ℝ → Spacetime}
+    (h : IsProperTimeTrajectory k F x u) (h0 : u 0 ∈ futureUnitShell) (τ : ℝ) :
+    u τ ∈ futureUnitShell := by
+  have hd : ∀ t, HasDerivAt (fun t => minkowskiForm .timeNegative 3 (u t) (u t)) 0 t := by
+    intro t
+    have hb := (minkowskiForm .timeNegative 3).hasDerivAt_of_bilinear (fun _ => (h t).2)
+      (fun _ => (h t).2)
+    have hz : minkowskiForm .timeNegative 3 (u t) (k • F (x t) (u t)) +
+        minkowskiForm .timeNegative 3 (k • F (x t) (u t)) (u t) = 0 := by
+      rw [map_smul, map_smul, smul_apply, smul_eq_mul, smul_eq_mul,
+        minkowskiForm_symmetric .timeNegative (u t), hF.orthogonal, mul_zero, add_zero]
+    rw [hz] at hb
+    exact hb
+  have hc : ∀ t, minkowskiForm .timeNegative 3 (u t) (u t) = -1 := fun t => by
+    have h' := is_const_of_deriv_eq_zero
+      (f := fun t => minkowskiForm .timeNegative 3 (u t) (u t))
+      (fun t => (hd t).differentiableAt) (fun t => (hd t).deriv) t 0
+    exact h'.trans h0.1
+  have hne : ∀ t, time (u t) ≠ 0 := fun t h0' => by
+    have hq := intervalQuadratic_convention .timeNegative (u t)
+    rw [hc t, intervalQuadratic_coordinates, h0'] at hq
+    simp only [LorentzConvention.timeSign] at hq
+    nlinarith [sq_nonneg ‖space (u t)‖]
+  refine ⟨hc τ, ?_⟩
+  by_contra hneg
+  have hcont : Continuous fun t => time (u t) :=
+    (time (d := 3)).continuous.comp
+      (continuous_iff_continuousAt.mpr fun t => (h t).2.continuousAt)
+  have hmem : (0 : ℝ) ∈ uIcc (time (u 0)) (time (u τ)) := by
+    have h1 := h0.2
+    exact ⟨by rw [min_eq_right ((not_lt.mp hneg).trans h1.le)]; exact not_lt.mp hneg,
+      by rw [max_eq_left ((not_lt.mp hneg).trans h1.le)]; exact h1.le⟩
+  obtain ⟨c, -, hc0⟩ := intermediate_value_uIcc (a := 0) (b := τ) hcont.continuousOn hmem
+  exact hne c hc0
+
+/-- A world line in proper time in a skew-adjoint field with a future unit initial four-velocity is
+physical. -/
+theorem isPhysicalProperTimeTrajectory_of_isProperTimeTrajectory {k : ℝ}
+    {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F) {x u : ℝ → Spacetime}
+    (h : IsProperTimeTrajectory k F x u) (h0 : u 0 ∈ futureUnitShell) :
+    IsPhysicalProperTimeTrajectory k F x u :=
+  ⟨h, mem_futureUnitShell_of_isProperTimeTrajectory hF h h0⟩
+
+open scoped ContDiff in
+/-- **The physical relativistic motion exists for all proper times**: in a smooth bounded field
+`F(x)` that is skew-adjoint for the Minkowski metric, the world line through any event with a
+future unit four-velocity is defined for all proper times, and its four-velocity stays on the
+future unit mass shell. -/
+theorem exists_physicalProperTimeTrajectory (k : ℝ) {F : Spacetime → Spacetime →L[ℝ] Spacetime}
+    (hF : ContDiff ℝ ∞ F) {M : ℝ} (hM : ∀ x, ‖F x‖ ≤ M) (hskew : IsMinkowskiSkew F)
+    (x₀ : Spacetime) {u₀ : Spacetime} (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧ IsPhysicalProperTimeTrajectory k F x u := by
+  obtain ⟨x, u, hx, hu, h⟩ := exists_properTimeTrajectory k hF hM x₀ u₀
+  exact ⟨x, u, hx, hu, isPhysicalProperTimeTrajectory_of_isProperTimeTrajectory hskew h
+    (hu ▸ hu₀)⟩
+
+/-- An instance: in the monochromatic plane wave `F(x) = cos(ℓ(x)) F₀♯` of a constant two-form
+`F₀`, the world line with a future unit initial four-velocity exists for all proper times and
+stays on the future unit mass shell. -/
+theorem exists_physicalProperTimeTrajectory_planeWave (k : ℝ) (ℓ : FourCovector) (F₀ : TwoForm)
+    (x₀ : Spacetime) {u₀ : Spacetime} (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k (fun y => Real.cos (ℓ y) • ConstantField.forceMap 1 F₀)
+        x u := by
+  obtain ⟨x, u, hx, hu, h⟩ :=
+    exists_properTimeTrajectory_planeWave k ℓ (ConstantField.forceMap 1 F₀) x₀ u₀
+  exact ⟨x, u, hx, hu, isPhysicalProperTimeTrajectory_of_isProperTimeTrajectory
+    ((isMinkowskiSkew_forceMap 1 fun _ => F₀).smul fun y => Real.cos (ℓ y)) h (hu ▸ hu₀)⟩
+
+/-- The Lorentz force of the field of the plane wave `A = sin(ℓ(x)) a` is `cos(ℓ(x))` times its
+value at the origin (`fieldTensor_planeWave`: the field is `cos(ℓ(x)) ℓ ∧ a`). -/
+theorem forceMap_fieldTensor_planeWave_sin (e : ℝ) (ℓ a : FourCovector) (y : Spacetime) :
+    ConstantField.forceMap e (fieldTensor (planeWave ℓ a Real.sin) y) =
+      Real.cos (ℓ y) • ConstantField.forceMap e (fieldTensor (planeWave ℓ a Real.sin) 0) := by
+  refine ContinuousLinearMap.ext fun v => sub_eq_zero.mp
+    (minkowskiForm_nondegenerate .timeNegative _ fun w => ?_)
+  rw [map_sub, sub_apply, smul_apply, map_smul,
+    smul_apply, ConstantField.forceMap_apply, ConstantField.forceMap_apply,
+    lorentzForce_lowered, lorentzForce_lowered,
+    fieldTensor_planeWave _ _ Real.differentiableAt_sin,
+    fieldTensor_planeWave _ _ Real.differentiableAt_sin, Real.deriv_sin, map_zero, Real.cos_zero,
+    smul_eq_mul]
+  ring
+
+/-- **The motion in the field of a plane wave** (Landau–Lifshitz §§47, 78): in the field of the
+plane-wave potential `A = sin(ℓ(x)) a` (`planeWave`), with the Lorentz force `(e/m) F♯(x) u` as the
+field map and `k = e/m`, the world line through any event with a future unit four-velocity exists
+for all proper times and stays on the future unit mass shell. For a null `ℓ` and `⟨ℓ, a⟩ = 0` the
+field solves the equations of Maxwell in the vacuum (`vacuum_planeWave`). -/
+theorem exists_physicalProperTimeTrajectory_planeWavePotential (k : ℝ) (ℓ a : FourCovector)
+    (x₀ : Spacetime) {u₀ : Spacetime} (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k
+        (fun y => ConstantField.forceMap 1 (fieldTensor (planeWave ℓ a Real.sin) y)) x u := by
+  rw [show (fun y => ConstantField.forceMap 1 (fieldTensor (planeWave ℓ a Real.sin) y)) =
+      fun y => Real.cos (ℓ y) •
+        ConstantField.forceMap 1 (fieldTensor (planeWave ℓ a Real.sin) 0) from
+    funext (forceMap_fieldTensor_planeWave_sin 1 ℓ a)]
+  exact exists_physicalProperTimeTrajectory_planeWave k ℓ _ x₀ hu₀
 
 /-! ### The response to a weak wave -/
 
@@ -658,6 +837,16 @@ theorem transverse_incidentPotential {ω : ℝ} (hω : ω ≠ 0) {n E₀ : E3} (
       rw [← hn']
       exact Finset.sum_congr rfl fun i _ => (sq _).symm
     rw [this, mul_one, EuclideanSpace.real_norm_sq_eq]
+
+/-- **The relativistic motion in the incident wave**: in the field of `incidentPotential ω n E₀`,
+with the Lorentz force `(e/m) F♯(x) u` and `k = e/m`, the world line through any event with a
+future unit four-velocity exists for all proper times and stays on the future unit mass shell. -/
+theorem exists_physicalProperTimeTrajectory_incidentPotential (k ω : ℝ) (n E₀ : E3)
+    (x₀ : Spacetime) {u₀ : Spacetime} (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k
+        (fun y => ConstantField.forceMap 1 (fieldTensor (incidentPotential ω n E₀) y)) x u :=
+  exists_physicalProperTimeTrajectory_planeWavePotential k _ _ x₀ hu₀
 
 /-! ### Averages over a period -/
 

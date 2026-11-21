@@ -184,8 +184,8 @@ Verified results on the pinned base:
 |---|---|
 | `lake build --wfail ProjectAinos` | Passed; 9,236 build jobs, warnings treated as failures |
 | `lake exe mk_all --check --lib ProjectAinos` | Passed; no update necessary |
-| `lake env lean -DwarningAsError=true checks/AxiomAudit.lean` | Passed; 5,673 project/YM declarations |
-| `lake env lean -DwarningAsError=true checks/QuantumMechanicsAPI.lean` | Passed; 113 quantum declarations, including generated declarations |
+| `lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean` | Passed; 5,673 project/YM declarations |
+| `lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/QuantumMechanicsAPI.lean` | Passed; 113 quantum declarations, including generated declarations |
 | Existing smooth-geometry, Yang–Mills, special-relativity, atomic-nonreactive, and electrodynamics API checks | All five passed with warnings as errors |
 
 The printed axiom dependencies for the projector equivalence, expectation
