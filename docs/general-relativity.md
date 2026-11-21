@@ -1611,7 +1611,19 @@ expansion with a `C/c⁴` remainder (`abs_ricciOf_pnCoefficient_sub_le`), and to
 linearized Einstein equations reduce to ordinary differential equations
 (`CosmologicalPerturbation.scalarMode_iff`, `tensorMode_iff`, `vectorMode_iff`), with the growing and
 decaying density contrasts (`densityContrast_growing`, `densityContrast_decaying`), the fictitious
-gauge mode (`gaugeMode`) and the decay of the vector modes (`vectorMode_decay`).
+gauge mode (`gaugeMode`) and the decay of the vector modes (`vectorMode_decay`). A general flat
+perturbation is reduced to these modes: at each nonzero frequency the scalar, vector and tensor
+projectors sum to the identity and commute with the linearized operator (`symbolEq_iff`); for
+weighted integrable amplitudes, Schwartz slices included and with no cutoff at `ξ = 0`, a
+perturbation solves the equations iff almost every frequency does, iff each of its three parts does,
+and it is their sum (`IsWeightedData.linearizedEinsteinDust_iff`, `linearizedEinsteinDust_iff_split`,
+`fieldOf_eq_add`, `HasIntegrableSpectrum.reconstruction`); the gauge modes lie in the scalar and vector
+sectors (`scalarAmp_mem_scalar`, `vectorGauge_solution`). On S³ the closed harmonics are complete in
+the chart measure (`CurvedScalarCompleteness.eq_zero_of_chartPair`), and scalar data of the expandable
+class solve the scalar equations iff every coefficient obeys its mode equation
+(`IsClosedExpandable.scalarSystemAt_slice_iff`, with infinite instances
+`exists_isClosedExpandable_infinite`); on H³ the zonal synthesis solves them iff almost every mode
+does (`CurvedOpenSynthesis.open_zonal_scalarSystemAt_slice_iff`).
 
 **Scalar perturbations of closed and open dust universes (§115).** In conformal time, H = a′/a
 and the potential satisfies Φ″ + 3HΦ′ − 2kΦ = 0. For a mode with spatial eigenvalue −q the
@@ -1631,11 +1643,13 @@ epoch to the next with explicit rates (`TypeII.tendsto_exponents`, `TypeII.abs_e
 | Dust collapse | `Tolman.metric`, `isEinstein_iff`, `Equations.density_nonneg_iff`, `solution_parabolic`, `solution_elliptic`, `solution_hyperbolic`, `tendsto_radius_zero`, `lemaitre_eq`, `matching_exterior` | [Tolman](../ProjectAinos/GeneralRelativity/Tolman.lean) |
 | Post-Newtonian motion | `PostNewtonian.PostNewtonianMetricFamily`, `postNewtonianAcceleration`, `acceleration_error`, `geodesic_acceleration_error`, `lagrangian`, `eulerLagrange_acceleration_error` | [PostNewtonian](../ProjectAinos/GeneralRelativity/PostNewtonian.lean) |
 | EIH Lagrangian and the dust field | `EinsteinInfeldHoffmann.eihLagrangian`, `eulerLagrange_eihLagrangian_eq_test`, `eulerLagrange_acceleration_error`, `eihLagrangian_perm`, `tendsto_eihLagrangian`, `eulerLagrange_testMass`, `PostNewtonianRicci.abs_ricciOf_pnCoefficient_sub_le`, `PostNewtonianSources.superPotential_coordLaplacian`, `hasDerivAt_newtonPotential_continuity`, `PostNewtonianDust.SmoothDust`, `SmoothDust.gauge`, `vector_eq`, `scalar_eq`, `SmoothDust.abs_ricciOf_sub_dustSource_le`, `exists_smoothDust` | [EinsteinInfeldHoffmann](../ProjectAinos/GeneralRelativity/EinsteinInfeldHoffmann.lean) · [PostNewtonianField](../ProjectAinos/GeneralRelativity/PostNewtonianField.lean) · [PostNewtonianRicci](../ProjectAinos/GeneralRelativity/PostNewtonianRicci.lean) · [PostNewtonianSources](../ProjectAinos/GeneralRelativity/PostNewtonianSources.lean) · [PostNewtonianDust](../ProjectAinos/GeneralRelativity/PostNewtonianDust.lean) |
+| Reconstruction of perturbations | `ScalarVectorTensor.symbolEq_iff`, `Fourier.IsWeightedAmplitude`, `ae_eq_zero_of_fourier_eq_zero`, `IsWeightedData.linearizedEinsteinDust_iff`, `linearizedEinsteinDust_iff_split`, `fieldOf_eq_add`, `HasIntegrableSpectrum.reconstruction`, `linearizedEinsteinDust_gaugeData`, `scalarAmp_mem_scalar`, `vectorGauge_solution`, `CurvedScalarSeries.scalarSystemAt_tsum_iff`, `closedHarmonic_coeff_eq_zero`, `eq_zero_of_chartPair`, `IsClosedExpandable.scalarSystemAt_slice_iff`, `exists_isClosedExpandable_infinite`, `open_zonal_scalarSystemAt_slice_iff` | [ScalarVectorTensor](../ProjectAinos/SmoothGeometry/Tensor/ScalarVectorTensor.lean) · [WeightedSynthesis](../ProjectAinos/SmoothGeometry/Fourier/WeightedSynthesis.lean) · [PerturbationReconstructionGeneral](../ProjectAinos/GeneralRelativity/PerturbationReconstructionGeneral.lean) · [CurvedScalarSeries](../ProjectAinos/GeneralRelativity/CurvedScalarSeries.lean) · [CurvedScalarCompleteness](../ProjectAinos/GeneralRelativity/CurvedScalarCompleteness.lean) · [CurvedOpenSynthesis](../ProjectAinos/GeneralRelativity/CurvedOpenSynthesis.lean) |
 | Cosmological perturbations | `CosmologicalPerturbation.ricci_synchronous_deriv`, `scalarMode_iff`, `densityContrast_growing`, `densityContrast_decaying`, `gaugeMode`, `tensorMode_iff`, `vectorMode_decay` | [CosmologicalPerturbation](../ProjectAinos/GeneralRelativity/CosmologicalPerturbation.lean) |
 | The oscillating regime | `BKL.bounce_kasnerExponents`, `bklMap`, `TypeII.Data.isVacuum_iff`, `TypeII.solution`, `TypeII.tendsto_exponents`, `TypeII.abs_exponents_sub_le` | [BKL](../ProjectAinos/GeneralRelativity/BKL.lean) |
 
 The typed examples are in `checks/CollapseAPI.lean`, `checks/CollapseHorizonAPI.lean`, `checks/TolmanAPI.lean`,
 `checks/PostNewtonianAPI.lean`, `checks/EinsteinInfeldHoffmannAPI.lean`, `checks/PostNewtonianDustAPI.lean`,
-`checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
+`checks/PerturbationReconstructionAPI.lean`, `checks/PerturbationReconstructionGeneralAPI.lean`,
+`checks/CurvedScalarSeriesAPI.lean`, `checks/CurvedScalarCompletenessAPI.lean`, `checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
 The decisions are recorded in GR34–GR38 of the [notes](general-relativity-notes.md) and in G17 of
 the [smooth-geometry notes](smooth-geometry-notes.md).

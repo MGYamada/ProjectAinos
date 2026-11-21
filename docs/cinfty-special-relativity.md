@@ -80,10 +80,9 @@ Closed with a stated remainder: none.
 
 ### Proof strategy for the remaining target
 
-Across the three volumes, 118 of the 119 sections are *proved* in their
-declared scopes, §12 among them. One GR section (§115) is *informal* with a proved
-part and a stated remainder;
-[issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracks its proof.
+Across the three volumes, all 119 sections are *proved* in their declared scopes,
+§12 among them; [issue #187](https://github.com/MGYamada/ProjectAinos/issues/187) tracked the
+proofs of the rows that had been closed with a remainder.
 [ED proof strategy](cinfty-electrodynamics.md#proof-strategy-for-the-remaining-targets) ·
 [GR proof strategy](cinfty-general-relativity.md#proof-strategy-for-the-remaining-targets)
 

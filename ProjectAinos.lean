@@ -163,7 +163,9 @@ public import ProjectAinos.GeneralRelativity.CosmologicalRedshift
 public import ProjectAinos.GeneralRelativity.CurvedCosmology
 public import ProjectAinos.GeneralRelativity.CurvedDustGrowth
 public import ProjectAinos.GeneralRelativity.CurvedDustModes
+public import ProjectAinos.GeneralRelativity.CurvedOpenSynthesis
 public import ProjectAinos.GeneralRelativity.CurvedPerturbation
+public import ProjectAinos.GeneralRelativity.CurvedScalarCompleteness
 public import ProjectAinos.GeneralRelativity.CurvedScalarReconstruction
 public import ProjectAinos.GeneralRelativity.CurvedScalarSeries
 public import ProjectAinos.GeneralRelativity.CurvedScalarUniqueness
@@ -747,6 +749,7 @@ public import ProjectAinos.SpecialFunctions.ClassicalPolynomial
 public import ProjectAinos.SpecialFunctions.CompleteElliptic
 public import ProjectAinos.SpecialFunctions.CubicPhase
 public import ProjectAinos.SpecialFunctions.Fresnel
+public import ProjectAinos.SpecialFunctions.GegenbauerCompleteness
 public import ProjectAinos.SpecialFunctions.GegenbauerOrthogonality
 public import ProjectAinos.SpecialFunctions.Hankel
 public import ProjectAinos.SpecialFunctions.HankelUpper
@@ -777,6 +780,7 @@ public import ProjectAinos.SpecialFunctions.OscillatoryAverage
 public import ProjectAinos.SpecialFunctions.QuadraticPhase
 public import ProjectAinos.SpecialFunctions.Schlaefli
 public import ProjectAinos.SpecialFunctions.SchlaefliArc
+public import ProjectAinos.SpecialFunctions.SineTransformUniqueness
 public import ProjectAinos.SpecialFunctions.SphericalAddition
 public import ProjectAinos.SpecialFunctions.SphericalBasis
 public import ProjectAinos.SpecialFunctions.SphericalBessel
@@ -787,6 +791,7 @@ public import ProjectAinos.SpecialFunctions.SphericalCompleteness
 public import ProjectAinos.SpecialFunctions.SphericalComplex
 public import ProjectAinos.SpecialFunctions.SphericalHarmonics
 public import ProjectAinos.SpecialFunctions.SphericalOrthogonality
+public import ProjectAinos.SpecialFunctions.SphericalPolarCompleteness
 public import ProjectAinos.SpecialFunctions.StationaryPhase
 public import ProjectAinos.SpecialFunctions.ZonalHarmonics
 public import ProjectAinos.SpecialRelativity.Boost

@@ -1025,6 +1025,17 @@ there. The ledger row §119 is *proved* with the maximizing premise as the globa
 (GR 38 of 39).
 [Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 
+At each nonzero frequency the scalar, vector and tensor projectors commute with the linearized
+Einstein–dust operator, and amplitudes with weighted integrable bounds are closed under them, so a
+general flat perturbation solves the equations exactly when its three parts do, with no cutoff at
+zero frequency; Fourier injectivity on `L¹`, absent from the pinned Mathlib, gives the
+reconstruction. On S³ Gegenbauer and spherical completeness in the chart measure reconstruct
+expandable scalar data from the closed harmonics, and on H³ the injectivity of the sine transform
+gives the zonal sector. The ledger row §115 is *proved* in these classes, which completes the
+general-relativity ledger (39 of 39): every one of the 119 rows of the three field ledgers is
+*proved* in its written scope.
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

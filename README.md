@@ -336,7 +336,8 @@ surface in the weak sense, and its event horizon is the boundary of the region f
 escapes; test bodies follow the
 post-Newtonian equations of motion, `N` bodies follow the Einstein–Infeld–Hoffmann Lagrangian, the
 post-Newtonian field of smooth dust solves the Einstein equations to `O(c⁻⁴)`, density
-perturbations of a flat universe grow like `t^{2/3}`,
+perturbations of a flat universe grow like `t^{2/3}` and every flat perturbation is the sum of its
+scalar, vector and tensor parts,
 and the approach to a cosmological singularity passes between Kasner epochs. On closed and open
 dust backgrounds, discrete S³ harmonics and continuous H³ harmonics give scalar density and
 velocity perturbations with two independent time solutions.
