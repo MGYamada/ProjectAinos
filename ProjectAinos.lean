@@ -164,6 +164,9 @@ public import ProjectAinos.GeneralRelativity.CurvedCosmology
 public import ProjectAinos.GeneralRelativity.CurvedDustGrowth
 public import ProjectAinos.GeneralRelativity.CurvedDustModes
 public import ProjectAinos.GeneralRelativity.CurvedPerturbation
+public import ProjectAinos.GeneralRelativity.CurvedScalarReconstruction
+public import ProjectAinos.GeneralRelativity.CurvedScalarSeries
+public import ProjectAinos.GeneralRelativity.CurvedScalarUniqueness
 public import ProjectAinos.GeneralRelativity.CurvedSpatialHarmonic
 public import ProjectAinos.GeneralRelativity.DeSitterSlicing
 public import ProjectAinos.GeneralRelativity.DeflectionIntegral
@@ -206,6 +209,11 @@ public import ProjectAinos.GeneralRelativity.ParticleAction
 public import ProjectAinos.GeneralRelativity.ParticleExamples
 public import ProjectAinos.GeneralRelativity.Perihelion
 public import ProjectAinos.GeneralRelativity.PerihelionIntegral
+public import ProjectAinos.GeneralRelativity.PerturbationGaugeSector
+public import ProjectAinos.GeneralRelativity.PerturbationModeSplit
+public import ProjectAinos.GeneralRelativity.PerturbationPacket
+public import ProjectAinos.GeneralRelativity.PerturbationReconstruction
+public import ProjectAinos.GeneralRelativity.PerturbationReconstructionGeneral
 public import ProjectAinos.GeneralRelativity.PostNewtonian
 public import ProjectAinos.GeneralRelativity.PostNewtonianDust
 public import ProjectAinos.GeneralRelativity.PostNewtonianField
@@ -466,8 +474,10 @@ public import ProjectAinos.SmoothGeometry.Euclidean.PolarLIntegral
 public import ProjectAinos.SmoothGeometry.Euclidean.Similarity
 public import ProjectAinos.SmoothGeometry.Euclidean.SphereIntegral
 public import ProjectAinos.SmoothGeometry.Examples
+public import ProjectAinos.SmoothGeometry.Fourier.CompactSynthesis
 public import ProjectAinos.SmoothGeometry.Fourier.PeriodicSeries
 public import ProjectAinos.SmoothGeometry.Fourier.WaveSolution
+public import ProjectAinos.SmoothGeometry.Fourier.WeightedSynthesis
 public import ProjectAinos.SmoothGeometry.Gluing
 public import ProjectAinos.SmoothGeometry.GluingExample
 public import ProjectAinos.SmoothGeometry.GluingExampleIso
@@ -704,6 +714,8 @@ public import ProjectAinos.SmoothGeometry.Tensor.Operations
 public import ProjectAinos.SmoothGeometry.Tensor.OperationsExamples
 public import ProjectAinos.SmoothGeometry.Tensor.Pullback
 public import ProjectAinos.SmoothGeometry.Tensor.Regularity
+public import ProjectAinos.SmoothGeometry.Tensor.ScalarVectorTensor
+public import ProjectAinos.SmoothGeometry.Tensor.ScalarVectorTensorScaling
 public import ProjectAinos.SmoothGeometry.Tensor.ShapeDerivative
 public import ProjectAinos.SmoothGeometry.Tensor.ShapeDerivativeEvaluation
 public import ProjectAinos.SmoothGeometry.Tensor.Tensoriality
@@ -735,6 +747,7 @@ public import ProjectAinos.SpecialFunctions.ClassicalPolynomial
 public import ProjectAinos.SpecialFunctions.CompleteElliptic
 public import ProjectAinos.SpecialFunctions.CubicPhase
 public import ProjectAinos.SpecialFunctions.Fresnel
+public import ProjectAinos.SpecialFunctions.GegenbauerOrthogonality
 public import ProjectAinos.SpecialFunctions.Hankel
 public import ProjectAinos.SpecialFunctions.HankelUpper
 public import ProjectAinos.SpecialFunctions.HarmonicExtension
