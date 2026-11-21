@@ -701,4 +701,18 @@ example (hm₃ : 0 ≤ m₃) (hm₄ : 0 ≤ m₄) (hP : P ∈ region 3 m₃ m₄
 example (P : MinkowskiModel 3) : IsFiniteMeasure (fibreMeasure m₃ m₄ P) :=
   inferInstance
 
+example (m : ℝ) (L : orthochronousLorentzGroup d) :
+    ⇑(actionHomeomorph m L) = action m L := rfl
+
+example (m : ℝ) (L : orthochronousLorentzGroup d) :
+    ⇑(actionHomeomorph m L).symm = action m L⁻¹ := rfl
+
+example (m₃ m₄ : ℝ) (K k : Fin d → ℝ) :
+    labGrad m₃ m₄ K k =
+      (pairMass m₃ m₄ k * (pairMass m₃ m₄ k + Real.sqrt (pairMass m₃ m₄ k ^ 2 + ∑ i, K i ^ 2)))⁻¹ •
+          K +
+        ((energy m₄ k - energy m₃ k - (∑ i, K i * k i) /
+            Real.sqrt (pairMass m₃ m₄ k ^ 2 + ∑ i, K i ^ 2)) /
+          (pairMass m₃ m₄ k * energy m₃ k * energy m₄ k)) • k := rfl
+
 end ProjectAinos.SpecialRelativity.TwoBodyFibre

@@ -831,10 +831,30 @@ edge conditions, and the error of Kirchhoff's approximation are outside the scop
 a prescribed slow path is `−δm v̇ + (2/3)(e²/4π) v̈ + O(κ⁴)` (`selfForce_expansion`), with
 `tr δm = 4U` (`trace_selfMass`). The damping force does the work `−(2/3)(e²/4π)∫|v̇|²` plus the
 Schott term (`work_dampingForce_eq`), the free equation has runaways (`runaway`), and the reduced
-oscillator is damped (`reducedOscillator`). The Lorentz–Dirac force is orthogonal to `u`
+oscillator is damped (`reducedOscillator`). For a profile of radius `a` at fixed charge, `δm` and
+`U` scale as `1/a`, and an isotropic profile has `δm = (4/3)U/a` (`selfMass_scaledProfile`,
+`selfMass_isotropic`). To first order in the displacement the self-force of a rigid charge is a
+distributed delay of memory `2a`, `−(2/3)e² ∫∫ η(x)η(x − y) R̈(t − |y|)/(4π|y|)`
+(`RigidChargeDynamics.linearSelfForce_eq`), with total weight `δm` and first moment
+`(2/3)(e²/4π)`. For every bare mass `m₀ ≠ 0` the motion exists and is unique for all times
+(`existsUnique_linearMotion`), stable uniformly in time when `δm < m₀`, with runaways when
+`m₀ < 0 < m₀ + δm` (`exists_runaway_linearMotion`); at a radius with `2δm < m` a slow force keeps the
+motion within `Cκ⁴` in acceleration of the reduced equation `m v̇ = F + (2/3)(e²/4π)Ḟ/m`
+(`EffectiveComparison.norm_sub_effectivePath_le`), one order below the damping term
+(`norm_sub_effectivePath_le_slow`). The Lorentz–Dirac force is orthogonal to `u`
 (`lorentzDirac_orthogonal`), equals the Landau–Lifshitz force on the undamped motion
 (`lorentzDirac_eq_landauLifshitz`), and balances the radiated four-momentum with the Schott term
-(`integral_lorentzDirac_eq`).
+(`integral_lorentzDirac_eq`). For rectilinear motion the Lorentz–Dirac equation is `mα = f + mτ₀α′`
+in the rapidity derivative (`Rectilinear.lorentzDirac_rectilinear_iff_radiationTime`); boundedness
+towards the future selects `α = (mτ₀)⁻¹∫_τ^∞ e^{−(s−τ)/τ₀} f` (`eq_selectedAcceleration_of_bounded`),
+all other solutions run away, and the selected one pre-accelerates before a pulse
+(`selectedAcceleration_preacceleration`) and solves the four-vector equation
+(`selected_lorentzDirac`). The force is derived from the field: for a `C⁴` world line, the flux of
+the Maxwell stress of the retarded Liénard–Wiechert field through the side of Dirac's tube of
+radius `ε` is `∫[(e²/8πε)u̇ − F_LD]dτ + O(ε)` (`WorldTube.diracTubeFlux_expansion`), so with the
+observed mass `m = m₀(ε) + e²/(8πε)` fixed the balance of a bare particle with the flux is
+equivalent to `m u̇ = F_ext + F_LD` (`tubeBalance_iff_lorentzDirac`); the flux vanishes in uniform
+motion (`diracTubeFlux_inertial`).
 
 **Scattering (§§78–80).** A charge in a wave moves for all times (`Thomson.exists_trajectory`);
 relativistically, in a field skew-adjoint for the Minkowski metric, its four-velocity stays on the
@@ -934,6 +954,8 @@ All names below are under `ProjectAinos`, except imported `YM` names.
 | Diffraction | `Diffraction.apertureField`, `contDiffOn_apertureField`, `helmholtz_apertureField`, `tendsto_apertureField_boundary`, `apertureField_isRadiating`, `norm_apertureField_sub_fresnelField_le`, `tendsto_fraunhofer`, `norm_fraunhofer_sub_le`, `babinet` | [Aperture](../ProjectAinos/Electrodynamics/Diffraction/Aperture.lean), [Fresnel](../ProjectAinos/Electrodynamics/Diffraction/Fresnel.lean), [Fraunhofer](../ProjectAinos/Electrodynamics/Diffraction/Fraunhofer.lean) |
 | Diffraction: uniqueness and Maxwell | `Diffraction.continuousOn_apertureFieldExt`, `greenField`, `fluxC_greenField_eq`, `eq_integral_spacePoint`, `eq_apertureField`, `IsRadiatingDirichletSolution`, `IsRadiatingDirichletSolution.eqOn_apertureField`, `apertureField_unique`, `eq_zero_of_isRadiating`, `fderiv_apertureField_planePoint`, `IsTimeHarmonicMaxwell`, `apertureE`, `maxwell_aperture`, `isRadiating_apertureE`, `tendsto_apertureE_screen`, `exists_tendsto_apertureE_apertureBump_ne_zero` | [HalfSpaceDivergence](../ProjectAinos/SmoothGeometry/Euclidean/HalfSpaceDivergence.lean) · [GreenField](../ProjectAinos/Electrodynamics/Diffraction/GreenField.lean) · [Representation](../ProjectAinos/Electrodynamics/Diffraction/Representation.lean) · [Uniqueness](../ProjectAinos/Electrodynamics/Diffraction/Uniqueness.lean) · [MaxwellAperture](../ProjectAinos/Electrodynamics/Diffraction/MaxwellAperture.lean) |
 | Radiation damping | `RadiationReaction.dampingField_expansion`, `selfForce_expansion`, `trace_selfMass`, `work_dampingForce_eq`, `runaway`, `reducedOscillator`, `lorentzDirac_orthogonal`, `lorentzDirac_eq_landauLifshitz`, `integral_lorentzDirac_eq` | [RadiationReaction](../ProjectAinos/Electrodynamics/RadiationReaction.lean) |
+| Size and self-consistent motion | `RadiusScaling.selfMass_scaledProfile`, `selfMass_isotropic`, `radialBump`, `DistributedDelay.exists_solution`, `eq_of_delay`, `exists_runaway`, `norm_sub_reduced_le`, `RigidChargeDynamics.linearSelfForce_eq`, `linearSelfForce_eq_delayOp`, `existsUnique_linearMotion`, `norm_sub_le_linearMotion`, `exists_runaway_linearMotion`, `EffectiveComparison.norm_sub_effectivePath_le`, `norm_sub_effectivePath_le_slow`, `norm_sub_effectivePath_le_scaledProfile`, `effectiveComparison_radialBump` | [RadiusScaling](../ProjectAinos/Electrodynamics/RadiationReaction/RadiusScaling.lean) · [DistributedDelay](../ProjectAinos/SmoothGeometry/ODE/DistributedDelay.lean) · [RigidChargeDynamics](../ProjectAinos/Electrodynamics/RadiationReaction/RigidChargeDynamics.lean) · [EffectiveComparison](../ProjectAinos/Electrodynamics/RadiationReaction/EffectiveComparison.lean) |
+| Selection and the world tube | `Rectilinear.lorentzDirac_rectilinear_iff_radiationTime`, `selectedAcceleration`, `solution_iff`, `eq_selectedAcceleration_of_bounded`, `selectedAcceleration_preacceleration`, `selected_lorentzDirac`, `WorldTube.ProperWorldline`, `retardedProperTime`, `retardedField`, `fieldTensor_lwPotential`, `diracTubeFlux`, `tubeIntegrand_expansion`, `diracTubeFlux_expansion`, `diracTubeFlux_expansion_schott`, `tubeBalance_iff_lorentzDirac`, `diracTubeFlux_inertial`, `diracTubeFlux_hyperbolic` | [Rectilinear](../ProjectAinos/Electrodynamics/RadiationReaction/Rectilinear.lean) · [WorldTube](../ProjectAinos/Electrodynamics/RadiationReaction/WorldTube.lean) · [Expansion](../ProjectAinos/Electrodynamics/RadiationReaction/WorldTube/Expansion.lean) · [Retarded](../ProjectAinos/Electrodynamics/RadiationReaction/WorldTube/Retarded.lean) · [FieldExpansion](../ProjectAinos/Electrodynamics/RadiationReaction/WorldTube/FieldExpansion.lean) · [Potential](../ProjectAinos/Electrodynamics/RadiationReaction/WorldTube/Potential.lean) |
 | Scattering | `Scattering.Thomson.exists_trajectory`, `exists_physicalProperTimeTrajectory`, `mem_futureUnitShell_of_isProperTimeTrajectory`, `IsPhysicalProperTimeTrajectory`, `isMinkowskiSkew_forceMap`, `norm_trajectory_sub_firstOrder_le`, `crossSection_eq`, `differentialCrossSection_eq`, `LowFrequency.crossSection_oscillator`, `abs_crossSection_sub_le`, `orientationAverage`, `HighFrequency.crossSection_tendsto_thomson`, `tendsto_coherentFactor` | [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean), [LowFrequency](../ProjectAinos/Electrodynamics/Scattering/LowFrequency.lean), [HighFrequency](../ProjectAinos/Electrodynamics/Scattering/HighFrequency.lean) |
 | Geometrical optics | `Wave.waveOperator_highFrequencyWave`, `Optics.Eikonal.box_highFrequencyPotential`, `leading_eq_zero_iff`, `lightlike_of_isRay`, `maxwell_highFrequencyPotential_iff_of_eikonal`, `RayOptics.isRay_of_isHamiltonJacobi`, `RayOptics.IsPhysicalRay`, `isPhysicalRay_of_isHamiltonJacobi`, `isPhysicalRay_linearIndexRay_iff`, `RayOptics.fermat` | [HighFrequency](../ProjectAinos/SmoothGeometry/Wave/HighFrequency.lean), [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean), [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) |
 | Intensity | `Eikonal.subleading_eq_zero_iff_transport`, `divergence_intensityCurrent_eq_zero`, `intensity_mul_det_eq` | [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean) |

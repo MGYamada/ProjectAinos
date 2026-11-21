@@ -978,6 +978,64 @@ scalar field along the normal is a time-harmonic Maxwell field whose tangential 
 the screen. The ledger row §59 is *proved* for the half-space Dirichlet model (ED 64 of 66).
 [Guide](electrodynamics.md#diffraction-5961)
 
+For `N` bodies apart from each other, the Einstein–Infeld–Hoffmann Lagrangian gives each body
+exactly the equations of a test body in the post-Newtonian potentials of the others, so the
+acceleration is explicit up to `O(c⁻⁴)`. For smooth dust that satisfies the continuity equation,
+Newton potentials and the superpotential `G∫ρ|x − y|` give potentials in the gauge of GR36, and an
+explicit expansion of the Ricci tensor of the post-Newtonian metric shows that it solves the
+Einstein equations for dust in the trace-reversed form up to `O(c⁻⁴)`. The ledger row §106 is
+*proved*; the approach of Einstein–Euler solutions to this motion needs well-posedness and is
+outside its scope (GR 36 of 39).
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
+The self-mass of a rigid charge scales as the inverse of its radius. To first order in the
+displacement its self-force is a distributed delay whose memory is the light-crossing time, and a
+shared theory of such delay equations gives existence and uniqueness for every nonzero bare mass,
+stability when the bare mass exceeds the self-mass, and runaways when the bare mass is negative.
+At a fixed radius a slow force keeps the motion within `O(κ⁴)` of the reduced equation of
+radiation damping, one order below the damping term; the point limit at fixed observed mass would
+need a negative bare mass. The ledger row §75 is *proved* in this model (ED 65 of 66).
+[Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
+
+For rectilinear motion the Lorentz–Dirac equation is linear in the derivative of the rapidity, and
+boundedness towards the future selects one solution, which pre-accelerates; every other runs away.
+The flux of the field of a point charge through the side of Dirac's tube expands as the divergent
+electromagnetic mass times the acceleration minus the Lorentz–Dirac force, up to `O(ε)`, so the
+balance of a bare particle with the flux at fixed observed mass is the Lorentz–Dirac equation. The
+ledger row §76 is *proved*, which completes the electrodynamics ledger (66 of 66).
+[Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
+
+For a metric continuous across a hyperplane the weak Einstein tensor has the Lanczos–Israel
+surface term in the jump of the second fundamental form. In a chart adapted to the surface of the
+Oppenheimer–Snyder ball the matched forms make the glued metric `C¹` and a weak solution with dust
+inside and vacuum outside, while a mismatched shell has a surface layer. In the global
+Painlevé–Gullstrand chart of the collapse, a Grönwall comparison for causal curves and explicit
+escaping curves identify the causal past of future null infinity, so the event horizon is the
+outgoing null generator that reaches the surface at `r = 2M`. The ledger row §102 is *proved*
+(GR 37 of 39).
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
+The Kretschmann scalar is an invariant of isometries; in a nonflat Kasner universe it diverges like
+`t⁻⁴` along the comoving geodesic, which reaches `t = 0` in a finite proper time, so no isometric
+extension gives the geodesic an end point, while the flat case embeds in Minkowski space. The
+second variation of the proper time along a normal geodesic, with the timelike convergence
+condition and a contracting slice, bounds the length of every maximizing normal geodesic by
+`3/C`; for synchronous metrics every point is reached by a maximizer, so the bound is unconditional
+there. The ledger row §119 is *proved* with the maximizing premise as the global hypothesis
+(GR 38 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
+At each nonzero frequency the scalar, vector and tensor projectors commute with the linearized
+Einstein–dust operator, and amplitudes with weighted integrable bounds are closed under them, so a
+general flat perturbation solves the equations exactly when its three parts do, with no cutoff at
+zero frequency; Fourier injectivity on `L¹`, absent from the pinned Mathlib, gives the
+reconstruction. On S³ Gegenbauer and spherical completeness in the chart measure reconstruct
+expandable scalar data from the closed harmonics, and on H³ the injectivity of the sine transform
+gives the zonal sector. The ledger row §115 is *proved* in these classes, which completes the
+general-relativity ledger (39 of 39): every one of the 119 rows of the three field ledgers is
+*proved* in its written scope.
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

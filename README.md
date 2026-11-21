@@ -241,7 +241,9 @@ The straight-edge Fresnel intensity equals one quarter on the shadow boundary.
 Light diffracted by an aperture is the unique radiating solution with the aperture data on the plane,
 with one polarization of the Maxwell field, and has the Fresnel and Fraunhofer forms with explicit
 remainders, a
-radiating charge feels a damping force, and free and bound charges scatter waves with the Thomson
+radiating charge feels a damping force — for a rigid charge of finite size the self-consistent motion
+follows the reduced equation of radiation damping, and the covariant force follows from the flux of
+the field through a thin tube around the world line — and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·
 [Guide](docs/electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
@@ -325,10 +327,17 @@ under Lorentz changes of co-ordinates, a stationary source has the far field of 
 momentum, a localized source
 radiates gravitational waves by the quadrupole formula, short waves travel along null geodesics of a
 curved background with their amplitude transported and carry the averaged effective stress of
-Isaacson, and the time lines of a synchronous system focus under the energy condition.
+Isaacson, and the time lines of a synchronous system focus under the energy condition. Kasner
+universes end at a curvature singularity in a finite proper time, and under the energy condition a
+slice that contracts everywhere bounds the length of every maximizing normal geodesic.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
-A star collapses through its horizon in a finite proper time, test bodies follow the
-post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,
+A star collapses through its horizon in a finite proper time, solves the Einstein equations across its
+surface in the weak sense, and its event horizon is the boundary of the region from which light still
+escapes; test bodies follow the
+post-Newtonian equations of motion, `N` bodies follow the Einstein–Infeld–Hoffmann Lagrangian, the
+post-Newtonian field of smooth dust solves the Einstein equations to `O(c⁻⁴)`, density
+perturbations of a flat universe grow like `t^{2/3}` and every flat perturbation is the sum of its
+scalar, vector and tensor parts,
 and the approach to a cosmological singularity passes between Kasner epochs. On closed and open
 dust backgrounds, discrete S³ harmonics and continuous H³ harmonics give scalar density and
 velocity perturbations with two independent time solutions.

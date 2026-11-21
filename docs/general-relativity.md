@@ -1530,7 +1530,25 @@ the strong energy condition with Einstein's equations and `Λ ≤ 0` gives `R₀
 (`SatisfiesEinstein.ricci_timelike_nonneg`), and the time line leaves the domain of the synchronous
 chart within `3/|θ|` (`IsSynchronous.exists_notMem_of_focusing`); `θ → −∞` there only when the line
 stays in the domain up to that time (`IsSynchronous.tendsto_expansion_atBot`). Leaving the chart is
-not by itself a caustic. Geodesic incompleteness is the remainder.
+not by itself a caustic.
+
+**Incompleteness (§119).** The Kretschmann scalar `R_abcd R^abcd` (`LorentzMetric.kretschmann`) is
+invariant under isometries (`kretschmann_isometry`). In a vacuum Kasner model it is
+`−16 p₁p₂p₃/t⁴` (`Kasner.kretschmann_kasner`), positive unless `p` is a permutation of `(1, 0, 0)`; the
+comoving past-directed unit geodesic reaches `t = 0` in the proper time `t₀`
+(`properTime_comovingPast`), has no limit, and `K → ∞` along it, so no smooth isometric map into any
+Lorentz manifold gives it a limit (`not_tendsto_of_isometry`), while flat Kasner embeds in Minkowski
+space by the Milne map (`exists_isometry_tendsto_flat`). For a coordinate metric with a time
+function, the timelike convergence condition and a slice whose normal expansion satisfies
+`νθ ≤ −C`, a maximizing normal geodesic has length at most `3/C`: the second variation along the
+test fields `(1 − s/L)E_i` (`FocalPoints.varSpeed₂_zero`, `sum_curv_frame`) would otherwise give a
+longer curve (`length_le_of_maximizing`); with the premise that every point is reached by such a
+maximizer, every normal geodesic is incomplete (`length_le_of_focusing`). For synchronous metrics
+the premise is proved (`curveProperTime_le`, `IsSynchronous.length_le_of_focusing`), and with
+Einstein's equations, the strong energy condition and `Λ ≤ 0` the bound is `3/C`
+(`IsSynchronous.length_le_of_einstein`; instances `Kasner.length_le_past`,
+`Kasner.length_le_reverse_dustKasner`). Constructing maximizers from global hyperbolicity is outside
+the scope, and the generic structure near the singularity (BKL) is open.
 
 | Result | Declarations | Source |
 | --- | --- | --- |
@@ -1541,10 +1559,11 @@ not by itself a caustic. Geodesic incompleteness is the remainder.
 | Transport and effective stress | `CoordinateMetric.covDerivOne`, `tensorPairing`, `christoffelOf_perturbation_eq`, `ricciOf_eq_of_christoffel`, `hasDerivAt_deriv_ricciOf_perturbation`, `secondRicci`, `ShortWave.transportOperator`, `transportTerm_eq`, `transportTerm_of_gauge`, `sum_transverse_transportTerm`, `harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`, `transportTerm_longitudinal`, `secondRicci_shortWave`, `tendsto_secondRicci_shortWave`, `effectiveStress`, `averagedSecondRicci_eq_effectiveStress`, `effectiveStress_eq_average_gradient`, `effectiveStress_conserved`, `effectiveStress_flux_eq_average`, `PlaneWave.effectiveStress_cross` | [CovariantLeibniz](../ProjectAinos/SmoothGeometry/Lorentzian/CovariantLeibniz.lean) · [SecondVariation](../ProjectAinos/SmoothGeometry/Lorentzian/SecondVariation.lean) · [ShortWaveTransport](../ProjectAinos/GeneralRelativity/ShortWaveTransport.lean) · [EffectiveStress](../ProjectAinos/GeneralRelativity/EffectiveStress.lean) |
 | Gravitational radiation | `LinearizedRadiation.retardedPerturbation`, `linearizedEinstein_retardedPerturbation`, `farZone_quadrupole`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `binary_power_smooth`, `Wave.integral_ttSquare` | [TransverseTraceless](../ProjectAinos/SmoothGeometry/Wave/TransverseTraceless.lean), [LinearizedRadiation](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) |
 | Focusing | `Focusing.trace_sq_ge`, `IsSynchronous.raychaudhuri`, `RiccatiComparison.lt_div_abs`, `StrongEnergyCondition`, `SatisfiesEinstein.ricci_timelike_nonneg`, `IsSynchronous.exists_notMem_of_focusing`, `deSitter_not_focusing` | [RiccatiComparison](../ProjectAinos/SmoothGeometry/ODE/RiccatiComparison.lean), [Focusing](../ProjectAinos/SmoothGeometry/Lorentzian/Focusing.lean), [EnergyCondition](../ProjectAinos/GeneralRelativity/EnergyCondition.lean) |
+| Incompleteness | `LorentzMetric.kretschmann`, `kretschmann_isometry`, `Kasner.kretschmann_kasner`, `kasner_prod_neg`, `properTime_comovingPast`, `tendsto_kretschmann_comovingPast`, `not_tendsto_of_isometry`, `exists_isometry_tendsto_flat`, `FocalPoints.varSpeed₂_zero`, `length_le_of_maximizing`, `length_le_of_focusing`, `IsSynchronous.length_le_of_focusing`, `IsSynchronous.length_le_of_einstein`, `Kasner.length_le_past` | [Kretschmann](../ProjectAinos/SmoothGeometry/Lorentzian/Kretschmann.lean) · [ProperTimeVariation](../ProjectAinos/SmoothGeometry/Lorentzian/ProperTimeVariation.lean) · [SecondDerivativeTest](../ProjectAinos/SmoothGeometry/ODE/SecondDerivativeTest.lean) · [FocalPoints](../ProjectAinos/SmoothGeometry/Lorentzian/FocalPoints.lean) · [KasnerIncompleteness](../ProjectAinos/GeneralRelativity/KasnerIncompleteness.lean) · [SingularityTheorem](../ProjectAinos/GeneralRelativity/SingularityTheorem.lean) |
 
 The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/ChargeCovarianceAPI.lean`,
 `checks/CurvedWavesAPI.lean`, `checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
-`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33, GR40 and GR41 of the
+`checks/FocusingAPI.lean` and `checks/IncompletenessAPI.lean`. The decisions are recorded in GR30–GR33, GR40, GR41 and GR44 of the
 [notes](general-relativity-notes.md) and in G16 of the
 [smooth-geometry notes](smooth-geometry-notes.md).
 
@@ -1558,18 +1577,53 @@ Schwarzschild time diverges (`tendsto_coordinateTime`) and its signals are red-s
 (`junction_oppenheimerSnyder`). Tolman's metric satisfies the Einstein equations with dust iff the
 equations of Tolman hold (`Tolman.isEinstein_iff`), with the parabolic, elliptic and hyperbolic
 solutions, the collapse at a finite time and the matching of a smooth dust ball to the exterior
-(`Tolman.matching_exterior`).
+(`Tolman.matching_exterior`). For a metric continuous across a hyperplane with a unit normal, the
+weak Einstein tensor is the sum of the two sides minus the Lanczos–Israel surface term
+`ε ∫([K_ab] − h_ab[K]) φ^{ab}` (`WeakJunction.weakEinstein_glue`), and the glued metric is `C¹` exactly
+when the second fundamental forms agree (`contDiffOn_glue_iff_secondFundamental`). In a chart
+adapted to the boundary of the Oppenheimer–Snyder ball, Painlevé–Gullstrand outside and comoving
+with a second-order time correction inside, the glued metric is `C¹` and a weak solution with dust
+inside and vacuum outside (`CollapseJunction.isWeakEinstein_oppenheimerSnyder`); a static shell with
+a mismatched rate has a surface layer (`exists_surface_layer`). In the global Painlevé–Gullstrand
+chart of the collapse (`CollapseHorizon.osForm`), the causal past of future null infinity for
+`τ`-parametrized future causal curves is `{|x| > r_H(τ)}` (`causalPastScri_eq`), with
+`r_H = 3(r_b − (τ_c − τ))` until the surface reaches `2M` and `2M` after, so the event horizon is the
+outgoing null generator that leaves the centre at `τ_c − 9M/2` (`eventHorizon_eq`, `horizon_generator`).
 
 **Post-Newtonian motion (§106).** For a 1PN metric family the geodesic acceleration equals the
 explicit 1PN acceleration up to `O(c⁻⁴)` (`PostNewtonian.acceleration_error`), and so does the
 acceleration of the Euler–Lagrange paths of the test-body Lagrangian
-(`eulerLagrange_acceleration_error`).
+(`eulerLagrange_acceleration_error`). For `N` bodies apart from each other, the
+Einstein–Infeld–Hoffmann Lagrangian (106.17) (`EinsteinInfeldHoffmann.eihLagrangian`), in the gauge
+of GR36, gives for each body exactly the Euler–Lagrange equations of a test body in the 1PN
+potentials of the others (`eulerLagrange_eihLagrangian_eq_test`), so the acceleration is the EIH
+acceleration up to `C/c⁴` (`eulerLagrange_acceleration_error`); it is symmetric under permutations,
+tends to Newton's Lagrangian and, per unit mass of a light body, to the test-body equations. For
+smooth dust with the continuity equation (`PostNewtonianDust.SmoothDust`), the potentials are
+Newton potentials and a superpotential `χ = G∫ρ|x − y|` with `Δχ = 2U`
+(`superPotential_coordLaplacian`); they satisfy the gauge condition `3∂ₜΦ + ∇·B = 0` exactly
+(`SmoothDust.gauge`), the Ricci tensor of the 1PN metric of any bounded potentials has an explicit
+expansion with a `C/c⁴` remainder (`abs_ricciOf_pnCoefficient_sub_le`), and together the metric solves
+`R = κ(T − ½ g tr T)` for the dust stress up to `C/c⁴` on bounded sets
+(`SmoothDust.abs_ricciOf_sub_dustSource_le`, with the static ball `exists_smoothDust`).
 
 **Perturbations of a flat universe (§115).** For single modes on the flat dust universe the
 linearized Einstein equations reduce to ordinary differential equations
 (`CosmologicalPerturbation.scalarMode_iff`, `tensorMode_iff`, `vectorMode_iff`), with the growing and
 decaying density contrasts (`densityContrast_growing`, `densityContrast_decaying`), the fictitious
-gauge mode (`gaugeMode`) and the decay of the vector modes (`vectorMode_decay`).
+gauge mode (`gaugeMode`) and the decay of the vector modes (`vectorMode_decay`). A general flat
+perturbation is reduced to these modes: at each nonzero frequency the scalar, vector and tensor
+projectors sum to the identity and commute with the linearized operator (`symbolEq_iff`); for
+weighted integrable amplitudes, Schwartz slices included and with no cutoff at `ξ = 0`, a
+perturbation solves the equations iff almost every frequency does, iff each of its three parts does,
+and it is their sum (`IsWeightedData.linearizedEinsteinDust_iff`, `linearizedEinsteinDust_iff_split`,
+`fieldOf_eq_add`, `HasIntegrableSpectrum.reconstruction`); the gauge modes lie in the scalar and vector
+sectors (`scalarAmp_mem_scalar`, `vectorGauge_solution`). On S³ the closed harmonics are complete in
+the chart measure (`CurvedScalarCompleteness.eq_zero_of_chartPair`), and scalar data of the expandable
+class solve the scalar equations iff every coefficient obeys its mode equation
+(`IsClosedExpandable.scalarSystemAt_slice_iff`, with infinite instances
+`exists_isClosedExpandable_infinite`); on H³ the zonal synthesis solves them iff almost every mode
+does (`CurvedOpenSynthesis.open_zonal_scalarSystemAt_slice_iff`).
 
 **Scalar perturbations of closed and open dust universes (§115).** In conformal time, H = a′/a
 and the potential satisfies Φ″ + 3HΦ′ − 2kΦ = 0. For a mode with spatial eigenvalue −q the
@@ -1585,12 +1639,17 @@ epoch to the next with explicit rates (`TypeII.tendsto_exponents`, `TypeII.abs_e
 | Result | Declarations | Source |
 | --- | --- | --- |
 | Collapse of a spherical body | `CoordinateMetric.IsOrthogonalSlicing`, `secondFundamental`, `Collapse.radialInfall_properTime`, `tendsto_coordinateTime`, `tendsto_observedFrequency`, `radius_deriv_neg_of_causal`, `junction_oppenheimerSnyder`, `secondFundamental_closedInterior_ne_lemaitre` | [OrthogonalSlicing](../ProjectAinos/SmoothGeometry/Lorentzian/OrthogonalSlicing.lean), [Collapse](../ProjectAinos/GeneralRelativity/Collapse.lean) |
+| Weak junction and event horizon | `CoordinateMetric.einsteinOf_pullback`, `WeakJunction.weakEinstein`, `weakEinstein_glue`, `isWeakEinstein_glue`, `contDiffOn_glue_iff_secondFundamental`, `CollapseJunction.junction_adapted`, `contDiffOn_glue_iff_junction`, `isWeakEinstein_oppenheimerSnyder`, `exists_surface_layer`, `CollapseHorizon.osForm`, `IsFutureCausalCurve`, `causalPastScri`, `horizonRadius`, `horizon_generator`, `causalPastScri_eq`, `eventHorizon_eq` | [CoordinatePullback](../ProjectAinos/SmoothGeometry/Lorentzian/CoordinatePullback.lean) · [WeakJunction](../ProjectAinos/SmoothGeometry/Lorentzian/WeakJunction.lean) · [CollapseJunction](../ProjectAinos/GeneralRelativity/CollapseJunction.lean) · [CollapseHorizon](../ProjectAinos/GeneralRelativity/CollapseHorizon.lean) |
 | Dust collapse | `Tolman.metric`, `isEinstein_iff`, `Equations.density_nonneg_iff`, `solution_parabolic`, `solution_elliptic`, `solution_hyperbolic`, `tendsto_radius_zero`, `lemaitre_eq`, `matching_exterior` | [Tolman](../ProjectAinos/GeneralRelativity/Tolman.lean) |
 | Post-Newtonian motion | `PostNewtonian.PostNewtonianMetricFamily`, `postNewtonianAcceleration`, `acceleration_error`, `geodesic_acceleration_error`, `lagrangian`, `eulerLagrange_acceleration_error` | [PostNewtonian](../ProjectAinos/GeneralRelativity/PostNewtonian.lean) |
+| EIH Lagrangian and the dust field | `EinsteinInfeldHoffmann.eihLagrangian`, `eulerLagrange_eihLagrangian_eq_test`, `eulerLagrange_acceleration_error`, `eihLagrangian_perm`, `tendsto_eihLagrangian`, `eulerLagrange_testMass`, `PostNewtonianRicci.abs_ricciOf_pnCoefficient_sub_le`, `PostNewtonianSources.superPotential_coordLaplacian`, `hasDerivAt_newtonPotential_continuity`, `PostNewtonianDust.SmoothDust`, `SmoothDust.gauge`, `vector_eq`, `scalar_eq`, `SmoothDust.abs_ricciOf_sub_dustSource_le`, `exists_smoothDust` | [EinsteinInfeldHoffmann](../ProjectAinos/GeneralRelativity/EinsteinInfeldHoffmann.lean) · [PostNewtonianField](../ProjectAinos/GeneralRelativity/PostNewtonianField.lean) · [PostNewtonianRicci](../ProjectAinos/GeneralRelativity/PostNewtonianRicci.lean) · [PostNewtonianSources](../ProjectAinos/GeneralRelativity/PostNewtonianSources.lean) · [PostNewtonianDust](../ProjectAinos/GeneralRelativity/PostNewtonianDust.lean) |
+| Reconstruction of perturbations | `ScalarVectorTensor.symbolEq_iff`, `Fourier.IsWeightedAmplitude`, `ae_eq_zero_of_fourier_eq_zero`, `IsWeightedData.linearizedEinsteinDust_iff`, `linearizedEinsteinDust_iff_split`, `fieldOf_eq_add`, `HasIntegrableSpectrum.reconstruction`, `linearizedEinsteinDust_gaugeData`, `scalarAmp_mem_scalar`, `vectorGauge_solution`, `CurvedScalarSeries.scalarSystemAt_tsum_iff`, `closedHarmonic_coeff_eq_zero`, `eq_zero_of_chartPair`, `IsClosedExpandable.scalarSystemAt_slice_iff`, `exists_isClosedExpandable_infinite`, `open_zonal_scalarSystemAt_slice_iff` | [ScalarVectorTensor](../ProjectAinos/SmoothGeometry/Tensor/ScalarVectorTensor.lean) · [WeightedSynthesis](../ProjectAinos/SmoothGeometry/Fourier/WeightedSynthesis.lean) · [PerturbationReconstructionGeneral](../ProjectAinos/GeneralRelativity/PerturbationReconstructionGeneral.lean) · [CurvedScalarSeries](../ProjectAinos/GeneralRelativity/CurvedScalarSeries.lean) · [CurvedScalarCompleteness](../ProjectAinos/GeneralRelativity/CurvedScalarCompleteness.lean) · [CurvedOpenSynthesis](../ProjectAinos/GeneralRelativity/CurvedOpenSynthesis.lean) |
 | Cosmological perturbations | `CosmologicalPerturbation.ricci_synchronous_deriv`, `scalarMode_iff`, `densityContrast_growing`, `densityContrast_decaying`, `gaugeMode`, `tensorMode_iff`, `vectorMode_decay` | [CosmologicalPerturbation](../ProjectAinos/GeneralRelativity/CosmologicalPerturbation.lean) |
 | The oscillating regime | `BKL.bounce_kasnerExponents`, `bklMap`, `TypeII.Data.isVacuum_iff`, `TypeII.solution`, `TypeII.tendsto_exponents`, `TypeII.abs_exponents_sub_le` | [BKL](../ProjectAinos/GeneralRelativity/BKL.lean) |
 
-The typed examples are in `checks/CollapseAPI.lean`, `checks/TolmanAPI.lean`,
-`checks/PostNewtonianAPI.lean`, `checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
+The typed examples are in `checks/CollapseAPI.lean`, `checks/CollapseHorizonAPI.lean`, `checks/TolmanAPI.lean`,
+`checks/PostNewtonianAPI.lean`, `checks/EinsteinInfeldHoffmannAPI.lean`, `checks/PostNewtonianDustAPI.lean`,
+`checks/PerturbationReconstructionAPI.lean`, `checks/PerturbationReconstructionGeneralAPI.lean`,
+`checks/CurvedScalarSeriesAPI.lean`, `checks/CurvedScalarCompletenessAPI.lean`, `checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
 The decisions are recorded in GR34–GR38 of the [notes](general-relativity-notes.md) and in G17 of
 the [smooth-geometry notes](smooth-geometry-notes.md).
