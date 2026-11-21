@@ -1908,6 +1908,16 @@ sections on [isotropic cosmology](general-relativity.md#isotropic-cosmology-1111
 [homogeneous models](general-relativity.md#homogeneous-cosmological-models-116-117) and
 [the Newtonian limit and gravitational waves](general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109).
 
+## Covariant Leibniz rules and the second variation
+
+`Lorentzian/CovariantLeibniz.lean` gives the coordinate covariant derivatives of covectors and of
+three-index arrays, the derivative of raised indices `∂(g^{il}q_l) = −Γ g q + g ∇q`, the pairing
+`g^{ce}g^{df}A_{cd}B_{ef}` with its Leibniz rule, and `∂_m g(dψ, dψ) = 2k^a∇_m∂_aψ`.
+`Lorentzian/SecondVariation.lean` writes the Christoffel symbols of `g + sh` exactly as
+`Γ + s(g + sh)⁻¹X`, the Ricci tensor of a perturbed connection as `Ric + palatini D + D·D`, and the
+second derivative of the Ricci tensor along `g + sh`. Their physics is in the
+[general relativity guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119).
+
 ## Scope and next stages
 
 These definitions impose neither finite generation nor global Hausdorffness

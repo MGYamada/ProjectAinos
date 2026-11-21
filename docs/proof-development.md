@@ -940,6 +940,16 @@ the chart formulas hold, `∇g = 0`, and on `e^{2z}η` the covector `dz` has a n
 derivative. The ledger row §85 is *proved* (GR 32 of 39).
 [Guide](general-relativity.md#the-derivative-of-the-curvature-the-bianchi-identities-and-the-einstein-tensor-85-92)
 
+The `ε⁻¹` coefficient of a short wave needs no field equation for the background: it is the
+transport operator plus a longitudinal term in the divergence of the amplitude, so the transport
+equation `2∇_k a + (∇·k)a = 0` follows on the transverse polarizations, and for the full amplitude
+under the next-order harmonic gauge. The perturbed Christoffel symbols are exact rational
+functions of the parameter, which gives the second variation of the Ricci tensor along an actual
+family; its phase average for the short wave is the effective stress of Isaacson, conserved given
+transport, with the flux of §110. The ledger row §108 is *proved*; the approximation of exact
+solutions needs local well-posedness and is outside its scope (GR 33 of 39).
+[Guide](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

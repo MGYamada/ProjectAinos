@@ -1468,7 +1468,23 @@ metric (`charge_zero_eq_mass`), and the charges are conserved when the flux vani
 Palatini form (`familyRicciDeriv_eq`), gauge invariant on Ricci-flat backgrounds
 (`familyRicciDeriv_lie_eq_zero`); a short wave has the exact expansion `familyRicciDeriv_shortWave`,
 whose symbol in the gauge vanishes iff the phase is null (`shortWaveSymbol_eq_zero_iff`), and the
-rays are null geodesics (`isGeodesicOn_ray`).
+rays are null geodesics (`isGeodesicOn_ray`). With no field equation for the background, the
+`ε⁻¹` coefficient is `R₁ = −½(2∇_k a + θa) + ½(k ⊗ B + B ⊗ k)` with `B = div ā`
+(`ShortWave.transportTerm_eq`, `transportTerm_of_gauge`); on the transverse polarizations it is the
+transport operator (`sum_transverse_transportTerm`), and for the full amplitude the `ε⁻¹` order
+vanishes iff `2∇_k a + (∇·k)a = 0` once the next-order harmonic gauge `div ā = 0` holds
+(`harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`); a longitudinal amplitude in flat space
+shows that the gauge is needed (`transportTerm_longitudinal`). The perturbed Christoffel symbols
+are exactly `Γ + s(g + sh)⁻¹X` (`christoffelOf_perturbation_eq`), so the second variation of the
+Ricci tensor along an actual family exists and is `secondRicci`
+(`hasDerivAt_deriv_ricciOf_perturbation`). For the short wave with amplitude `ε` its order-one
+coefficient tends to a profile in the phase (`tendsto_secondRicci_shortWave`), whose phase average is
+`−κ(t − ½g tr t)` with the effective stress `t = (a·a − ½(tr a)²) k ⊗ k/(8κ)`
+(`averagedSecondRicci_eq_effectiveStress`), the average `(1/4κ)⟨∇h∇h − ½∇h̄∇h̄⟩`
+(`effectiveStress_eq_average_gradient`). It is symmetric, traceless for a null phase and conserved
+given transport (`effectiveStress_conserved`), and its flux is the phase average of the flux of §110
+(`effectiveStress_flux_eq_average`). Flat space and the Rosen waves are instances
+(`PlaneWave.effectiveStress_cross`).
 
 **The radiation of gravitational waves (§110).** The retarded perturbation `h̄ = 2κRT` of a
 localized conserved stress is harmonic and solves the linearized equations
@@ -1488,12 +1504,14 @@ not by itself a caustic. Geodesic incompleteness is the remainder.
 | --- | --- | --- |
 | Charges at infinity | `CoordinateMetric.surfaceCharge`, `Sphere.flux_sub_flux`, `surfaceCharge_sub_surfaceCharge_eq`, `IsAsymptoticallyGalilean`, `abs_pseudotensor_le`, `tendsto_surfaceCharge`, `charge_eq_integral`, `charge_zero_eq_mass`, `charge_const_of_flux` | [PseudotensorFlux](../ProjectAinos/SmoothGeometry/Lorentzian/PseudotensorFlux.lean), [AsymptoticCharge](../ProjectAinos/GeneralRelativity/AsymptoticCharge.lean) |
 | Waves on a curved background | `CoordinateMetric.curvedChristoffel`, `palatini`, `familyChristoffelDeriv_eq`, `familyRicciDeriv_eq`, `familyRicciDeriv_lie_eq_zero`, `ShortWave.familyRicciDeriv_shortWave`, `shortWaveSymbol_eq_zero_iff`, `isGeodesicOn_ray` | [CurvedLinearization](../ProjectAinos/SmoothGeometry/Lorentzian/CurvedLinearization.lean), [ShortWave](../ProjectAinos/GeneralRelativity/ShortWave.lean) |
+| Transport and effective stress | `CoordinateMetric.covDerivOne`, `tensorPairing`, `christoffelOf_perturbation_eq`, `ricciOf_eq_of_christoffel`, `hasDerivAt_deriv_ricciOf_perturbation`, `secondRicci`, `ShortWave.transportOperator`, `transportTerm_eq`, `transportTerm_of_gauge`, `sum_transverse_transportTerm`, `harmonicGauge_shortWave`, `transportTerm_eq_zero_iff`, `transportTerm_longitudinal`, `secondRicci_shortWave`, `tendsto_secondRicci_shortWave`, `effectiveStress`, `averagedSecondRicci_eq_effectiveStress`, `effectiveStress_eq_average_gradient`, `effectiveStress_conserved`, `effectiveStress_flux_eq_average`, `PlaneWave.effectiveStress_cross` | [CovariantLeibniz](../ProjectAinos/SmoothGeometry/Lorentzian/CovariantLeibniz.lean) · [SecondVariation](../ProjectAinos/SmoothGeometry/Lorentzian/SecondVariation.lean) · [ShortWaveTransport](../ProjectAinos/GeneralRelativity/ShortWaveTransport.lean) · [EffectiveStress](../ProjectAinos/GeneralRelativity/EffectiveStress.lean) |
 | Gravitational radiation | `LinearizedRadiation.retardedPerturbation`, `linearizedEinstein_retardedPerturbation`, `farZone_quadrupole`, `tendsto_pseudotensorFlux`, `gravitationalPower_slow`, `binary_power_smooth`, `Wave.integral_ttSquare` | [TransverseTraceless](../ProjectAinos/SmoothGeometry/Wave/TransverseTraceless.lean), [LinearizedRadiation](../ProjectAinos/GeneralRelativity/LinearizedRadiation.lean) |
 | Focusing | `Focusing.trace_sq_ge`, `IsSynchronous.raychaudhuri`, `RiccatiComparison.lt_div_abs`, `StrongEnergyCondition`, `SatisfiesEinstein.ricci_timelike_nonneg`, `IsSynchronous.exists_notMem_of_focusing`, `deSitter_not_focusing` | [RiccatiComparison](../ProjectAinos/SmoothGeometry/ODE/RiccatiComparison.lean), [Focusing](../ProjectAinos/SmoothGeometry/Lorentzian/Focusing.lean), [EnergyCondition](../ProjectAinos/GeneralRelativity/EnergyCondition.lean) |
 
 The typed examples are in `checks/AsymptoticChargeAPI.lean`, `checks/CurvedWavesAPI.lean`,
-`checks/GravitationalRadiationAPI.lean` and `checks/FocusingAPI.lean`. The decisions are recorded
-in GR30–GR33 of the [notes](general-relativity-notes.md) and in G16 of the
+`checks/ShortWaveTransportAPI.lean`, `checks/GravitationalRadiationAPI.lean` and
+`checks/FocusingAPI.lean`. The decisions are recorded in GR30–GR33 and GR40 of the
+[notes](general-relativity-notes.md) and in G16 of the
 [smooth-geometry notes](smooth-geometry-notes.md).
 
 ## Collapse, post-Newtonian motion, perturbations and the oscillating regime (§§102, 103, 106, 115, 118)

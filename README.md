@@ -316,7 +316,8 @@ of a first-order solution.
 [Guide](docs/general-relativity.md#the-newtonian-limit-and-gravitational-waves-99-107-109)
 The energy and momentum of an isolated system are surface integrals at infinity, a localized source
 radiates gravitational waves by the quadrupole formula, short waves travel along null geodesics of a
-curved background, and the time lines of a synchronous system focus under the energy condition.
+curved background with their amplitude transported and carry the averaged effective stress of
+Isaacson, and the time lines of a synchronous system focus under the energy condition.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, test bodies follow the
 post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,

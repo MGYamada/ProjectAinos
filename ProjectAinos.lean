@@ -153,6 +153,7 @@ public import ProjectAinos.GeneralRelativity.CurvedSpatialHarmonic
 public import ProjectAinos.GeneralRelativity.DeSitterSlicing
 public import ProjectAinos.GeneralRelativity.DeflectionIntegral
 public import ProjectAinos.GeneralRelativity.EddingtonFinkelstein
+public import ProjectAinos.GeneralRelativity.EffectiveStress
 public import ProjectAinos.GeneralRelativity.EinsteinEquations
 public import ProjectAinos.GeneralRelativity.EinsteinHilbertAction
 public import ProjectAinos.GeneralRelativity.EnergyCondition
@@ -202,6 +203,7 @@ public import ProjectAinos.GeneralRelativity.SchwarzschildOrbit
 public import ProjectAinos.GeneralRelativity.SchwarzschildRotations
 public import ProjectAinos.GeneralRelativity.SchwarzschildVacuum
 public import ProjectAinos.GeneralRelativity.ShortWave
+public import ProjectAinos.GeneralRelativity.ShortWaveTransport
 public import ProjectAinos.GeneralRelativity.SpecialRelativity
 public import ProjectAinos.GeneralRelativity.SphericalAnsatz
 public import ProjectAinos.GeneralRelativity.StructureConstants
@@ -481,6 +483,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinatePotential
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateScalarField
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateTangent
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateVariation
+public import ProjectAinos.SmoothGeometry.Lorentzian.CovariantLeibniz
 public import ProjectAinos.SmoothGeometry.Lorentzian.Curvature
 public import ProjectAinos.SmoothGeometry.Lorentzian.CurvatureDerivative
 public import ProjectAinos.SmoothGeometry.Lorentzian.CurvatureExamples
@@ -550,6 +553,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.Regularity
 public import ProjectAinos.SmoothGeometry.Lorentzian.Restriction
 public import ProjectAinos.SmoothGeometry.Lorentzian.Ricci
 public import ProjectAinos.SmoothGeometry.Lorentzian.ScalarCurvatureVariation
+public import ProjectAinos.SmoothGeometry.Lorentzian.SecondVariation
 public import ProjectAinos.SmoothGeometry.Lorentzian.ShapeDerivative
 public import ProjectAinos.SmoothGeometry.Lorentzian.ShapeDerivativeExamples
 public import ProjectAinos.SmoothGeometry.Lorentzian.SignatureStability
