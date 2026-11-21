@@ -781,8 +781,11 @@ spectrum is an integral over the orbit (`spectrum_hyperbolic`).
 For every 0 < ε < 1, the inverse of Kepler’s equation gives the same Cartesian position as the
 polar-angle flow. At each nonzero integer n its two acceleration coefficients are
 −Aω²n J′ₙ(nε) and iA√(1−ε²)ω²n Jₙ(nε)/ε, in the Fourier convention of
-`harmonic_decomposition`. The Hankel evaluation of the hyperbolic orbit integral remains open.
-[Eccentric anomaly](../ProjectAinos/Electrodynamics/Radiation/EccentricOrbit.lean) · [Radiation harmonics](../ProjectAinos/Electrodynamics/Radiation/KeplerHarmonics.lean)
+`harmonic_decomposition`. For an unbound orbit put H = √(a² + ρ²), η = ωa/v∞ and k = ωH/v∞. Its two Fourier components
+are πeωa times the argument derivative of the outgoing Hankel function and πeωa(ρ/H) times
+the function itself, both at order −iη and argument ik. Their squared norms give the spectrum
+for both interaction signs. At zero frequency the longitudinal impulse is 2ev∞a/H.
+[Eccentric anomaly](../ProjectAinos/Electrodynamics/Radiation/EccentricOrbit.lean) · [Radiation harmonics](../ProjectAinos/Electrodynamics/Radiation/KeplerHarmonics.lean) · [Collision spectrum](../ProjectAinos/Electrodynamics/Radiation/HyperbolicSpectrum.lean)
 
 ## Diffraction (§§59–61)
 

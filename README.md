@@ -240,7 +240,8 @@ and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
 Colliding charges radiate with the dipole spectrum, whose low-frequency end is fixed by the
 change of velocity. On a Kepler ellipse the two Cartesian acceleration harmonics are given by
-Jₙ(nε) and J′ₙ(nε).
+Jₙ(nε) and J′ₙ(nε). For either sign of the Coulomb interaction, the hyperbolic collision
+spectrum is given by the outgoing Hankel function at imaginary order and argument.
 [Guide](docs/electrodynamics.md#radiation-in-collisions-6870)
 
 For general relativity, an observer with a timelike velocity measures

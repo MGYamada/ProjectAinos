@@ -76,6 +76,7 @@ public import ProjectAinos.Electrodynamics.Radiation.Dipole
 public import ProjectAinos.Electrodynamics.Radiation.EccentricOrbit
 public import ProjectAinos.Electrodynamics.Radiation.FarZone
 public import ProjectAinos.Electrodynamics.Radiation.HarmonicPower
+public import ProjectAinos.Electrodynamics.Radiation.HyperbolicSpectrum
 public import ProjectAinos.Electrodynamics.Radiation.KeplerHarmonics
 public import ProjectAinos.Electrodynamics.Radiation.Multipole
 public import ProjectAinos.Electrodynamics.Radiation.NearZone
@@ -676,11 +677,14 @@ public import ProjectAinos.SpecialFunctions.BesselSquare
 public import ProjectAinos.SpecialFunctions.BesselTurningIntegral
 public import ProjectAinos.SpecialFunctions.BesselTurningPoint
 public import ProjectAinos.SpecialFunctions.BesselZeros
+public import ProjectAinos.SpecialFunctions.CompleteElliptic
 public import ProjectAinos.SpecialFunctions.CubicPhase
 public import ProjectAinos.SpecialFunctions.Fresnel
 public import ProjectAinos.SpecialFunctions.Hankel
+public import ProjectAinos.SpecialFunctions.HankelUpper
 public import ProjectAinos.SpecialFunctions.HarmonicExtension
 public import ProjectAinos.SpecialFunctions.HarmonicPolynomial
+public import ProjectAinos.SpecialFunctions.HyperbolicTransform
 public import ProjectAinos.SpecialFunctions.JacobiCurves
 public import ProjectAinos.SpecialFunctions.JacobiElliptic
 public import ProjectAinos.SpecialFunctions.Kapteyn

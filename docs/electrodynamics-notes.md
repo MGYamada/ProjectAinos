@@ -402,3 +402,17 @@ latitude to move throughout a bounded set in their scaled coordinates.
 positive harmonic. With r = (n/2)⅓ and bounded r/γ and r sin(latitude), the scaled angular
 power has the K⅓ and K⅔ profile. The angle-integrated line converges after rescaling to the
 K⅔ boundary term minus the K⅓ tail integral with its Lorentz-factor weight. [Harmonic power](../ProjectAinos/Electrodynamics/Radiation/HarmonicPower.lean) · [Critical spectrum](../ProjectAinos/Electrodynamics/Radiation/CriticalSpectrum.lean)
+
+## ED50. Hyperbolic anomaly gives the imaginary-order scattering spectrum
+
+**Observation.** The scattering solution in Mechanics §19 has time (H sinh u + a u)/v∞
+and radius H cosh u + a, with H = √(a² + ρ²). Positivity of the radius makes the time
+change global for both signs of a. Moving the oscillatory contour down by iπ/2 gives the
+absolutely convergent Macdonald integral.
+
+**Interface decision.** Rotating the two Schläfli rays proves equality of the outgoing
+Hankel and Macdonald representations throughout the open first quadrant. The latter
+therefore supplies the positive imaginary axis and its argument derivative.
+
+**Proof status.** The two acceleration transforms give the Hankel spectral density for
+positive frequency and the net longitudinal impulse at zero. [Contour continuation](../ProjectAinos/SpecialFunctions/HankelUpper.lean) · [Scattering transform](../ProjectAinos/SpecialFunctions/HyperbolicTransform.lean) · [ED §70](../ProjectAinos/Electrodynamics/Radiation/HyperbolicSpectrum.lean)

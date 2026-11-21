@@ -48,6 +48,10 @@ private theorem integrable_kernel (a z : ℂ) (hz : 0 < z.re) :
   (integrable_bound a hz).integrableOn.mono' (by unfold kernel; fun_prop)
     (ae_restrict_of_forall_mem measurableSet_Ioi fun _ ht => norm_kernel a z hz le_rfl ht.le)
 
+/-- Absolute integrability of the real Schläfli ray on the right half-plane. -/
+theorem integrable_ray (a z : ℂ) (hz : 0 < z.re) :
+    IntegrableOn (fun t : ℝ => exp (-z * Real.sinh t + a * t)) (Ioi 0) := integrable_kernel a z hz
+
 private theorem plus (a z : ℂ) (t : ℝ) : kernel (a + 1) z t = exp (t : ℂ) * kernel a z t := by
   unfold kernel
   rw [← exp_add]

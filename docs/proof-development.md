@@ -1079,8 +1079,9 @@ with stated remainders (ED 58 of 66).
 The radiated energy and spectrum of a Coulomb collision follow from the dipole power by Plancherel,
 the low-frequency spectrum of a point charge is the jump of its velocity term, and on Kepler orbits
 the power decomposes into harmonics whose Cartesian coefficients are given by Jₙ(nε) and
-J′ₙ(nε). The Hankel evaluation for hyperbolic motion remains open. The ledger rows ED §§68, 69 are *proved* in their scopes and
-§70 is closed with a stated remainder (ED 62 of 66).
+J′ₙ(nε). For hyperbolic motion a contour shift gives the outgoing Hankel function and its
+argument derivative at imaginary order. ED §§68–70 are *proved* for the prescribed
+orbits in the dipole model (ED 63 of 66).
 [Guide](electrodynamics.md#radiation-in-collisions-6870)
 
 
