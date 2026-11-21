@@ -997,6 +997,14 @@ radiation damping, one order below the damping term; the point limit at fixed ob
 need a negative bare mass. The ledger row §75 is *proved* in this model (ED 65 of 66).
 [Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
 
+For rectilinear motion the Lorentz–Dirac equation is linear in the derivative of the rapidity, and
+boundedness towards the future selects one solution, which pre-accelerates; every other runs away.
+The flux of the field of a point charge through the side of Dirac's tube expands as the divergent
+electromagnetic mass times the acceleration minus the Lorentz–Dirac force, up to `O(ε)`, so the
+balance of a bare particle with the flux at fixed observed mass is the Lorentz–Dirac equation. The
+ledger row §76 is *proved*, which completes the electrodynamics ledger (66 of 66).
+[Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
+
 For a metric continuous across a hyperplane the weak Einstein tensor has the Lanczos–Israel
 surface term in the jump of the second fundamental form. In a chart adapted to the surface of the
 Oppenheimer–Snyder ball the matched forms make the glued metric `C¹` and a weak solution with dust

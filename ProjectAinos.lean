@@ -92,6 +92,11 @@ public import ProjectAinos.Electrodynamics.RadiationReaction.EffectiveComparison
 public import ProjectAinos.Electrodynamics.RadiationReaction.RadiusScaling
 public import ProjectAinos.Electrodynamics.RadiationReaction.Rectilinear
 public import ProjectAinos.Electrodynamics.RadiationReaction.RigidChargeDynamics
+public import ProjectAinos.Electrodynamics.RadiationReaction.WorldTube
+public import ProjectAinos.Electrodynamics.RadiationReaction.WorldTube.Expansion
+public import ProjectAinos.Electrodynamics.RadiationReaction.WorldTube.FieldExpansion
+public import ProjectAinos.Electrodynamics.RadiationReaction.WorldTube.Potential
+public import ProjectAinos.Electrodynamics.RadiationReaction.WorldTube.Retarded
 public import ProjectAinos.Electrodynamics.RetardedPotential
 public import ProjectAinos.Electrodynamics.RetardedSpectrum
 public import ProjectAinos.Electrodynamics.RetardedTime

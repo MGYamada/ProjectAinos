@@ -242,7 +242,8 @@ Light diffracted by an aperture is the unique radiating solution with the apertu
 with one polarization of the Maxwell field, and has the Fresnel and Fraunhofer forms with explicit
 remainders, a
 radiating charge feels a damping force — for a rigid charge of finite size the self-consistent motion
-follows the reduced equation of radiation damping — and free and bound charges scatter waves with the Thomson
+follows the reduced equation of radiation damping, and the covariant force follows from the flux of
+the field through a thin tube around the world line — and free and bound charges scatter waves with the Thomson
 and Rayleigh cross sections.
 [Guide](docs/electrodynamics.md#diffraction-5961) ·
 [Guide](docs/electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
