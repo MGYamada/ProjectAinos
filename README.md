@@ -318,7 +318,9 @@ curved background, and the time lines of a synchronous system focus under the en
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
 A star collapses through its horizon in a finite proper time, test bodies follow the
 post-Newtonian equations of motion, density perturbations of a flat universe grow like `t^{2/3}`,
-and the approach to a cosmological singularity passes between Kasner epochs.
+and the approach to a cosmological singularity passes between Kasner epochs. On closed and open
+dust backgrounds, discrete S³ harmonics and continuous H³ harmonics give scalar density and
+velocity perturbations with two independent time solutions.
 [Guide](docs/general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
 
 Topic 6 follows the provisional Boltzmannian typicality plan in

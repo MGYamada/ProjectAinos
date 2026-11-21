@@ -143,6 +143,11 @@ public import ProjectAinos.GeneralRelativity.CoordinateTime
 public import ProjectAinos.GeneralRelativity.CosmologicalModels
 public import ProjectAinos.GeneralRelativity.CosmologicalPerturbation
 public import ProjectAinos.GeneralRelativity.CosmologicalRedshift
+public import ProjectAinos.GeneralRelativity.CurvedCosmology
+public import ProjectAinos.GeneralRelativity.CurvedDustGrowth
+public import ProjectAinos.GeneralRelativity.CurvedDustModes
+public import ProjectAinos.GeneralRelativity.CurvedPerturbation
+public import ProjectAinos.GeneralRelativity.CurvedSpatialHarmonic
 public import ProjectAinos.GeneralRelativity.DeSitterSlicing
 public import ProjectAinos.GeneralRelativity.DeflectionIntegral
 public import ProjectAinos.GeneralRelativity.EddingtonFinkelstein
@@ -689,9 +694,11 @@ public import ProjectAinos.SpecialFunctions.HarmonicExtension
 public import ProjectAinos.SpecialFunctions.HarmonicPolynomial
 public import ProjectAinos.SpecialFunctions.HyperbolicCompleteness
 public import ProjectAinos.SpecialFunctions.HyperbolicHarmonics
+public import ProjectAinos.SpecialFunctions.HyperbolicRadial
 public import ProjectAinos.SpecialFunctions.HyperbolicSpectrum
 public import ProjectAinos.SpecialFunctions.HyperbolicSynthesis
 public import ProjectAinos.SpecialFunctions.HyperbolicTransform
+public import ProjectAinos.SpecialFunctions.HyperbolicZonal
 public import ProjectAinos.SpecialFunctions.JacobiCurves
 public import ProjectAinos.SpecialFunctions.JacobiElliptic
 public import ProjectAinos.SpecialFunctions.Kapteyn

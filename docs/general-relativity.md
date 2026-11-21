@@ -1480,6 +1480,13 @@ linearized Einstein equations reduce to ordinary differential equations
 decaying density contrasts (`densityContrast_growing`, `densityContrast_decaying`), the fictitious
 gauge mode (`gaugeMode`) and the decay of the vector modes (`vectorMode_decay`).
 
+**Scalar perturbations of closed and open dust universes (§115).** In conformal time, H = a′/a
+and the potential satisfies Φ″ + 3HΦ′ − 2kΦ = 0. For a mode with spatial eigenvalue −q the
+density constraint is κρa²δ/2 = [(3k−q)Φ − 3H(Φ′+HΦ)]Q. The momentum constraint fixes the
+covelocity as −2(Φ′+HΦ)∂ᵢQ/(κρa). These solve the first variation of the Ricci–dust residual
+on the closed and open dust metrics at q = n(n+2) and q = 1+ξ². Both time solutions are
+regular at maximal expansion. [Closed and open solutions](../ProjectAinos/GeneralRelativity/CurvedCosmology.lean) · [Time solutions](../ProjectAinos/GeneralRelativity/CurvedDustGrowth.lean)
+
 **The oscillating regime (§118).** The vacuum Bianchi II metric is vacuum iff the one-wall system
 holds (`BKL.TypeII.Data.isVacuum_iff`), and its exact one-bounce solution passes from one Kasner
 epoch to the next with explicit rates (`TypeII.tendsto_exponents`, `TypeII.abs_exponents_sub_le`).

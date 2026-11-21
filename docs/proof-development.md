@@ -914,7 +914,9 @@ A body falling radially reaches the horizon in a finite proper time, and a flat 
 matches the Lemaître exterior; Tolman's dust collapse is equivalent to the equations of Tolman,
 with a smooth dust ball matching its exterior. Test bodies move by the 1PN acceleration to
 `O(c⁻⁴)`; single modes of a flat dust universe grow like `t^{2/3}`; and one Kasner transition is
-exact in Bianchi II. The ledger rows §§103, 118 are *proved* and §§102, 106, 115 are closed with
+exact in Bianchi II. For §115 the linearized scalar Einstein–dust equations on the closed and open
+models now have explicit S³ and H³ harmonic solutions with Wronskian (H²+k)/(2a²) in conformal
+time. The general time-dependent scalar–vector–tensor decomposition remains open. The ledger rows §§103, 118 are *proved* and §§102, 106, 115 are closed with
 stated remainders (GR 31 of 39). Every row of the three ledgers is now *proved* or closed with a
 stated remainder.
 [Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
