@@ -149,6 +149,8 @@ public import ProjectAinos.GeneralRelativity.ChargeCovarianceIsotropic
 public import ProjectAinos.GeneralRelativity.ChargedMotion
 public import ProjectAinos.GeneralRelativity.ClockExamples
 public import ProjectAinos.GeneralRelativity.Collapse
+public import ProjectAinos.GeneralRelativity.CollapseHorizon
+public import ProjectAinos.GeneralRelativity.CollapseJunction
 public import ProjectAinos.GeneralRelativity.CoordinateTime
 public import ProjectAinos.GeneralRelativity.CosmologicalModels
 public import ProjectAinos.GeneralRelativity.CosmologicalPerturbation
@@ -495,6 +497,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateKilling
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateMatter
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateMetric
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinatePotential
+public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinatePullback
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateScalarField
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateTangent
 public import ProjectAinos.SmoothGeometry.Lorentzian.CoordinateVariation
@@ -590,6 +593,7 @@ public import ProjectAinos.SmoothGeometry.Lorentzian.VariationTesting
 public import ProjectAinos.SmoothGeometry.Lorentzian.VolumeDensity
 public import ProjectAinos.SmoothGeometry.Lorentzian.VolumeExamples
 public import ProjectAinos.SmoothGeometry.Lorentzian.VolumeForm
+public import ProjectAinos.SmoothGeometry.Lorentzian.WeakJunction
 public import ProjectAinos.SmoothGeometry.Manifold.Charts
 public import ProjectAinos.SmoothGeometry.Manifold.ClosedCoframe
 public import ProjectAinos.SmoothGeometry.Manifold.Euclidean

@@ -1558,7 +1558,18 @@ Schwarzschild time diverges (`tendsto_coordinateTime`) and its signals are red-s
 (`junction_oppenheimerSnyder`). Tolman's metric satisfies the Einstein equations with dust iff the
 equations of Tolman hold (`Tolman.isEinstein_iff`), with the parabolic, elliptic and hyperbolic
 solutions, the collapse at a finite time and the matching of a smooth dust ball to the exterior
-(`Tolman.matching_exterior`).
+(`Tolman.matching_exterior`). For a metric continuous across a hyperplane with a unit normal, the
+weak Einstein tensor is the sum of the two sides minus the Lanczos–Israel surface term
+`ε ∫([K_ab] − h_ab[K]) φ^{ab}` (`WeakJunction.weakEinstein_glue`), and the glued metric is `C¹` exactly
+when the second fundamental forms agree (`contDiffOn_glue_iff_secondFundamental`). In a chart
+adapted to the boundary of the Oppenheimer–Snyder ball, Painlevé–Gullstrand outside and comoving
+with a second-order time correction inside, the glued metric is `C¹` and a weak solution with dust
+inside and vacuum outside (`CollapseJunction.isWeakEinstein_oppenheimerSnyder`); a static shell with
+a mismatched rate has a surface layer (`exists_surface_layer`). In the global Painlevé–Gullstrand
+chart of the collapse (`CollapseHorizon.osForm`), the causal past of future null infinity for
+`τ`-parametrized future causal curves is `{|x| > r_H(τ)}` (`causalPastScri_eq`), with
+`r_H = 3(r_b − (τ_c − τ))` until the surface reaches `2M` and `2M` after, so the event horizon is the
+outgoing null generator that leaves the centre at `τ_c − 9M/2` (`eventHorizon_eq`, `horizon_generator`).
 
 **Post-Newtonian motion (§106).** For a 1PN metric family the geodesic acceleration equals the
 explicit 1PN acceleration up to `O(c⁻⁴)` (`PostNewtonian.acceleration_error`), and so does the
@@ -1597,13 +1608,14 @@ epoch to the next with explicit rates (`TypeII.tendsto_exponents`, `TypeII.abs_e
 | Result | Declarations | Source |
 | --- | --- | --- |
 | Collapse of a spherical body | `CoordinateMetric.IsOrthogonalSlicing`, `secondFundamental`, `Collapse.radialInfall_properTime`, `tendsto_coordinateTime`, `tendsto_observedFrequency`, `radius_deriv_neg_of_causal`, `junction_oppenheimerSnyder`, `secondFundamental_closedInterior_ne_lemaitre` | [OrthogonalSlicing](../ProjectAinos/SmoothGeometry/Lorentzian/OrthogonalSlicing.lean), [Collapse](../ProjectAinos/GeneralRelativity/Collapse.lean) |
+| Weak junction and event horizon | `CoordinateMetric.einsteinOf_pullback`, `WeakJunction.weakEinstein`, `weakEinstein_glue`, `isWeakEinstein_glue`, `contDiffOn_glue_iff_secondFundamental`, `CollapseJunction.junction_adapted`, `contDiffOn_glue_iff_junction`, `isWeakEinstein_oppenheimerSnyder`, `exists_surface_layer`, `CollapseHorizon.osForm`, `IsFutureCausalCurve`, `causalPastScri`, `horizonRadius`, `horizon_generator`, `causalPastScri_eq`, `eventHorizon_eq` | [CoordinatePullback](../ProjectAinos/SmoothGeometry/Lorentzian/CoordinatePullback.lean) · [WeakJunction](../ProjectAinos/SmoothGeometry/Lorentzian/WeakJunction.lean) · [CollapseJunction](../ProjectAinos/GeneralRelativity/CollapseJunction.lean) · [CollapseHorizon](../ProjectAinos/GeneralRelativity/CollapseHorizon.lean) |
 | Dust collapse | `Tolman.metric`, `isEinstein_iff`, `Equations.density_nonneg_iff`, `solution_parabolic`, `solution_elliptic`, `solution_hyperbolic`, `tendsto_radius_zero`, `lemaitre_eq`, `matching_exterior` | [Tolman](../ProjectAinos/GeneralRelativity/Tolman.lean) |
 | Post-Newtonian motion | `PostNewtonian.PostNewtonianMetricFamily`, `postNewtonianAcceleration`, `acceleration_error`, `geodesic_acceleration_error`, `lagrangian`, `eulerLagrange_acceleration_error` | [PostNewtonian](../ProjectAinos/GeneralRelativity/PostNewtonian.lean) |
 | EIH Lagrangian and the dust field | `EinsteinInfeldHoffmann.eihLagrangian`, `eulerLagrange_eihLagrangian_eq_test`, `eulerLagrange_acceleration_error`, `eihLagrangian_perm`, `tendsto_eihLagrangian`, `eulerLagrange_testMass`, `PostNewtonianRicci.abs_ricciOf_pnCoefficient_sub_le`, `PostNewtonianSources.superPotential_coordLaplacian`, `hasDerivAt_newtonPotential_continuity`, `PostNewtonianDust.SmoothDust`, `SmoothDust.gauge`, `vector_eq`, `scalar_eq`, `SmoothDust.abs_ricciOf_sub_dustSource_le`, `exists_smoothDust` | [EinsteinInfeldHoffmann](../ProjectAinos/GeneralRelativity/EinsteinInfeldHoffmann.lean) · [PostNewtonianField](../ProjectAinos/GeneralRelativity/PostNewtonianField.lean) · [PostNewtonianRicci](../ProjectAinos/GeneralRelativity/PostNewtonianRicci.lean) · [PostNewtonianSources](../ProjectAinos/GeneralRelativity/PostNewtonianSources.lean) · [PostNewtonianDust](../ProjectAinos/GeneralRelativity/PostNewtonianDust.lean) |
 | Cosmological perturbations | `CosmologicalPerturbation.ricci_synchronous_deriv`, `scalarMode_iff`, `densityContrast_growing`, `densityContrast_decaying`, `gaugeMode`, `tensorMode_iff`, `vectorMode_decay` | [CosmologicalPerturbation](../ProjectAinos/GeneralRelativity/CosmologicalPerturbation.lean) |
 | The oscillating regime | `BKL.bounce_kasnerExponents`, `bklMap`, `TypeII.Data.isVacuum_iff`, `TypeII.solution`, `TypeII.tendsto_exponents`, `TypeII.abs_exponents_sub_le` | [BKL](../ProjectAinos/GeneralRelativity/BKL.lean) |
 
-The typed examples are in `checks/CollapseAPI.lean`, `checks/TolmanAPI.lean`,
+The typed examples are in `checks/CollapseAPI.lean`, `checks/CollapseHorizonAPI.lean`, `checks/TolmanAPI.lean`,
 `checks/PostNewtonianAPI.lean`, `checks/EinsteinInfeldHoffmannAPI.lean`, `checks/PostNewtonianDustAPI.lean`,
 `checks/CosmologicalPerturbationAPI.lean` and `checks/BKLAPI.lean`.
 The decisions are recorded in GR34–GR38 of the [notes](general-relativity-notes.md) and in G17 of

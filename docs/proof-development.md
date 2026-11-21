@@ -997,6 +997,16 @@ radiation damping, one order below the damping term; the point limit at fixed ob
 need a negative bare mass. The ledger row §75 is *proved* in this model (ED 65 of 66).
 [Guide](electrodynamics.md#radiation-damping-and-scattering-75-76-7880)
 
+For a metric continuous across a hyperplane the weak Einstein tensor has the Lanczos–Israel
+surface term in the jump of the second fundamental form. In a chart adapted to the surface of the
+Oppenheimer–Snyder ball the matched forms make the glued metric `C¹` and a weak solution with dust
+inside and vacuum outside, while a mismatched shell has a surface layer. In the global
+Painlevé–Gullstrand chart of the collapse, a Grönwall comparison for causal curves and explicit
+escaping curves identify the causal past of future null infinity, so the event horizon is the
+outgoing null generator that reaches the surface at `r = 2M`. The ledger row §102 is *proved*
+(GR 37 of 39).
+[Guide](general-relativity.md#collapse-post-newtonian-motion-perturbations-and-the-oscillating-regime-102-103-106-115-118)
+
 ## Shared Variational Foundation
 
 The electrodynamics development adds compact localization for C² Lagrangians

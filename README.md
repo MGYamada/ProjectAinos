@@ -328,7 +328,9 @@ radiates gravitational waves by the quadrupole formula, short waves travel along
 curved background with their amplitude transported and carry the averaged effective stress of
 Isaacson, and the time lines of a synchronous system focus under the energy condition.
 [Guide](docs/general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
-A star collapses through its horizon in a finite proper time, test bodies follow the
+A star collapses through its horizon in a finite proper time, solves the Einstein equations across its
+surface in the weak sense, and its event horizon is the boundary of the region from which light still
+escapes; test bodies follow the
 post-Newtonian equations of motion, `N` bodies follow the Einstein–Infeld–Hoffmann Lagrangian, the
 post-Newtonian field of smooth dust solves the Einstein equations to `O(c⁻⁴)`, density
 perturbations of a flat universe grow like `t^{2/3}`,

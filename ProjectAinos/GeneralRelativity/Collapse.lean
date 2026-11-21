@@ -68,12 +68,11 @@ exterior Schwarzschild co-ordinates `(t, r, θ, φ)` of `SchwarzschildExterior`.
   (`secondFundamental_closedInterior_ne_lemaitre`); a boundary that moves in the Lemaître chart is
   not covered.
 
-Not stated: that the glued metric solves the Einstein equations across the boundary without a
-surface layer (with a jump of the density the glued metric is only `C^{1,1}`, while a
-`CoordinateMetric` is smooth and the library's Einstein equations are pointwise), the junction of
-the closed model with a comoving chart of bound shells (Novikov's co-ordinates, whose areal
-radius `fallRadius M R τ` is given by the inverse of Kepler's function), and the event horizon as
-the boundary of the causal past of future null infinity.
+The weak Einstein equations across the boundary and the event horizon as the boundary of the
+causal past of future null infinity are proved in `CollapseJunction.lean` and
+`CollapseHorizon.lean`. Not stated: the junction of the closed model with a comoving chart of
+bound shells (Novikov's co-ordinates, whose areal radius `fallRadius M R τ` is given by the
+inverse of Kepler's function).
 -/
 
 @[expose] public section
