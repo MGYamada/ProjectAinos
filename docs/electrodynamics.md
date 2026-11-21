@@ -719,10 +719,13 @@ it covers sources that vanish in the past. The point charge is treated in the ne
 leading coefficient vanishes iff `⟨dψ, dψ⟩ = 0` (`Eikonal.leading_eq_zero_iff`), the Lorenz
 condition at leading order is transversality, the rays are straight null lines
 (`lightlike_of_isRay`), and the vacuum equations hold at the two leading orders iff the eikonal and
-transport equations hold (`maxwell_highFrequencyPotential_iff_of_eikonal`). In a medium the rays of
-`(|p|² − n²)/2` come from a complete integral (`RayOptics.isRay_of_isHamiltonJacobi`, with the
-linear-gradient index), and Fermat's principle is the ray equation `γ″ = ∇(n²/2)`
-(`RayOptics.fermat`).
+transport equations hold (`maxwell_highFrequencyPotential_iff_of_eikonal`). In a medium the
+trajectories of `(|p|² − n²)/2` come from a complete integral at every energy
+(`RayOptics.isRay_of_isHamiltonJacobi`, with the linear-gradient index); the rays of light are
+those on `H = 0`, where `|q′|² = n²(q)` (`RayOptics.IsPhysicalRay`). The energy condition at one
+parameter value propagates (`isPhysicalRay_of_isHamiltonJacobi`), and the parabolic rays of the
+linear gradient are physical exactly when `|α|² = n₀² + 2gβ₃` (`isPhysicalRay_linearIndexRay_iff`).
+Fermat's principle is the ray equation `γ″ = ∇(n²/2)` (`RayOptics.fermat`).
 
 **Intensity (§54).** The `ε⁻¹` coefficient vanishes iff the amplitudes are transported
 (`subleading_eq_zero_iff_transport`), transport conserves the intensity current
@@ -822,7 +825,10 @@ oscillator is damped (`reducedOscillator`). The Lorentz–Dirac force is orthogo
 (`lorentzDirac_eq_landauLifshitz`), and balances the radiated four-momentum with the Schott term
 (`integral_lorentzDirac_eq`).
 
-**Scattering (§§78–80).** A charge in a wave moves for all times (`Thomson.exists_trajectory`), with
+**Scattering (§§78–80).** A charge in a wave moves for all times (`Thomson.exists_trajectory`);
+relativistically, in a field skew-adjoint for the Minkowski metric, its four-velocity stays on the
+future unit mass shell for all proper times (`Thomson.exists_physicalProperTimeTrajectory`,
+`exists_physicalProperTimeTrajectory_incidentPotential`). It has
 a first-order response up to `O(a²)` (`norm_trajectory_sub_firstOrder_le`), and Thomson's cross
 section is `(8π/3)(e²/4πm)²` (`crossSection_eq`). The bound charge gives
 `σ_T ω⁴/((ω₀² − ω²)² + 4γ²ω²)` (`LowFrequency.crossSection_oscillator`), Rayleigh's law
@@ -916,8 +922,8 @@ All names below are under `ProjectAinos`, except imported `YM` names.
 | Radiation in collisions | `Collision.integrable_dipoleAcceleration_coulomb`, `integral_dipolePower_eq`, `spectral_eq_coulomb`, `CoulombRadiation.effectiveRadiation_repulsive`, `average_dipolePower_kepler`, `totalEnergy_hyperbolic`, `harmonic_decomposition`, `spectrum_hyperbolic`, `CollisionSpectrum.fourier_radiationAmplitude`, `tendsto_dipoleSpectrum`, `tendsto_relativisticSpectrum` | [Collision](../ProjectAinos/Electrodynamics/Radiation/Collision.lean), [CoulombRadiation](../ProjectAinos/Electrodynamics/Radiation/CoulombRadiation.lean), [CollisionSpectrum](../ProjectAinos/Electrodynamics/Radiation/CollisionSpectrum.lean) |
 | Diffraction | `Diffraction.apertureField`, `contDiffOn_apertureField`, `helmholtz_apertureField`, `tendsto_apertureField_boundary`, `apertureField_isRadiating`, `norm_apertureField_sub_fresnelField_le`, `tendsto_fraunhofer`, `norm_fraunhofer_sub_le`, `babinet` | [Aperture](../ProjectAinos/Electrodynamics/Diffraction/Aperture.lean), [Fresnel](../ProjectAinos/Electrodynamics/Diffraction/Fresnel.lean), [Fraunhofer](../ProjectAinos/Electrodynamics/Diffraction/Fraunhofer.lean) |
 | Radiation damping | `RadiationReaction.dampingField_expansion`, `selfForce_expansion`, `trace_selfMass`, `work_dampingForce_eq`, `runaway`, `reducedOscillator`, `lorentzDirac_orthogonal`, `lorentzDirac_eq_landauLifshitz`, `integral_lorentzDirac_eq` | [RadiationReaction](../ProjectAinos/Electrodynamics/RadiationReaction.lean) |
-| Scattering | `Scattering.Thomson.exists_trajectory`, `norm_trajectory_sub_firstOrder_le`, `crossSection_eq`, `differentialCrossSection_eq`, `LowFrequency.crossSection_oscillator`, `abs_crossSection_sub_le`, `orientationAverage`, `HighFrequency.crossSection_tendsto_thomson`, `tendsto_coherentFactor` | [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean), [LowFrequency](../ProjectAinos/Electrodynamics/Scattering/LowFrequency.lean), [HighFrequency](../ProjectAinos/Electrodynamics/Scattering/HighFrequency.lean) |
-| Geometrical optics | `Wave.waveOperator_highFrequencyWave`, `Optics.Eikonal.box_highFrequencyPotential`, `leading_eq_zero_iff`, `lightlike_of_isRay`, `maxwell_highFrequencyPotential_iff_of_eikonal`, `RayOptics.isRay_of_isHamiltonJacobi`, `RayOptics.fermat` | [HighFrequency](../ProjectAinos/SmoothGeometry/Wave/HighFrequency.lean), [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean), [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) |
+| Scattering | `Scattering.Thomson.exists_trajectory`, `exists_physicalProperTimeTrajectory`, `mem_futureUnitShell_of_isProperTimeTrajectory`, `IsPhysicalProperTimeTrajectory`, `isMinkowskiSkew_forceMap`, `norm_trajectory_sub_firstOrder_le`, `crossSection_eq`, `differentialCrossSection_eq`, `LowFrequency.crossSection_oscillator`, `abs_crossSection_sub_le`, `orientationAverage`, `HighFrequency.crossSection_tendsto_thomson`, `tendsto_coherentFactor` | [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean), [LowFrequency](../ProjectAinos/Electrodynamics/Scattering/LowFrequency.lean), [HighFrequency](../ProjectAinos/Electrodynamics/Scattering/HighFrequency.lean) |
+| Geometrical optics | `Wave.waveOperator_highFrequencyWave`, `Optics.Eikonal.box_highFrequencyPotential`, `leading_eq_zero_iff`, `lightlike_of_isRay`, `maxwell_highFrequencyPotential_iff_of_eikonal`, `RayOptics.isRay_of_isHamiltonJacobi`, `RayOptics.IsPhysicalRay`, `isPhysicalRay_of_isHamiltonJacobi`, `isPhysicalRay_linearIndexRay_iff`, `RayOptics.fermat` | [HighFrequency](../ProjectAinos/SmoothGeometry/Wave/HighFrequency.lean), [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean), [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) |
 | Intensity | `Eikonal.subleading_eq_zero_iff_transport`, `divergence_intensityCurrent_eq_zero`, `intensity_mul_det_eq` | [Eikonal](../ProjectAinos/Electrodynamics/Optics/Eikonal.lean) |
 | The angular eikonal | `AngularEikonal.exists_angularEikonal`, `fderiv_angularEikonal`, `rayMap_symplectic`, `exists_rayMap_symplectic`, `Free.rayMap_isPoissonHom` | [AngularEikonal](../ProjectAinos/Electrodynamics/Optics/AngularEikonal.lean) |
 | Narrow bundles of rays | `Riccati.matrix_eq_of_hasDerivAt`, `NarrowBundle.hessian_ray`, `principalRadius_add`, `focal_iff`, `amplitude_tendsto_focal`, `norm_beam_sub_linear_le` | [Riccati](../ProjectAinos/SmoothGeometry/ODE/Riccati.lean), [NarrowBundle](../ProjectAinos/Electrodynamics/Optics/NarrowBundle.lean) |
@@ -979,13 +985,13 @@ All names below are under `ProjectAinos`, except imported `YM` names.
 ```sh
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/ElectrodynamicsAPI.lean
-lake env lean -DwarningAsError=true checks/ElectrodynamicsCoreAPI.lean
-lake env lean -DwarningAsError=true checks/ChargedParticleAPI.lean
-lake env lean -DwarningAsError=true checks/FieldClassificationAPI.lean
-lake env lean -DwarningAsError=true checks/SourcedFieldAPI.lean
-lake env lean -DwarningAsError=true checks/FieldStressAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ElectrodynamicsAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ElectrodynamicsCoreAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ChargedParticleAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/FieldClassificationAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SourcedFieldAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/FieldStressAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 experiments/.venv/bin/python -m ainos_experiments.verify_electrodynamics
 ```
 

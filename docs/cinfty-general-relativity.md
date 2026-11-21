@@ -1472,9 +1472,9 @@ The existing local commands relevant to this volume are:
 ```sh
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/GeneralRelativityAPI.lean
-lake env lean -DwarningAsError=true checks/LorentzGeometryAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/GeneralRelativityAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/LorentzGeometryAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 experiments/.venv/bin/python -m ainos_experiments.verify_lorentz_geometry
 ```
 

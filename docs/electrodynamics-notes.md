@@ -416,3 +416,19 @@ therefore supplies the positive imaginary axis and its argument derivative.
 
 **Proof status.** The two acceleration transforms give the Hankel spectral density for
 positive frequency and the net longitudinal impulse at zero. [Contour continuation](../ProjectAinos/SpecialFunctions/HankelUpper.lean) · [Scattering transform](../ProjectAinos/SpecialFunctions/HyperbolicTransform.lean) · [ED §70](../ProjectAinos/Electrodynamics/Radiation/HyperbolicSpectrum.lean)
+
+## ED51. The proper-time equations need the mass shell and a skew-adjoint field
+
+**Observation.** The equations `dx/dτ = u`, `du/dτ = k F(x) u` admit the constant curve with `u = 0` in every field, and for `F = id` a unit initial velocity becomes `e^{kτ} u₀` (#172). The parameter is the proper time only on the shell `η(u, u) = −1`. If `F(x)` is skew-adjoint for the Minkowski metric, `η(u, u)` is constant along every solution, with no smoothness of `F`; `u⁰` cannot vanish on the shell, so by the intermediate value theorem it keeps its sign, and a future unit velocity stays future and unit.
+
+**Interface decision.** `IsProperTimeTrajectory` stays the system of ordinary differential equations; `IsPhysicalProperTimeTrajectory` adds `u τ ∈ futureUnitShell` for all `τ`, and the field condition is `IsMinkowskiSkew`, which the Lorentz force `ConstantField.forceMap e (F x)` of every field of two-forms satisfies (`isMinkowskiSkew_forceMap`).
+
+**Proof status.** Proved: conservation of the shell for any trajectory in a skew field, global existence for smooth bounded skew fields, and the instances `cos(ℓx) F₀♯`, the field of the potential `sin(ℓx) a` and the incident wave of §78. The pins check that the constant curve is excluded and that `F = id` is not skew. [Thomson](../ProjectAinos/Electrodynamics/Scattering/Thomson.lean) · [Checks](../checks/ChargeScatteringAPI.lean)
+
+## ED52. Rays of light are the trajectories on `H = 0`
+
+**Observation.** Jacobi's theorem gives Hamilton's equations of `H = (|p|² − n²)/2` at every energy: for `n = 1` and `α = 0` the complete integral gives a constant trajectory (#173). Rays of light are the trajectories on `H = 0`, where `|q′|² = n²(q)`; along a complete integral `H = −∂S/∂σ`, and `H` is conserved, so the condition at one parameter value suffices.
+
+**Interface decision.** `IsPhysicalRay` is a trajectory with `H(c) = 0`. The linear-gradient example has the conserved value `H = (|α|² − n₀² − 2gβ₃)/2` and the homogeneous one `(|α|² − n²)/2`.
+
+**Proof status.** Proved, with the parameter conditions of both examples; the pins check that `n = 1`, `α = 0` gives a trajectory that is not a ray. [RayOptics](../ProjectAinos/Electrodynamics/Optics/RayOptics.lean) · [Checks](../checks/OpticsAPI.lean)

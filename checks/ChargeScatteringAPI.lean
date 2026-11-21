@@ -80,6 +80,114 @@ example (k : ℝ) (ℓ : FourCovector) (F₀ : Spacetime →L[ℝ] Spacetime) (x
       IsProperTimeTrajectory k (fun y => Real.cos (ℓ y) • F₀) x u :=
   exists_properTimeTrajectory_planeWave k ℓ F₀ x₀ u₀
 
+example :
+    Set Spacetime :=
+  futureUnitShell
+
+example (u : Spacetime) :
+    u ∈ futureUnitShell ↔ minkowskiForm .timeNegative 3 u u = -1 ∧ 0 < time u :=
+  Iff.rfl
+
+example :
+    (Pi.single 0 1 : Spacetime) ∈ futureUnitShell :=
+  single_zero_mem_futureUnitShell
+
+example {v : Spacetime} (hv : FutureTimelike v) :
+    fourVelocity v ∈ futureUnitShell :=
+  fourVelocity_mem_futureUnitShell hv
+
+example (F : Spacetime → Spacetime →L[ℝ] Spacetime) :
+    IsMinkowskiSkew F ↔ ∀ x v w,
+      minkowskiForm .timeNegative 3 (F x v) w = -minkowskiForm .timeNegative 3 v (F x w) :=
+  Iff.rfl
+
+example {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F) (x v : Spacetime) :
+    minkowskiForm .timeNegative 3 (F x v) v = 0 :=
+  hF.orthogonal x v
+
+example {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F)
+    (c : Spacetime → ℝ) :
+    IsMinkowskiSkew fun x => c x • F x :=
+  hF.smul c
+
+example (e : ℝ) (F : Spacetime → TwoForm) :
+    IsMinkowskiSkew fun x => ConstantField.forceMap e (F x) :=
+  isMinkowskiSkew_forceMap e F
+
+example (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spacetime) (x u : ℝ → Spacetime) :
+    IsPhysicalProperTimeTrajectory k F x u ↔
+      IsProperTimeTrajectory k F x u ∧ ∀ τ, u τ ∈ futureUnitShell :=
+  Iff.rfl
+
+example {k : ℝ} {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F)
+    {x u : ℝ → Spacetime} (h : IsProperTimeTrajectory k F x u) (h0 : u 0 ∈ futureUnitShell)
+    (τ : ℝ) :
+    u τ ∈ futureUnitShell :=
+  mem_futureUnitShell_of_isProperTimeTrajectory hF h h0 τ
+
+example {k : ℝ} {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : IsMinkowskiSkew F)
+    {x u : ℝ → Spacetime} (h : IsProperTimeTrajectory k F x u) (h0 : u 0 ∈ futureUnitShell) :
+    IsPhysicalProperTimeTrajectory k F x u :=
+  isPhysicalProperTimeTrajectory_of_isProperTimeTrajectory hF h h0
+
+open scoped ContDiff in
+example (k : ℝ) {F : Spacetime → Spacetime →L[ℝ] Spacetime} (hF : ContDiff ℝ ∞ F) {M : ℝ}
+    (hM : ∀ x, ‖F x‖ ≤ M) (hskew : IsMinkowskiSkew F) (x₀ : Spacetime) {u₀ : Spacetime}
+    (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧ IsPhysicalProperTimeTrajectory k F x u :=
+  exists_physicalProperTimeTrajectory k hF hM hskew x₀ hu₀
+
+example (k : ℝ) (ℓ : FourCovector) (F₀ : TwoForm) (x₀ : Spacetime) {u₀ : Spacetime}
+    (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k (fun y => Real.cos (ℓ y) • ConstantField.forceMap 1 F₀)
+        x u :=
+  exists_physicalProperTimeTrajectory_planeWave k ℓ F₀ x₀ hu₀
+
+example (e : ℝ) (ℓ a : FourCovector) (y : Spacetime) :
+    ConstantField.forceMap e (fieldTensor (planeWave ℓ a Real.sin) y) =
+      Real.cos (ℓ y) • ConstantField.forceMap e (fieldTensor (planeWave ℓ a Real.sin) 0) :=
+  forceMap_fieldTensor_planeWave_sin e ℓ a y
+
+example (k : ℝ) (ℓ a : FourCovector) (x₀ : Spacetime) {u₀ : Spacetime}
+    (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k
+        (fun y => ConstantField.forceMap 1 (fieldTensor (planeWave ℓ a Real.sin) y)) x u :=
+  exists_physicalProperTimeTrajectory_planeWavePotential k ℓ a x₀ hu₀
+
+example (k ω : ℝ) (n E₀ : E3) (x₀ : Spacetime) {u₀ : Spacetime} (hu₀ : u₀ ∈ futureUnitShell) :
+    ∃ x u : ℝ → Spacetime, x 0 = x₀ ∧ u 0 = u₀ ∧
+      IsPhysicalProperTimeTrajectory k
+        (fun y => ConstantField.forceMap 1 (fieldTensor (incidentPotential ω n E₀) y)) x u :=
+  exists_physicalProperTimeTrajectory_incidentPotential k ω n E₀ x₀ hu₀
+
+/- The constant curve with zero four-velocity solves the equations of `IsProperTimeTrajectory`
+in every field, but it is not a physical world line. -/
+example (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spacetime) (p : Spacetime) :
+    IsProperTimeTrajectory k F (fun _ => p) (fun _ => 0) := fun τ =>
+  ⟨hasDerivAt_const τ p, by simpa using hasDerivAt_const τ (0 : Spacetime)⟩
+
+example (k : ℝ) (F : Spacetime → Spacetime →L[ℝ] Spacetime) (p : Spacetime) :
+    ¬ IsPhysicalProperTimeTrajectory k F (fun _ => p) (fun _ => 0) := fun h => by
+  have h0 := (h.2 0).1
+  simp at h0
+
+/- The identity field map is not skew-adjoint: in it a unit four-velocity grows as `e^{kτ} u₀`. -/
+example : ¬ IsMinkowskiSkew fun _ => ContinuousLinearMap.id ℝ Spacetime := fun h => by
+  have h0 := h.orthogonal 0 (Pi.single 0 1)
+  have h1 := single_zero_mem_futureUnitShell.1
+  simp only [ContinuousLinearMap.id_apply] at h0
+  linarith
+
+/- A physical world line exists: the plane wave with a charge initially at rest. -/
+example (k : ℝ) (ℓ a : FourCovector) (x₀ : Spacetime) :
+    ∃ x u : ℝ → Spacetime, IsPhysicalProperTimeTrajectory k
+      (fun y => ConstantField.forceMap 1 (fieldTensor (planeWave ℓ a Real.sin) y)) x u := by
+  obtain ⟨x, u, -, -, h⟩ := exists_physicalProperTimeTrajectory_planeWavePotential k ℓ a x₀
+    single_zero_mem_futureUnitShell
+  exact ⟨x, u, h⟩
+
 example {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F] {f f' : ℝ → F} {K ε T : ℝ}
     (hf : ∀ t, HasDerivAt f (f' t) t) (h0 : f 0 = 0) (hb : ∀ t ∈ Icc 0 T, ‖f' t‖ ≤ K * ‖f t‖ + ε) :
     ∀ t ∈ Icc 0 T, ‖f t‖ ≤ gronwallBound 0 K ε t :=

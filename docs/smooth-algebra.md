@@ -543,11 +543,11 @@ From the repository root:
 lake exe cache get
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
-lake env lean -DwarningAsError=true checks/SmoothAlgebraAPI.lean
-lake env lean -DwarningAsError=true checks/ReductionAPI.lean
-lake env lean -DwarningAsError=true checks/FormalSeriesAPI.lean
-lake env lean -DwarningAsError=true checks/SmoothGeometryAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SmoothAlgebraAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/ReductionAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/FormalSeriesAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SmoothGeometryAPI.lean
 git diff --check
 ```
 

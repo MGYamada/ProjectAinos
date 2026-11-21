@@ -1044,8 +1044,8 @@ check, relevant default-option consumer checks and transitive axiom audit:
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
 lake env lean -DwarningAsError=true --run checks/CoreImports.lean
-lake env lean -DwarningAsError=true checks/SpecialRelativityAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SpecialRelativityAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 ```
 
 The axiom allowlist is `propext`, `Classical.choice`, `Quot.sound`. Physical

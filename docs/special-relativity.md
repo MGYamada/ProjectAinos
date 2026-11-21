@@ -522,15 +522,15 @@ The local counterparts are:
 ```sh
 lake build --wfail ProjectAinos
 lake exe mk_all --check --lib ProjectAinos
-lake env lean -DwarningAsError=true checks/SmoothGeometryAPI.lean
-lake env lean -DwarningAsError=true checks/SpecialRelativityAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticEnergyAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticHamiltonianAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticFreeMotionAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticCollisionsAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticShellAPI.lean
-lake env lean -DwarningAsError=true checks/RelativisticMeasureAPI.lean
-lake env lean -DwarningAsError=true checks/AxiomAudit.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SmoothGeometryAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/SpecialRelativityAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticEnergyAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticHamiltonianAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticFreeMotionAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticCollisionsAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticShellAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/RelativisticMeasureAPI.lean
+lake env lean -DwarningAsError=true -DautoImplicit=false -DrelaxedAutoImplicit=false checks/AxiomAudit.lean
 ```
 
 The public API checks use default elaborator options. Exact examples distinguish
