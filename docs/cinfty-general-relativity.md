@@ -136,8 +136,14 @@ test metric compatibility on a curved metric.
 [Tensor shapes](../ProjectAinos/SmoothGeometry/Tensor/Bundle.lean) ·
 [Bianchi and derivative checks](../checks/BianchiAPI.lean)
 
-**§§96 and 105. Four-momentum on tilted hyperplanes.** `charge_eq_integral`
-and `charge_const` already give the slice integral and its conservation.
+**§§96 and 105. Four-momentum on tilted hyperplanes.** The §96 guide
+records the local pseudotensor identity proved in F13. The later §105
+guide establishes `charge_eq_integral` and `charge_const` on coordinate
+time slices under decay and flux hypotheses. The open part of §96 is
+the transformation law for the resulting four components.
+[Local pseudotensor (§96)](general-relativity.md#the-energy-momentum-pseudotensor-96) ·
+[Coordinate-slice charges (§105)](general-relativity.md#charges-at-infinity-gravitational-radiation-and-focusing-105-108-110-119)
+
 First pull the metric coefficients through a constant Lorentz matrix and
 derive the transformation of the total density from the superpotential
 and `|det L| = 1`. For each free index integrate the resulting conserved
