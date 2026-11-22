@@ -1,6 +1,7 @@
 # Project Ainos Documentation
 
 - [Research plan](../README.md)
+- [Research overview and references](research-overview.md)
 - [Proof development record](proof-development.md)
 - [Courant–Hilbert 2.0 correspondence](courant-hilbert.md)
 - [Landau–Lifshitz correspondence](landau-lifshitz.md)
