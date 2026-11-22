@@ -16,6 +16,7 @@ website:
     contents:
       - index.qmd
       - research-plan.qmd
+      - research-overview.qmd
       - proof-development.qmd
       - courant-hilbert.qmd
       - section: Thermodynamics
